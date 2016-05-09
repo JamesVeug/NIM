@@ -27,14 +27,20 @@ public class PhaseJumpUI : MonoBehaviour {
 	void Update () {
 	    if( jump == null)
         {
-            Debug.LogError("NO PHASE JUMP SCRIPT APPLIED TO OBJECT!");
+            Debug.LogError("No PhaseJump script given.");
             return;
         }
+        GameObject phaseMenuImageO = GameObject.Find("PhaseImageMenu");
+        GameObject phaseNextImageO = GameObject.Find("PhaseImageNext");
+        GameObject phasePrevImageO = GameObject.Find("PhaseImagePrevious");
+        if( phaseMenuImageO == null) { Debug.LogError("PhaseImageMenu not setup in Canvas. Can not show menu!"); return; }
+        if (phaseNextImageO == null) { Debug.LogError("PhaseImageNext not setup in Canvas. Can not show menu!"); return; }
+        if (phasePrevImageO == null) { Debug.LogError("PhaseImagePrevious not setup in Canvas. Can not show menu!"); return; }
 
         bool menuOpen = jump.phaseMenuIsOpen();
         
         Sprite menuImage = !menuOpen ? missing : menu;
-        Image menuGuiImage = GameObject.Find("PhaseImageMenu").GetComponent<Image>();
+        Image menuGuiImage = phaseMenuImageO.GetComponent<Image>();
         menuGuiImage.sprite = menuImage;
 
         // Which direction have we selected from the menu?
@@ -42,12 +48,12 @@ public class PhaseJumpUI : MonoBehaviour {
 
         bool canJumpForward = jump.canPhaseForward();
         Sprite nextImage = !menuOpen ? missing : canJumpForward ? (direction == 1 ? selectPhaseRight : canPhaseRight) : canNotPhaseRight;
-        Image nextGuiImage = GameObject.Find("PhaseImageNext").GetComponent<Image>();
+        Image nextGuiImage = phaseNextImageO.GetComponent<Image>();
         nextGuiImage.sprite = nextImage;
 
         bool canJumpBackwards = jump.canPhaseBack();
         Sprite previousImage = !menuOpen ? missing : canJumpBackwards ? (direction == -1 ? selectPhaseLeft : canPhaseLeft) : canNotPhaseLeft;
-        Image previousGuiImage = GameObject.Find("PhaseImagePrevious").GetComponent<Image>();
+        Image previousGuiImage = phasePrevImageO.GetComponent<Image>();
         previousGuiImage.sprite = previousImage;
 
         // Preview the area
