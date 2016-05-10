@@ -15,6 +15,10 @@ public class PhaseJump : MonoBehaviour {
     public bool copyJumpedHeightOnPhase = true;
     public bool moveCameraOnPhase = false;
 
+    // Sounds
+    public AudioClip[] phaseForwardSounds;
+    public AudioClip[] phaseBackSounds;
+
     // Use this for initialization
     void Start () {
         playerMovement = GetComponent<Movement>();
@@ -30,37 +34,43 @@ public class PhaseJump : MonoBehaviour {
         return phaseDirectionSelected;
     }
 
-    void phaseForward()
+    bool phaseForward()
     {
-        MovementWaypoint currentPoint = playerMovement.currentMovementWaypoint;
-        if (currentPoint == null)
+        bool phased = phase(true);
+
+        if (phased)
         {
-            Debug.LogError("Player does not have a current Waypoint to phase");
-            return;
+            playRandomSound(phaseForwardSounds);
         }
 
-        // Move to new point
-        bool phased = phaseToWayPoint(currentPoint, currentPoint.nextPhasePoint, true);
-
-        // move camera
-        if (phased && moveCameraOnPhase)
-        {
-            ChasePlayer chase = Camera.main.GetComponent<ChasePlayer>();
-            if (chase != null) chase.instantlyMoveToPlayer();
-        }
+        return phased;
     }
 
-    void phaseBack()
+    bool phaseBack()
+    {
+        bool phased = phase(false);
+
+        if (phased) {
+            playRandomSound(phaseBackSounds);
+        }
+
+        return phased;
+    }
+
+    private bool phase(bool phaseForward)
     {
         MovementWaypoint currentPoint = playerMovement.currentMovementWaypoint;
         if (currentPoint == null)
         {
             Debug.LogError("Player does not have a current Waypoint to phase");
-            return;
+            return false;
         }
 
+        // Get the next phase waypoint to end up on
+        MovementWaypoint nextPhasePoint = phaseForward ? currentPoint.nextPhasePoint : currentPoint.previousPhasePoint;
+
         // Move to new point
-        bool phased = phaseToWayPoint(currentPoint, currentPoint.previousPhasePoint, false);
+        bool phased = phaseToWayPoint(currentPoint, nextPhasePoint, phaseForward);
 
         // move camera
         if (phased && moveCameraOnPhase)
@@ -68,6 +78,9 @@ public class PhaseJump : MonoBehaviour {
             ChasePlayer chase = Camera.main.GetComponent<ChasePlayer>();
             if (chase != null) chase.instantlyMoveToPlayer();
         }
+
+        // Return if we phased or not
+        return phased;
     }
 
     // Update is called once per frame
@@ -481,5 +494,27 @@ public class PhaseJump : MonoBehaviour {
     public bool canPhaseBack()
     {
         return canPhaseJump(playerMovement.currentMovementWaypoint, false);
+    }
+
+    // Play a random sound from a given array of sound files
+    private void playRandomSound(AudioClip[] clips)
+    {
+        // Don't try playing a sound if there aren't any
+        if (clips == null || clips.Length <= 0)
+        {
+            return;
+        }
+
+        // Check that we have an Audio Source Component
+        AudioSource a = GetComponent<AudioSource>();
+        if (a == null)
+        {
+            Debug.LogWarning("Player does not have an Audio Source component");
+            return;
+        }
+
+        // Play random sound
+        int index = Random.Range(0, clips.Length);
+        a.PlayOneShot(clips[index]);
     }
 }

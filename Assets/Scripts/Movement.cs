@@ -17,9 +17,18 @@ public class Movement : MonoBehaviour {
 
     float falling = 0f;
 
+    // SOUNDS
+    private bool fallSoundPlayed = false;
+    private bool nextFootStepSoundLeft = true;
+    private float nextFootStepSound = 0f;
+    public float footStepSoundDelay = 1f;
+    public AudioClip[] leftFootStepSounds;
+    public AudioClip[] rightFootStepSounds;
+    public AudioClip[] fallSounds;
 
-	// Use this for initialization
-	void Start () {
+
+    // Use this for initialization
+    void Start () {
         controller = GetComponent<CharacterController>();
         transform.position = currentMovementWaypoint.transform.position;
 
@@ -56,10 +65,17 @@ public class Movement : MonoBehaviour {
             {
                 falling = jump;
             }
+
+            if (falling < 0 && !fallSoundPlayed)
+            {
+                playRandomSound(fallSounds);
+                fallSoundPlayed = true;
+            }
         }
         else
         {
             falling -= gravity;
+            fallSoundPlayed = false;
         }
 
         // Save current Y
@@ -72,6 +88,12 @@ public class Movement : MonoBehaviour {
         if(falling > 0 && transform.position.y == currentY)
         {
             falling = 0;
+        }
+
+        // Play footstep if we are walking, not falling.
+        if( movement.z != 0 && transform.position.y == currentY )
+        {
+            playFootStep();
         }
     }
 
@@ -164,5 +186,51 @@ public class Movement : MonoBehaviour {
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, speed * Time.deltaTime);
             }
         }
+    }
+
+
+    // Play a random sound from a given array of sound files
+    private void playRandomSound(AudioClip[] clips)
+    {
+        // Don't try playing a sound if there aren't any
+        if (clips == null || clips.Length <= 0)
+        {
+            return;
+        }
+
+        // Check that we have an Audio Source Component
+        AudioSource a = GetComponent<AudioSource>();
+        if (a == null)
+        {
+            Debug.LogWarning("Player does not have an Audio Source component");
+            return;
+        }
+
+        // Play random sound
+        int index = Random.Range(0, clips.Length);
+        a.PlayOneShot(clips[index]);
+    }
+
+    private void playFootStep()
+    {
+        if( Time.time < nextFootStepSound)
+        {
+            return;
+        }
+
+        // Play sound
+        if(nextFootStepSoundLeft)
+        {
+            playRandomSound(leftFootStepSounds);
+        }
+        else
+        {
+            playRandomSound(rightFootStepSounds);
+        }
+
+        // Delay next step
+        nextFootStepSound = Time.time + footStepSoundDelay;
+
+        
     }
 }
