@@ -22,9 +22,25 @@ public class Movement : MonoBehaviour {
     private bool nextFootStepSoundLeft = true;
     private float nextFootStepSound = 0f;
     public float footStepSoundDelay = 1f;
+
+    // Volumes (100 represents 100% volume intensity)
+    [Range(min: 0, max: 100)]
+    public float[] leftFootStepSoundsVolume;
+
+    [Range(min: 0, max: 100)]
+    public float[] rightFootStepSoundsVolume;
+
+    [Range(min: 0, max: 100)]
+    public float[] fallSoundsVolume;
+
+    [Range(min: 0, max: 100)]
+    public float[] jumpSoundsVolume;
+
+    // Clips
     public AudioClip[] leftFootStepSounds;
     public AudioClip[] rightFootStepSounds;
     public AudioClip[] fallSounds;
+    public AudioClip[] jumpSounds;
 
 
     // Use this for initialization
@@ -35,7 +51,10 @@ public class Movement : MonoBehaviour {
         if( !EnableMoveAccordingToCamera)
         {
             // Look at the next point
-            transform.LookAt(currentMovementWaypoint.next.transform);
+            if (currentMovementWaypoint != null && currentMovementWaypoint.next != null)
+            {
+                transform.LookAt(currentMovementWaypoint.next.transform);
+            }
         }
     }
 	
@@ -63,12 +82,13 @@ public class Movement : MonoBehaviour {
         {
             if (Input.GetButtonDown("Jump"))
             {
+                SoundMaster.playRandomSound(jumpSounds, jumpSoundsVolume, transform.position);
                 falling = jump;
             }
 
             if (falling < 0 && !fallSoundPlayed)
             {
-                playRandomSound(fallSounds);
+                SoundMaster.playRandomSound(fallSounds, fallSoundsVolume, transform.position);
                 fallSoundPlayed = true;
             }
         }
@@ -188,29 +208,6 @@ public class Movement : MonoBehaviour {
         }
     }
 
-
-    // Play a random sound from a given array of sound files
-    private void playRandomSound(AudioClip[] clips)
-    {
-        // Don't try playing a sound if there aren't any
-        if (clips == null || clips.Length <= 0)
-        {
-            return;
-        }
-
-        // Check that we have an Audio Source Component
-        AudioSource a = GetComponent<AudioSource>();
-        if (a == null)
-        {
-            Debug.LogWarning("Player does not have an Audio Source component");
-            return;
-        }
-
-        // Play random sound
-        int index = Random.Range(0, clips.Length);
-        a.PlayOneShot(clips[index]);
-    }
-
     private void playFootStep()
     {
         if( Time.time < nextFootStepSound)
@@ -221,11 +218,11 @@ public class Movement : MonoBehaviour {
         // Play sound
         if(nextFootStepSoundLeft)
         {
-            playRandomSound(leftFootStepSounds);
+            SoundMaster.playRandomSound(leftFootStepSounds, leftFootStepSoundsVolume, transform.position);
         }
         else
         {
-            playRandomSound(rightFootStepSounds);
+            SoundMaster.playRandomSound(rightFootStepSounds, rightFootStepSoundsVolume, transform.position);
         }
 
         // Delay next step

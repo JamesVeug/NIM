@@ -57,7 +57,6 @@ public class ChasePlayer : MonoBehaviour
         if (enableChase)
         {
             Vector3 newPos = getNewPosition();
-            Vector3 fromPos = this.transform.position;
             float time = chaseSpeed * Time.deltaTime;
 
             this.transform.position = Vector3.Slerp(this.transform.position, newPos, time);
