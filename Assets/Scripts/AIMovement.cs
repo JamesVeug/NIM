@@ -137,7 +137,6 @@ public class AIMovement : MonoBehaviour
         else
         {
             // We have someone to chase
-            Vector3 gravityVector = new Vector3(0, gravity, 0);
             agent.SetDestination(target.transform.position);
             agent.Move(agent.desiredVelocity);
 

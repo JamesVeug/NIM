@@ -3,6 +3,7 @@ using System.Collections;
 
 public class PhaseCondition : MonoBehaviour {
 
+
     // Conditions to do after Phase
     public bool effectAfterPhase = true;
     public bool effectOnForwardPhase = true;
@@ -42,7 +43,7 @@ public class PhaseCondition : MonoBehaviour {
         if (other.gameObject.tag == "Player")
         {
             PhaseJump move = other.gameObject.GetComponent<PhaseJump>();
-            if( move == null)
+            if (move == null)
             {
                 Debug.LogWarning("Player does not have PhaseJump script!");
                 return;
@@ -72,7 +73,7 @@ public class PhaseCondition : MonoBehaviour {
     public void ChangeOptions()
     {
         // Modify the main camera if we need to
-        if( enableModifyCamera )
+        if (enableModifyCamera)
         {
             ChasePlayer cam = cameraToEdit.GetComponent<ChasePlayer>();
             cam.chaseX = cameraChaseX;
@@ -86,7 +87,7 @@ public class PhaseCondition : MonoBehaviour {
         }
 
         // Modify the player if we need to
-        if( enablePlayerModify )
+        if (enablePlayerModify)
         {
             PhaseJump player = GameObject.FindGameObjectWithTag("Player").GetComponent<PhaseJump>();
             player.moveCameraOnPhase = playerMoveCameraOnPhase;
