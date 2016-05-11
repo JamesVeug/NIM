@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class UILoadScene : MonoBehaviour {
@@ -8,7 +9,7 @@ public class UILoadScene : MonoBehaviour {
 	public void LoadScene(int level){
 
 		loadingScreen.SetActive (true);
-		Application.LoadLevel (level);
+		SceneManager.LoadScene (level);
 
 	}
 }
