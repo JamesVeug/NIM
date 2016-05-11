@@ -15,6 +15,9 @@ public class PhaseJump : MonoBehaviour {
     public bool copyJumpedHeightOnPhase = true;
     public bool moveCameraOnPhase = false;
 
+    // The PhaseVolume that we are current in
+    private PhaseVolume currentPhaseVolume;
+
     // SOUNDS
 
     // Volumes (100 represents 100% volume intensity)
@@ -68,6 +71,7 @@ public class PhaseJump : MonoBehaviour {
 
     private bool phase(bool phaseForward)
     {
+
         MovementWaypoint currentPoint = playerMovement.currentMovementWaypoint;
         if (currentPoint == null)
         {
@@ -165,9 +169,7 @@ public class PhaseJump : MonoBehaviour {
         Vector3 spawnPosition = Vector3.zero;
         MovementWaypoint newPhasePoint = null;
         getPhasePoint(phaseForward, out spawnPosition, out newPhasePoint);
-
-        //Debug.LogWarning("Phasing!");
-
+        
         // If we are inside any phaseCondition volumes. Call the beforePhase method
         callConditions(true, phaseForward);
 
@@ -180,8 +182,28 @@ public class PhaseJump : MonoBehaviour {
         return true;
     }
 
+    // We are current in a PhaseVolume. Check that we can phase
+    private bool canPhaseJumpInVolume(MovementWaypoint current, bool phaseForward)
+    {
+        if( phaseForward && currentPhaseVolume.nextPhaseWaypoint == null)
+        {
+            return false;
+        }
+        else if (!phaseForward && currentPhaseVolume.previousPhaseWaypoint == null)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
     private bool canPhaseJump(MovementWaypoint current, bool phaseForward)
     {
+        if( currentPhaseVolume != null)
+        {
+            return canPhaseJumpInVolume(current, phaseForward);
+        }
+
         MovementWaypoint phasedPoint = phaseForward ? current.nextPhasePoint : current.previousPhasePoint;
         if (phasedPoint == null)
         {
@@ -245,8 +267,23 @@ public class PhaseJump : MonoBehaviour {
         return true;
     }
 
+    // We are in a PhaseVolume. Return the position we are in
+    private void getPhasePointInVolume(bool phaseForward, out Vector3 newPoint, out MovementWaypoint newPhasedPoint)
+    {
+        newPhasedPoint = phaseForward ? currentPhaseVolume.nextPhaseWaypoint : currentPhaseVolume.previousPhaseWaypoint;
+        newPoint = newPhasedPoint.transform.position;
+    }
+
+    // Get the Points that we will end up if we phase
     public void getPhasePoint(bool phaseForward, out Vector3 newPoint, out MovementWaypoint newPhasedPoint)
     {
+        // If we are in a volume. Prioritize that
+        if( currentPhaseVolume != null ){
+            getPhasePointInVolume(phaseForward, out newPoint, out newPhasedPoint);
+            return;
+        }
+
+        // Not in a volume
         MovementWaypoint current = playerMovement.currentMovementWaypoint;
         MovementWaypoint phasedPoint = phaseForward ? current.nextPhasePoint : current.previousPhasePoint;
 
@@ -520,5 +557,14 @@ public class PhaseJump : MonoBehaviour {
     public bool canPhaseBack()
     {
         return canPhaseJump(playerMovement.currentMovementWaypoint, false);
+    }
+
+    public void setPhaseVolume(PhaseVolume v)
+    {
+        this.currentPhaseVolume = v;
+    }
+    public PhaseVolume getPhaseVolume()
+    {
+        return currentPhaseVolume;
     }
 }
