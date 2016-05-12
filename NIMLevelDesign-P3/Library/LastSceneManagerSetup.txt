@@ -1,0 +1,4 @@
+sceneSetups:
+- path: Assets/_scene/11.4 - nimLev1PresentationVersion.unity
+  isLoaded: 1
+  isActive: 1
