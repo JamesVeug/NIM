@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class PhaseJump : MonoBehaviour {
 
     private Movement playerMovement;
+    private AudioSource audioSource;
     private bool canPhase = true;
     private bool phaseMenuOpen = false;
     private int phaseDirectionSelected = 0;
@@ -16,12 +17,11 @@ public class PhaseJump : MonoBehaviour {
     public bool moveCameraOnPhase = false;
 
     // SOUNDS
-
     // Volumes (100 represents 100% volume intensity)
-    [Range(min: 0, max: 100)]
+	[Range(min: 0, max: 100)]
     public float[] phaseForwardSoundsVolume;
 
-    [Range(min: 0, max: 100)]
+	[Range(min: 0, max: 100)]
     public float[] phaseBackSoundsVolume;
 
     // Clips
@@ -31,7 +31,8 @@ public class PhaseJump : MonoBehaviour {
     // Use this for initialization
     void Start () {
         playerMovement = GetComponent<Movement>();
-	}
+        audioSource = GetComponent<AudioSource>();
+    }
 	
     public bool phaseMenuIsOpen()
     {
@@ -49,7 +50,7 @@ public class PhaseJump : MonoBehaviour {
 
         if (phased)
         {
-            SoundMaster.playRandomSound(phaseForwardSounds, phaseForwardSoundsVolume, transform.position);
+            SoundMaster.playRandomSound(phaseForwardSounds, phaseForwardSoundsVolume, getAudioSource());
         }
 
         return phased;
@@ -60,7 +61,7 @@ public class PhaseJump : MonoBehaviour {
         bool phased = phase(false);
 
         if (phased) {
-            SoundMaster.playRandomSound(phaseBackSounds, phaseBackSoundsVolume, transform.position);
+            SoundMaster.playRandomSound(phaseBackSounds, phaseBackSoundsVolume, getAudioSource());
         }
 
         return phased;
@@ -520,5 +521,14 @@ public class PhaseJump : MonoBehaviour {
     public bool canPhaseBack()
     {
         return canPhaseJump(playerMovement.currentMovementWaypoint, false);
+    }
+
+    public AudioSource getAudioSource()
+    {
+        if(audioSource == null)
+        {
+            Debug.LogError("Object " + gameObject.name + " does not have an AudioSource Component!");
+        }
+        return audioSource;
     }
 }
