@@ -17,6 +17,29 @@ public class PhaseJumpUI : MonoBehaviour {
     public GameObject previewObject;
     public Camera previewCamera;
 
+    // SOUNDS
+
+    // Volumes (200 represents 200% volume intensity)
+    [Range(min: 0, max: 100)]
+    public float[] openMenuSoundsVolume;
+    [Range(min: 0, max: 100)]
+    public float[] closeMenuSoundsVolume;
+    [Range(min: 0, max: 100)]
+    public float[] selectForwardSoundsVolume;
+    [Range(min: 0, max: 100)]
+    public float[] selectBackwardSoundsVolume;
+
+    // Clips
+    public AudioClip[] openMenuSound;
+    public AudioClip[] closeMenuSound;
+    public AudioClip[] selectForwardArrowSound;
+    public AudioClip[] selectBackwardArrowSound;
+
+    private bool menuIsOpen = false;
+    private bool forwardArrowSelected = false;
+    private bool backwardArrowSelected = false;
+    private float directionSelected = 0;
+
     // Use this for initialization
     void Start () {
         jump = GetComponent<PhaseJump>();
@@ -38,23 +61,45 @@ public class PhaseJumpUI : MonoBehaviour {
         if (phasePrevImageO == null) { Debug.LogError("PhaseImagePrevious not setup in Canvas. Can not show menu!"); return; }
 
         bool menuOpen = jump.phaseMenuIsOpen();
-        
+        if (!menuIsOpen && menuOpen == true)
+        {
+            SoundMaster.playRandomSound(openMenuSound, openMenuSoundsVolume, Camera.main.transform.position);
+        }
+        else if (menuIsOpen && menuOpen == false && directionSelected == 0)
+        {
+            SoundMaster.playRandomSound(closeMenuSound, closeMenuSoundsVolume, Camera.main.transform.position);
+        }
+        menuIsOpen = menuOpen;
+
         Sprite menuImage = !menuOpen ? missing : menu;
         Image menuGuiImage = phaseMenuImageO.GetComponent<Image>();
         menuGuiImage.sprite = menuImage;
 
         // Which direction have we selected from the menu?
         int direction = jump.getJumpDirection();
+        directionSelected = direction;
 
+        // Phase Forward Button
         bool canJumpForward = jump.canPhaseForward();
         Sprite nextImage = !menuOpen ? missing : canJumpForward ? (direction == 1 ? selectPhaseRight : canPhaseRight) : canNotPhaseRight;
         Image nextGuiImage = phaseNextImageO.GetComponent<Image>();
         nextGuiImage.sprite = nextImage;
+        if (!forwardArrowSelected && direction == 1)
+        {
+            SoundMaster.playRandomSound(selectForwardArrowSound, selectForwardSoundsVolume, Camera.main.transform.position);
+        }
+        forwardArrowSelected = direction == 1;
 
+        // Phase Back button
         bool canJumpBackwards = jump.canPhaseBack();
         Sprite previousImage = !menuOpen ? missing : canJumpBackwards ? (direction == -1 ? selectPhaseLeft : canPhaseLeft) : canNotPhaseLeft;
         Image previousGuiImage = phasePrevImageO.GetComponent<Image>();
         previousGuiImage.sprite = previousImage;
+        if (!backwardArrowSelected && direction == -1)
+        {
+            SoundMaster.playRandomSound(selectBackwardArrowSound, selectBackwardSoundsVolume, Camera.main.transform.position);
+        }
+        backwardArrowSelected = direction == -1;
 
         // Preview the area
         if ((direction == 1 && jump.canPhaseForward()) || (direction == -1 && jump.canPhaseBack()))
@@ -73,8 +118,6 @@ public class PhaseJumpUI : MonoBehaviour {
         else
         {
             previewCamera.depth = -1;
-
-            Renderer r = previewObject.GetComponent<Renderer>();
             hideRenderers();
         }
     }
@@ -84,3 +127,4 @@ public class PhaseJumpUI : MonoBehaviour {
         previewObject.transform.position = new Vector3(0,-2000,0);
     }
 }
+

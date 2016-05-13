@@ -17,16 +17,44 @@ public class Movement : MonoBehaviour {
 
     float falling = 0f;
 
+    // SOUNDS
+    private bool fallSoundPlayed = false;
+    private bool nextFootStepSoundLeft = true;
+    private float nextFootStepSound = 0f;
+    public float footStepSoundDelay = 1f;
 
-	// Use this for initialization
-	void Start () {
+    // Volumes (100 represents 100% volume intensity)
+    [Range(min: 0, max: 100)]
+    public float[] leftFootStepSoundsVolume;
+
+    [Range(min: 0, max: 100)]
+    public float[] rightFootStepSoundsVolume;
+
+    [Range(min: 0, max: 100)]
+    public float[] fallSoundsVolume;
+
+    [Range(min: 0, max: 100)]
+    public float[] jumpSoundsVolume;
+
+    // Clips
+    public AudioClip[] leftFootStepSounds;
+    public AudioClip[] rightFootStepSounds;
+    public AudioClip[] fallSounds;
+    public AudioClip[] jumpSounds;
+
+
+    // Use this for initialization
+    void Start () {
         controller = GetComponent<CharacterController>();
         transform.position = currentMovementWaypoint.transform.position;
 
         if( !EnableMoveAccordingToCamera)
         {
             // Look at the next point
-            transform.LookAt(currentMovementWaypoint.next.transform);
+            if (currentMovementWaypoint != null && currentMovementWaypoint.next != null)
+            {
+                transform.LookAt(currentMovementWaypoint.next.transform);
+            }
         }
     }
 	
@@ -54,12 +82,20 @@ public class Movement : MonoBehaviour {
         {
             if (Input.GetButtonDown("Jump"))
             {
+                SoundMaster.playRandomSound(jumpSounds, jumpSoundsVolume, transform.position);
                 falling = jump;
+            }
+
+            if (falling < 0 && !fallSoundPlayed)
+            {
+                SoundMaster.playRandomSound(fallSounds, fallSoundsVolume, transform.position);
+                fallSoundPlayed = true;
             }
         }
         else
         {
             falling -= gravity;
+            fallSoundPlayed = false;
         }
 
         // Save current Y
@@ -72,6 +108,12 @@ public class Movement : MonoBehaviour {
         if(falling > 0 && transform.position.y == currentY)
         {
             falling = 0;
+        }
+
+        // Play footstep if we are walking, not falling.
+        if( movement.z != 0 && transform.position.y == currentY )
+        {
+            playFootStep();
         }
     }
 
@@ -164,5 +206,28 @@ public class Movement : MonoBehaviour {
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, speed * Time.deltaTime);
             }
         }
+    }
+
+    private void playFootStep()
+    {
+        if( Time.time < nextFootStepSound)
+        {
+            return;
+        }
+
+        // Play sound
+        if(nextFootStepSoundLeft)
+        {
+            SoundMaster.playRandomSound(leftFootStepSounds, leftFootStepSoundsVolume, transform.position);
+        }
+        else
+        {
+            SoundMaster.playRandomSound(rightFootStepSounds, rightFootStepSoundsVolume, transform.position);
+        }
+
+        // Delay next step
+        nextFootStepSound = Time.time + footStepSoundDelay;
+
+        
     }
 }

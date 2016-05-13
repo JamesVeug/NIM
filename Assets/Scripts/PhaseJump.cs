@@ -15,6 +15,19 @@ public class PhaseJump : MonoBehaviour {
     public bool copyJumpedHeightOnPhase = true;
     public bool moveCameraOnPhase = false;
 
+    // SOUNDS
+
+    // Volumes (100 represents 100% volume intensity)
+    [Range(min: 0, max: 100)]
+    public float[] phaseForwardSoundsVolume;
+
+    [Range(min: 0, max: 100)]
+    public float[] phaseBackSoundsVolume;
+
+    // Clips
+    public AudioClip[] phaseForwardSounds;
+    public AudioClip[] phaseBackSounds;
+
     // Use this for initialization
     void Start () {
         playerMovement = GetComponent<Movement>();
@@ -30,37 +43,43 @@ public class PhaseJump : MonoBehaviour {
         return phaseDirectionSelected;
     }
 
-    void phaseForward()
+    bool phaseForward()
     {
-        MovementWaypoint currentPoint = playerMovement.currentMovementWaypoint;
-        if (currentPoint == null)
+        bool phased = phase(true);
+
+        if (phased)
         {
-            Debug.LogError("Player does not have a current Waypoint to phase");
-            return;
+            SoundMaster.playRandomSound(phaseForwardSounds, phaseForwardSoundsVolume, transform.position);
         }
 
-        // Move to new point
-        bool phased = phaseToWayPoint(currentPoint, currentPoint.nextPhasePoint, true);
-
-        // move camera
-        if (phased && moveCameraOnPhase)
-        {
-            ChasePlayer chase = Camera.main.GetComponent<ChasePlayer>();
-            if (chase != null) chase.instantlyMoveToPlayer();
-        }
+        return phased;
     }
 
-    void phaseBack()
+    bool phaseBack()
+    {
+        bool phased = phase(false);
+
+        if (phased) {
+            SoundMaster.playRandomSound(phaseBackSounds, phaseBackSoundsVolume, transform.position);
+        }
+
+        return phased;
+    }
+
+    private bool phase(bool phaseForward)
     {
         MovementWaypoint currentPoint = playerMovement.currentMovementWaypoint;
         if (currentPoint == null)
         {
             Debug.LogError("Player does not have a current Waypoint to phase");
-            return;
+            return false;
         }
 
+        // Get the next phase waypoint to end up on
+        MovementWaypoint nextPhasePoint = phaseForward ? currentPoint.nextPhasePoint : currentPoint.previousPhasePoint;
+
         // Move to new point
-        bool phased = phaseToWayPoint(currentPoint, currentPoint.previousPhasePoint, false);
+        bool phased = phaseToWayPoint(currentPoint, nextPhasePoint, phaseForward);
 
         // move camera
         if (phased && moveCameraOnPhase)
@@ -68,6 +87,9 @@ public class PhaseJump : MonoBehaviour {
             ChasePlayer chase = Camera.main.GetComponent<ChasePlayer>();
             if (chase != null) chase.instantlyMoveToPlayer();
         }
+
+        // Return if we phased or not
+        return phased;
     }
 
     // Update is called once per frame
@@ -167,19 +189,31 @@ public class PhaseJump : MonoBehaviour {
             return false;
         }
 
-        // We can't move forward
+
         MovementWaypoint nextPoint = current.next;
+
+        if (nextPoint == null && current.previous == null)
+        {
+            // We can not move from this node. But we can still phase
+            return true;
+        }
+        
+        // We can't move forward
         if (nextPoint == null)
         {
             return false;
         }
 
         MovementWaypoint nextPhasePoint = phaseForward ? nextPoint.nextPhasePoint : nextPoint.previousPhasePoint;
+        if (nextPoint != null && nextPhasePoint.next == null && nextPhasePoint.previous == null)
+        {
+            // We can move from this node, but not in the next plane. But we can still phase
+            return true;
+        }
 
         // #1 A and B do not have a next point
         if (nextPhasePoint == null)
         {
-            //Debug.LogError("FAILED: 1");
             return false;
         }
 
@@ -213,16 +247,23 @@ public class PhaseJump : MonoBehaviour {
 
     public void getPhasePoint(bool phaseForward, out Vector3 newPoint, out MovementWaypoint newPhasedPoint)
     {
-
         MovementWaypoint current = playerMovement.currentMovementWaypoint;
         MovementWaypoint phasedPoint = phaseForward ? current.nextPhasePoint : current.previousPhasePoint;
 
         Vector3 spawnPosition = Vector3.zero;
         MovementWaypoint spawnPhase = null;
 
-        // Find midpoint between both points
-        spawnPosition = getMidPoint(current, phasedPoint, phaseForward);
-        spawnPhase = getPreviousWayPoint(current, spawnPosition, phaseForward);
+        if (current.next == null || phasedPoint == null)
+        {
+            // Don't have a next on A's plane. Just use the exact position
+            spawnPosition = phasedPoint.transform.position;
+            spawnPhase = phasedPoint;
+        }
+        else {
+            // Find midpoint between both points
+            spawnPosition = getMidPoint(current, phasedPoint, phaseForward);
+            spawnPhase = getPreviousWayPoint(current, spawnPosition, phaseForward);
+        }
 
         // Apply the Y according to the largest Y of the points then add the players extra Y
         float extraY = transform.position.y - current.transform.position.y;
@@ -270,7 +311,7 @@ public class PhaseJump : MonoBehaviour {
         // Find out where we should be in the graph by using Ap
         float Bp = 0f;
         MovementWaypoint previousWayPoint = B;
-        while (Bp <= Ap)
+        while (Bp <= Ap && previousWayPoint.next != null )
         {
             float distance = (previousWayPoint.transform.position - previousWayPoint.next.transform.position).magnitude;
             float percent = distance / Bd;
@@ -429,8 +470,6 @@ public class PhaseJump : MonoBehaviour {
         // A X---------X
 
         MovementWaypoint cnP = phaseForward ? current.next.nextPhasePoint : current.next.previousPhasePoint;
-        MovementWaypoint nnP = phaseForward ? next.next.nextPhasePoint : next.next.previousPhasePoint;
-
         if (cnP != null && cnP.phaseLayer == next.phaseLayer)
         {
             //Debug.LogWarning("~A " + current.name);
