@@ -7,7 +7,7 @@ public static class SoundMaster {
     public static float Master_Volume = 100;
 
     // Play a random sound from a given array of sound files
-    public static void playRandomSound(AudioClip[] clips, float[] volumes, Vector3 position)
+    public static void playRandomSound(AudioClip[] clips, float[] volumes, AudioSource s)
     {
         // Don't try playing a sound if there aren't any
         if (clips == null || clips.Length <= 0)
@@ -18,9 +18,14 @@ public static class SoundMaster {
         // Play random sound
         int index = Random.Range(0, clips.Length);
         AudioClip clip = clips[index];
+        if (clip == null)
+        {
+            Debug.Log("Audio Clip at position " + index + " is null");
+            return;
+        }
 
         float volume = volumes.Length <= index ? 100 : volumes[index];
-        AudioSource.PlayClipAtPoint(clip, position, (volume / 100) * (SoundMaster.Master_Volume/100));
+        s.PlayOneShot(clip,(volume/100)*(Master_Volume/100));
     }
 
     public static void setMasterVolume(float v)

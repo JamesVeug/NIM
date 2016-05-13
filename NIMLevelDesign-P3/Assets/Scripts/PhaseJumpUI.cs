@@ -3,7 +3,8 @@ using System.Collections;
 using UnityEngine.UI;
 
 public class PhaseJumpUI : MonoBehaviour {
-    PhaseJump jump;
+    private PhaseJump jump;
+    private AudioSource audioSource;
 
     public Sprite canPhaseLeft;
     public Sprite canPhaseRight;
@@ -18,15 +19,15 @@ public class PhaseJumpUI : MonoBehaviour {
     public Camera previewCamera;
 
     // SOUNDS
-
+	//private float maxVolume = 200f;
     // Volumes (200 represents 200% volume intensity)
-    [Range(min: 0, max: 100)]
+	[Range(min: 0, max: 100)]
     public float[] openMenuSoundsVolume;
-    [Range(min: 0, max: 100)]
+	[Range(min: 0, max: 100)]
     public float[] closeMenuSoundsVolume;
-    [Range(min: 0, max: 100)]
+	[Range(min: 0, max: 100)]
     public float[] selectForwardSoundsVolume;
-    [Range(min: 0, max: 100)]
+	[Range(min: 0, max: 100)]
     public float[] selectBackwardSoundsVolume;
 
     // Clips
@@ -43,7 +44,7 @@ public class PhaseJumpUI : MonoBehaviour {
     // Use this for initialization
     void Start () {
         jump = GetComponent<PhaseJump>();
-
+        audioSource = GetComponent<AudioSource>();
     }
 	
 	// Update is called once per frame
@@ -63,11 +64,11 @@ public class PhaseJumpUI : MonoBehaviour {
         bool menuOpen = jump.phaseMenuIsOpen();
         if (!menuIsOpen && menuOpen == true)
         {
-            SoundMaster.playRandomSound(openMenuSound, openMenuSoundsVolume, Camera.main.transform.position);
+            SoundMaster.playRandomSound(openMenuSound, openMenuSoundsVolume, getAudioSource());
         }
         else if (menuIsOpen && menuOpen == false && directionSelected == 0)
         {
-            SoundMaster.playRandomSound(closeMenuSound, closeMenuSoundsVolume, Camera.main.transform.position);
+            SoundMaster.playRandomSound(closeMenuSound, closeMenuSoundsVolume, getAudioSource());
         }
         menuIsOpen = menuOpen;
 
@@ -86,7 +87,7 @@ public class PhaseJumpUI : MonoBehaviour {
         nextGuiImage.sprite = nextImage;
         if (!forwardArrowSelected && direction == 1)
         {
-            SoundMaster.playRandomSound(selectForwardArrowSound, selectForwardSoundsVolume, Camera.main.transform.position);
+            SoundMaster.playRandomSound(selectForwardArrowSound, selectForwardSoundsVolume, getAudioSource());
         }
         forwardArrowSelected = direction == 1;
 
@@ -97,7 +98,7 @@ public class PhaseJumpUI : MonoBehaviour {
         previousGuiImage.sprite = previousImage;
         if (!backwardArrowSelected && direction == -1)
         {
-            SoundMaster.playRandomSound(selectBackwardArrowSound, selectBackwardSoundsVolume, Camera.main.transform.position);
+            SoundMaster.playRandomSound(selectBackwardArrowSound, selectBackwardSoundsVolume, getAudioSource());
         }
         backwardArrowSelected = direction == -1;
 
@@ -125,6 +126,15 @@ public class PhaseJumpUI : MonoBehaviour {
     private void hideRenderers()
     {
         previewObject.transform.position = new Vector3(0,-2000,0);
+    }
+
+    public AudioSource getAudioSource()
+    {
+        if (audioSource == null)
+        {
+            Debug.LogError("Object " + gameObject.name + " does not have an AudioSource Component!");
+        }
+        return audioSource;
     }
 }
 

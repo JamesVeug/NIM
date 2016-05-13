@@ -3,7 +3,8 @@ using System.Collections;
 
 public class Movement : MonoBehaviour {
     
-    CharacterController controller;
+    private CharacterController controller;
+    private AudioSource audioSource;
 
     public bool EnableLeftRightMovement = true; // can we move left/right?
     public bool EnableForwardBackMovement = false; // can we move forward/back?
@@ -22,18 +23,18 @@ public class Movement : MonoBehaviour {
     private bool nextFootStepSoundLeft = true;
     private float nextFootStepSound = 0f;
     public float footStepSoundDelay = 1f;
-
+	//private float maxVolume = 200f;
     // Volumes (100 represents 100% volume intensity)
-    [Range(min: 0, max: 100)]
+	[Range(min: 0, max: 100)]
     public float[] leftFootStepSoundsVolume;
 
-    [Range(min: 0, max: 100)]
+	[Range(min: 0, max: 100)]
     public float[] rightFootStepSoundsVolume;
 
-    [Range(min: 0, max: 100)]
+	[Range(min: 0, max: 100)]
     public float[] fallSoundsVolume;
 
-    [Range(min: 0, max: 100)]
+	[Range(min: 0, max: 100)]
     public float[] jumpSoundsVolume;
 
     // Clips
@@ -46,6 +47,7 @@ public class Movement : MonoBehaviour {
     // Use this for initialization
     void Start () {
         controller = GetComponent<CharacterController>();
+        audioSource = GetComponent<AudioSource>();
         transform.position = currentMovementWaypoint.transform.position;
 
         if( !EnableMoveAccordingToCamera)
@@ -82,13 +84,13 @@ public class Movement : MonoBehaviour {
         {
             if (Input.GetButtonDown("Jump"))
             {
-                SoundMaster.playRandomSound(jumpSounds, jumpSoundsVolume, transform.position);
+                SoundMaster.playRandomSound(jumpSounds, jumpSoundsVolume, getAudioSource());
                 falling = jump;
             }
 
             if (falling < 0 && !fallSoundPlayed)
             {
-                SoundMaster.playRandomSound(fallSounds, fallSoundsVolume, transform.position);
+                SoundMaster.playRandomSound(fallSounds, fallSoundsVolume, getAudioSource());
                 fallSoundPlayed = true;
             }
         }
@@ -218,16 +220,25 @@ public class Movement : MonoBehaviour {
         // Play sound
         if(nextFootStepSoundLeft)
         {
-            SoundMaster.playRandomSound(leftFootStepSounds, leftFootStepSoundsVolume, transform.position);
+            SoundMaster.playRandomSound(leftFootStepSounds, leftFootStepSoundsVolume, getAudioSource());
         }
         else
         {
-            SoundMaster.playRandomSound(rightFootStepSounds, rightFootStepSoundsVolume, transform.position);
+            SoundMaster.playRandomSound(rightFootStepSounds, rightFootStepSoundsVolume, getAudioSource());
         }
 
         // Delay next step
         nextFootStepSound = Time.time + footStepSoundDelay;
 
-        
+
+    }
+
+    public AudioSource getAudioSource()
+    {
+        if (audioSource == null)
+        {
+            Debug.LogError("Object " + gameObject.name + " does not have an AudioSource Component!");
+        }
+        return audioSource;
     }
 }
