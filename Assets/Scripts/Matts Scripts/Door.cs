@@ -46,13 +46,11 @@ public class Door : MonoBehaviour {
         {
             if (desiredPos.y > doorBlock.transform.position.y)
             {
-                Debug.LogError("test1");
                 float slowYInc = doorBlock.transform.position.y + (doorBlock.transform.localScale.y * 0.05f * speed);
                 doorBlock.transform.position = new Vector3(doorBlock.transform.position.x, slowYInc, doorBlock.transform.position.z);
             }
             else if (desiredPos.y < doorBlock.transform.position.y)
             {
-                Debug.LogError("test3");
                 float slowYInc = doorBlock.transform.position.y - (doorBlock.transform.localScale.y * 0.05f * speed);
                 doorBlock.transform.position = new Vector3(doorBlock.transform.position.x, slowYInc, doorBlock.transform.position.z);
             }

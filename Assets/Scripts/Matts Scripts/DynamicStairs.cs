@@ -106,7 +106,7 @@ public class DynamicStairs : MonoBehaviour {
             {
                 yPos = yPos + scaleY;
             }
-          //  }
+
         }
 
     }
@@ -120,13 +120,11 @@ public class DynamicStairs : MonoBehaviour {
         {
             if (yPos > step.transform.position.y)
             {
-                Debug.LogError("test1");
                 float slowYInc = step.transform.position.y + (step.transform.localScale.y * 0.05f * speed);
                 step.transform.position = new Vector3(xPos, slowYInc, z);
             }
             else if (yPos < step.transform.position.y)
             {
-                Debug.LogError("test3");
                 float slowYInc = step.transform.position.y - (step.transform.localScale.y * 0.05f * speed);
                 step.transform.position = new Vector3(xPos, slowYInc, z);
             }
