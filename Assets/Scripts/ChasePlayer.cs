@@ -1,13 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class ChasePlayer : MonoBehaviour
 {
 
     public GameObject whatToChase = null;
     public Vector3 rotationVector = new Vector3(0f, 0f, 0f);
-    public float distance = 10f;
+	public float distance = 10f;
     public float chaseSpeed = 10f;
+	public float rotateSpeed = 20f;
 
     public bool chaseX = true;
     public bool chaseY = true;
@@ -16,6 +18,9 @@ public class ChasePlayer : MonoBehaviour
     public bool startInPosition = true;
     public bool startLookingAtPlayer = true;
     public bool lookAtPlayer = true;
+	public bool waypointTracking = true;
+
+	private Vector3 targetPosition;
 
     private float setX = float.MaxValue;
     private float setY = float.MaxValue;
@@ -25,6 +30,8 @@ public class ChasePlayer : MonoBehaviour
     private bool originalChaseXState;
     private bool originalChaseYState;
     private bool originalChaseZState;
+
+	private Vector3 previousRotation = Vector3.zero;
 
     // Use this for initialization
     void Start()
@@ -47,13 +54,17 @@ public class ChasePlayer : MonoBehaviour
         {
             this.transform.LookAt(whatToChase.transform);
         }
+
+		//Waypoint tracking must have player tracking
+		if (waypointTracking) {
+			lookAtPlayer = true;
+		}
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-        // Get the new position
+		//TODO: Fix chasing when phasing -- it looks weird
         if (enableChase)
         {
             Vector3 newPos = getNewPosition();
@@ -66,8 +77,11 @@ public class ChasePlayer : MonoBehaviour
         // Look at the object we want to chase
         if (lookAtPlayer)
         {
+			//float time = rotateSpeed * Time.deltaTime;
             this.transform.LookAt(whatToChase.transform);
+			//transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(whatToChase.transform.position - transform.position), time);
         }
+			
     }
 
     public Vector3 getNewPosition()
@@ -85,7 +99,11 @@ public class ChasePlayer : MonoBehaviour
 
 
         Vector3 offsetPosition = expectedPosition + offset;
-        Vector3 rotatedVector = RotatePointAroundPivot(offsetPosition, expectedPosition, rotationVector);
+		Vector3 rotation = rotationVector;
+		if (waypointTracking) {
+			rotation += RotatePerpendicularToWaypoint ();
+		}
+		Vector3 rotatedVector = RotatePointAroundPivot(offsetPosition, expectedPosition, RotatePerpendicularToWaypoint()+rotationVector);
 
 
         //Debug.LogWarning("expectedPosition : " + expectedPosition);
@@ -103,6 +121,41 @@ public class ChasePlayer : MonoBehaviour
         // Look at the object we want to chase
         this.transform.LookAt(whatToChase.transform);
     }
+		
+	private Vector3 RotatePerpendicularToWaypoint(){
+		Movement mov = whatToChase.GetComponent<Movement>();
+	
+		if (mov == null || mov.currentMovementWaypoint == null) {
+			//Do nothing if we can't find a waypoint
+			return previousRotation;
+		}
+			
+		MovementWaypoint way1 = mov.currentMovementWaypoint;
+		MovementWaypoint way2 = way1.next;
+
+		if (way2 != null) {
+			//Calculate a vector perpendicular to the vector between the two points
+			//and rotation angle
+			Vector3 pos1 = new Vector3(way1.transform.position.x, 0, way1.transform.position.z);
+			Vector3 pos2 = new Vector3 (way2.transform.position.x, 0, way2.transform.position.z);
+
+			Vector3 path = pos2 - pos1;
+			Vector3 normal = Vector3.Cross(path, Vector3.up);
+
+			float rotation = Vector3.Angle(Vector3.back, normal);
+
+			//check whether to rotate left or right
+			Vector3 cross = Vector3.Cross(Vector3.back, normal);
+			if (cross.y < 0) {
+				rotation = -rotation;
+			}
+
+			previousRotation = new Vector3 (0, rotation, 0);
+			return new Vector3(0, rotation, 0);
+		}
+
+		return previousRotation;
+	}
 
     public Vector3 RotatePointAroundPivot(Vector3 point, Vector3 pivot, Vector3 angles)
     {
