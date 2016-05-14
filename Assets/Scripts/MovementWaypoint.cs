@@ -32,21 +32,21 @@ public class MovementWaypoint : MonoBehaviour {
         if ( next != null)
         {
             makeLine(this, next, Color.red, drawOffset);
-            if (next.phaseLayer != this.phaseLayer) { Debug.LogWarning("The phaselayer for " + this.name + " is NOT same for it's next point!"); }
+            //if (next.phaseLayer != this.phaseLayer) { Debug.LogWarning("The phaselayer for " + this.name + " is NOT same for it's next point!"); }
         }
 
         // When we walk left, it will walk here
         if (previous != null)
         {
             makeLine(this, previous, Color.green, -drawOffset);
-            if (previous.phaseLayer != this.phaseLayer) { Debug.LogWarning("The phaselayer for " + this.name + " is NOT same for it's previous point!"); }
+            //if (previous.phaseLayer != this.phaseLayer) { Debug.LogWarning("The phaselayer for " + this.name + " is NOT same for it's previous point!"); }
         }
 
         // Next position to phase to
         if (nextPhasePoint != null)
         {
             makeLine(this, nextPhasePoint, Color.blue, drawOffset);
-            if( nextPhasePoint.phaseLayer == this.phaseLayer) { Debug.LogWarning("The phaselayer for " + this.name + " is the same for it's nextPhasePoint!"); }
+            //if( nextPhasePoint.phaseLayer == this.phaseLayer) { Debug.LogWarning("The phaselayer for " + this.name + " is the same for it's nextPhasePoint!"); }
 
         }
 
@@ -54,7 +54,7 @@ public class MovementWaypoint : MonoBehaviour {
         if (previousPhasePoint != null)
         {
             makeLine(this, previousPhasePoint, Color.yellow, -drawOffset);
-            if (previousPhasePoint.phaseLayer == this.phaseLayer) { Debug.LogWarning("The phaselayer for " + this.name + " is the same for it's previousPhasePoint!"); }
+            //if (previousPhasePoint.phaseLayer == this.phaseLayer) { Debug.LogWarning("The phaselayer for " + this.name + " is the same for it's previousPhasePoint!"); }
         }
     }
 
