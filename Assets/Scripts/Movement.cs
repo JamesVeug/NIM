@@ -48,7 +48,10 @@ public class Movement : MonoBehaviour {
     void Start () {
         controller = GetComponent<CharacterController>();
         audioSource = GetComponent<AudioSource>();
-        transform.position = currentMovementWaypoint.transform.position;
+
+		if (currentMovementWaypoint != null) {
+			transform.position = currentMovementWaypoint.transform.position;
+		}
 
         if( !EnableMoveAccordingToCamera)
         {
@@ -62,6 +65,10 @@ public class Movement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (controller == null) { //If the player can't be controlled, don't let it move
+			return;
+		}
+
         zoomCamera();
 
         float moveHorizontal = EnableLeftRightMovement ? Input.GetAxis("Horizontal") : 0;

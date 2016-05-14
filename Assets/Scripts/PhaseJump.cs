@@ -534,6 +534,7 @@ public class PhaseJump : MonoBehaviour
             ChasePlayer camChase = cam.GetComponent<ChasePlayer>();
             camChase.transform.position = mainChase.transform.position;
             camChase.transform.localEulerAngles = mainChase.transform.localEulerAngles;
+			camChase.transform.rotation = mainChase.transform.rotation;
         }
 
         foreach (PhaseCondition p in conditions)

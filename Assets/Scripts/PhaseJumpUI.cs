@@ -105,6 +105,7 @@ public class PhaseJumpUI : MonoBehaviour {
         // Preview the area
         if ((direction == 1 && jump.canPhaseForward()) || (direction == -1 && jump.canPhaseBack()))
         {
+			Movement mov = previewObject.GetComponent<Movement> ();
 
             // Move the preview object
             Vector3 spawnPosition = Vector3.zero;
@@ -113,6 +114,7 @@ public class PhaseJumpUI : MonoBehaviour {
             //jump.previewPhaseCamera(previewCamera, previewObject, spawnPosition, direction == 1);
 
 
+			mov.currentMovementWaypoint = newPhasePoint;
             previewObject.transform.position = spawnPosition;
             previewCamera.depth = 1;
         }
