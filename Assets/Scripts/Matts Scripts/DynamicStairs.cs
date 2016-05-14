@@ -6,6 +6,7 @@ using System;
 public class DynamicStairs : MonoBehaviour {
 
     public double position;
+    public float speed;
 
     private List<GameObject> steps;//A static amount of 6 steps are expected
 
@@ -99,10 +100,7 @@ public class DynamicStairs : MonoBehaviour {
     {
         foreach (GameObject step in steps)
         {
-
-                slowMove(xPos, yPos, step);
-                //step.transform.position = new Vector3(xPos, yPos, z);
-
+            slowMove(xPos, yPos, step);
             xPos = xPos + scaleX;
             if (diag == true)
             {
@@ -123,13 +121,13 @@ public class DynamicStairs : MonoBehaviour {
             if (yPos > step.transform.position.y)
             {
                 Debug.LogError("test1");
-                float slowYInc = step.transform.position.y + (step.transform.localScale.y * 0.05f);
+                float slowYInc = step.transform.position.y + (step.transform.localScale.y * 0.05f * speed);
                 step.transform.position = new Vector3(xPos, slowYInc, z);
             }
             else if (yPos < step.transform.position.y)
             {
                 Debug.LogError("test3");
-                float slowYInc = step.transform.position.y - (step.transform.localScale.y * 0.05f);
+                float slowYInc = step.transform.position.y - (step.transform.localScale.y * 0.05f * speed);
                 step.transform.position = new Vector3(xPos, slowYInc, z);
             }
         }
