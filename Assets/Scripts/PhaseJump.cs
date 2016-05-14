@@ -2,7 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class PhaseJump : MonoBehaviour {
+public class PhaseJump : MonoBehaviour
+{
 
     private Movement playerMovement;
     private AudioSource audioSource;
@@ -16,12 +17,15 @@ public class PhaseJump : MonoBehaviour {
     public bool copyJumpedHeightOnPhase = true;
     public bool moveCameraOnPhase = false;
 
+    // The PhaseVolume that we are current in
+    private PhaseVolume currentPhaseVolume;
+
     // SOUNDS
     // Volumes (100 represents 100% volume intensity)
-	[Range(min: 0, max: 100)]
+    [Range(min: 0, max: 100)]
     public float[] phaseForwardSoundsVolume;
 
-	[Range(min: 0, max: 100)]
+    [Range(min: 0, max: 100)]
     public float[] phaseBackSoundsVolume;
 
     // Clips
@@ -29,11 +33,12 @@ public class PhaseJump : MonoBehaviour {
     public AudioClip[] phaseBackSounds;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         playerMovement = GetComponent<Movement>();
         audioSource = GetComponent<AudioSource>();
     }
-	
+
     public bool phaseMenuIsOpen()
     {
         return phaseMenuOpen;
@@ -60,7 +65,8 @@ public class PhaseJump : MonoBehaviour {
     {
         bool phased = phase(false);
 
-        if (phased) {
+        if (phased)
+        {
             SoundMaster.playRandomSound(phaseBackSounds, phaseBackSoundsVolume, getAudioSource());
         }
 
@@ -69,6 +75,7 @@ public class PhaseJump : MonoBehaviour {
 
     private bool phase(bool phaseForward)
     {
+
         MovementWaypoint currentPoint = playerMovement.currentMovementWaypoint;
         if (currentPoint == null)
         {
@@ -94,13 +101,14 @@ public class PhaseJump : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update () {
+    void Update()
+    {
 
         float phaseJumpMenu = Input.GetAxis("PhaseJumpMenu");
-        if( phaseJumpMenu == 0)
+        if (phaseJumpMenu == 0)
         {
             phaseMenuOpen = false;
-            if( phaseDirectionSelected == 1)
+            if (phaseDirectionSelected == 1)
             {
                 phaseForward();
             }
@@ -116,23 +124,23 @@ public class PhaseJump : MonoBehaviour {
 
         phaseMenuOpen = true;
         float phaseJumpDirection = Input.GetAxis("PhaseJump");
-        if (phaseJumpDirection != 0 && canPhase )
+        if (phaseJumpDirection != 0 && canPhase)
         {
             canPhase = false;
 
             // Phase forward
-            if( phaseJumpDirection > 0 )
+            if (phaseJumpDirection > 0)
             {
                 phaseDirectionSelected = 1;
             }
 
             // Phase Backward
-            if (phaseJumpDirection < 0 )
+            if (phaseJumpDirection < 0)
             {
                 phaseDirectionSelected = -1;
             }
         }
-        else if( phaseJumpDirection == 0 && !canPhase)
+        else if (phaseJumpDirection == 0 && !canPhase)
         {
             // We released the phase button.
             // Allow us to phase again
@@ -157,7 +165,7 @@ public class PhaseJump : MonoBehaviour {
     private bool phaseToWayPoint(MovementWaypoint current, MovementWaypoint phasedPoint, bool phaseForward)
     {
         // Make sure we can phase
-        if(!canPhaseJump(current,phaseForward))
+        if (!canPhaseJump(current, phaseForward))
         {
             return false;
         }
@@ -166,8 +174,6 @@ public class PhaseJump : MonoBehaviour {
         Vector3 spawnPosition = Vector3.zero;
         MovementWaypoint newPhasePoint = null;
         getPhasePoint(phaseForward, out spawnPosition, out newPhasePoint);
-
-        //Debug.LogWarning("Phasing!");
 
         // If we are inside any phaseCondition volumes. Call the beforePhase method
         callConditions(true, phaseForward);
@@ -181,8 +187,28 @@ public class PhaseJump : MonoBehaviour {
         return true;
     }
 
+    // We are current in a PhaseVolume. Check that we can phase
+    private bool canPhaseJumpInVolume(MovementWaypoint current, bool phaseForward)
+    {
+        if (phaseForward && currentPhaseVolume.nextPhaseWaypoint == null)
+        {
+            return false;
+        }
+        else if (!phaseForward && currentPhaseVolume.previousPhaseWaypoint == null)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
     private bool canPhaseJump(MovementWaypoint current, bool phaseForward)
     {
+        if (currentPhaseVolume != null)
+        {
+            return canPhaseJumpInVolume(current, phaseForward);
+        }
+
         MovementWaypoint phasedPoint = phaseForward ? current.nextPhasePoint : current.previousPhasePoint;
         if (phasedPoint == null)
         {
@@ -198,7 +224,7 @@ public class PhaseJump : MonoBehaviour {
             // We can not move from this node. But we can still phase
             return true;
         }
-        
+
         // We can't move forward
         if (nextPoint == null)
         {
@@ -206,7 +232,7 @@ public class PhaseJump : MonoBehaviour {
         }
 
         MovementWaypoint nextPhasePoint = phaseForward ? nextPoint.nextPhasePoint : nextPoint.previousPhasePoint;
-        if (nextPoint != null && nextPhasePoint.next == null && nextPhasePoint.previous == null)
+        if (nextPhasePoint != null && nextPhasePoint.next == null && nextPhasePoint.previous == null)
         {
             // We can move from this node, but not in the next plane. But we can still phase
             return true;
@@ -223,12 +249,13 @@ public class PhaseJump : MonoBehaviour {
         MovementWaypoint B = phaseForward ? current.nextPhasePoint : current.previousPhasePoint;
         for (MovementWaypoint C = B.next; C != null; C = C.next)
         {
-            if (C == nextPhasePoint) {
+            if (C == nextPhasePoint)
+            {
                 areConnected = true;
                 break;
             }
         }
-        if( !areConnected )
+        if (!areConnected)
         {
             // If B and Bn are not connected. Stop
             //Debug.Log("Not Conencted B-BN " + B.name + ", " + nextPhasePoint.name);
@@ -246,8 +273,24 @@ public class PhaseJump : MonoBehaviour {
         return true;
     }
 
+    // We are in a PhaseVolume. Return the position we are in
+    private void getPhasePointInVolume(bool phaseForward, out Vector3 newPoint, out MovementWaypoint newPhasedPoint)
+    {
+        newPhasedPoint = phaseForward ? currentPhaseVolume.nextPhaseWaypoint : currentPhaseVolume.previousPhaseWaypoint;
+        newPoint = newPhasedPoint.transform.position;
+    }
+
+    // Get the Points that we will end up if we phase
     public void getPhasePoint(bool phaseForward, out Vector3 newPoint, out MovementWaypoint newPhasedPoint)
     {
+        // If we are in a volume. Prioritize that
+        if (currentPhaseVolume != null)
+        {
+            getPhasePointInVolume(phaseForward, out newPoint, out newPhasedPoint);
+            return;
+        }
+
+        // Not in a volume
         MovementWaypoint current = playerMovement.currentMovementWaypoint;
         MovementWaypoint phasedPoint = phaseForward ? current.nextPhasePoint : current.previousPhasePoint;
 
@@ -268,7 +311,7 @@ public class PhaseJump : MonoBehaviour {
 
         // Apply the Y according to the largest Y of the points then add the players extra Y
         float extraY = transform.position.y - current.transform.position.y;
-        
+
         // Use the Y of the highest point? (current or next)
         if (copyYOnPhase)
         {
@@ -278,7 +321,7 @@ public class PhaseJump : MonoBehaviour {
         }
 
         // If we have jumped before phasing, add that height to the next phase area
-        if( copyJumpedHeightOnPhase)
+        if (copyJumpedHeightOnPhase)
         {
             spawnPosition.y += extraY;
         }
@@ -304,21 +347,21 @@ public class PhaseJump : MonoBehaviour {
 
         // Get the distance from B to Bn by traversing the nodes
         float Bd = 0f;
-        for( MovementWaypoint b = B; b != Bn; b = b.next)
+        for (MovementWaypoint b = B; b != Bn; b = b.next)
         {
-            Bd += (b.transform.position-b.next.transform.position).magnitude;
+            Bd += (b.transform.position - b.next.transform.position).magnitude;
         }
 
         // Find out where we should be in the graph by using Ap
         float Bp = 0f;
         MovementWaypoint previousWayPoint = B;
-        while (Bp <= Ap && previousWayPoint.next != null )
+        while (Bp <= Ap && previousWayPoint.next != null)
         {
             float distance = (previousWayPoint.transform.position - previousWayPoint.next.transform.position).magnitude;
             float percent = distance / Bd;
             Bp += percent;
 
-            if( previousWayPoint.next != Bn )
+            if (previousWayPoint.next != Bn)
             {
                 previousWayPoint = previousWayPoint.next;
             }
@@ -360,7 +403,7 @@ public class PhaseJump : MonoBehaviour {
         AB = AB * scale;
 
         //3) You can now scale this vector to find a point between A and B.so(A + (0.1 * AB)) will be 0.1 units from A.
-        return A+AB;
+        return A + AB;
     }
 
     private void callConditions(bool beforePhase, bool phaseForward)
@@ -400,11 +443,11 @@ public class PhaseJump : MonoBehaviour {
         MovementWaypoint A = current;
         MovementWaypoint B = next;
 
-        
+
         MovementWaypoint An = null;
         MovementWaypoint Bn = null;
         MovementWaypoint graphA = getA(current, next, phaseForward);
-        if( graphA == next)
+        if (graphA == next)
         {
             Bn = graphA.next;
             An = !phaseForward ? Bn.nextPhasePoint : Bn.previousPhasePoint;
@@ -412,7 +455,7 @@ public class PhaseJump : MonoBehaviour {
         else
         {
             An = graphA.next;
-            Bn = phaseForward? An.nextPhasePoint: An.previousPhasePoint;
+            Bn = phaseForward ? An.nextPhasePoint : An.previousPhasePoint;
         }
 
         Debug.LogWarning("A " + A);
@@ -422,7 +465,7 @@ public class PhaseJump : MonoBehaviour {
 
         // Get the maximum distance we need to travel in B
         float Bd = 0f;
-        for(MovementWaypoint i = Bn; i != B; i = i.previous)
+        for (MovementWaypoint i = Bn; i != B; i = i.previous)
         {
             Bd += (i.transform.position - i.previous.transform.position).magnitude;
         }
@@ -438,7 +481,7 @@ public class PhaseJump : MonoBehaviour {
         while (newWaypoint != Bn.previous)
         {
             float mag = (newWaypoint.next.transform.position - newWaypoint.transform.position).magnitude;
-            float tempDistance = (distance+mag) / Bd;
+            float tempDistance = (distance + mag) / Bd;
             float newTravel = distance + (newWaypoint.next.transform.position - newWaypoint.transform.position).magnitude;
             Debug.LogWarning("newTravel " + newTravel);
             Debug.LogWarning("newWaypoint " + newWaypoint);
@@ -460,7 +503,7 @@ public class PhaseJump : MonoBehaviour {
         Debug.LogWarning("remainingDistance" + remainingDistance);
         Debug.LogWarning("remainingDistancePercentage" + remainingDistancePercentage);
 
-        newPosition = getPointOnLine(newWaypoint.transform.position,newWaypoint.next.transform.position, remainingDistancePercentage);
+        newPosition = getPointOnLine(newWaypoint.transform.position, newWaypoint.next.transform.position, remainingDistancePercentage);
     }
 
     private MovementWaypoint getA(MovementWaypoint current, MovementWaypoint next, bool phaseForward)
@@ -523,9 +566,19 @@ public class PhaseJump : MonoBehaviour {
         return canPhaseJump(playerMovement.currentMovementWaypoint, false);
     }
 
+    public void setPhaseVolume(PhaseVolume v)
+    {
+        this.currentPhaseVolume = v;
+    }
+
+    public PhaseVolume getPhaseVolume()
+    {
+        return currentPhaseVolume;
+    }
+
     public AudioSource getAudioSource()
     {
-        if(audioSource == null)
+        if (audioSource == null)
         {
             Debug.LogError("Object " + gameObject.name + " does not have an AudioSource Component!");
         }
