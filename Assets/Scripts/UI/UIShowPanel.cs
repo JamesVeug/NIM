@@ -10,4 +10,8 @@ public class UIShowPanel : MonoBehaviour {
 	public void hidePanel(GameObject panel){
 		panel.SetActive (false);
 	}
+
+	public void quit(){
+		Application.Quit ();
+	}
 }
