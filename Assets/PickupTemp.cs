@@ -11,6 +11,9 @@ public class PickupTemp : MonoBehaviour {
 
     public Material[] materials;
     public Mesh[] meshes;
+    
+    public float[] picksupSoundsVolumes;
+    public AudioClip[] pickupSounds;
 
 	// Use this for initialization
 	void Start () {
@@ -56,7 +59,7 @@ public class PickupTemp : MonoBehaviour {
         if (phaseMenuImageO != null)
         {
             Text menuGuiImage = phaseMenuImageO.GetComponent<Text>();
-            if( menuGuiImage != null)
+            if (menuGuiImage != null)
             {
                 int num = int.Parse(menuGuiImage.text);
                 num++;
@@ -70,6 +73,11 @@ public class PickupTemp : MonoBehaviour {
         else
         {
             Debug.Log("3");
+        }
+
+        AudioSource source = other.gameObject.GetComponent<AudioSource>();
+        if (source != null) { 
+            SoundMaster.playRandomSound(pickupSounds, picksupSoundsVolumes, source);
         }
         Destroy(gameObject);
     }
