@@ -41,10 +41,20 @@ public class PhaseJumpUI : MonoBehaviour {
     private bool backwardArrowSelected = false;
     private float directionSelected = 0;
 
+
+    private GameObject phaseMenuImageO = GameObject.Find("PhaseImageMenu");
+    private GameObject phaseNextImageO = GameObject.Find("PhaseImageNext");
+    private GameObject phasePrevImageO = GameObject.Find("PhaseImagePrevious");
+
     // Use this for initialization
     void Start () {
         jump = GetComponent<PhaseJump>();
         audioSource = GetComponent<AudioSource>();
+
+
+        if (phaseMenuImageO == null) { Debug.LogError("PhaseImageMenu not setup in Canvas. Can not show menu!"); }
+        if (phaseNextImageO == null) { Debug.LogError("PhaseImageNext not setup in Canvas. Can not show menu!"); }
+        if (phasePrevImageO == null) { Debug.LogError("PhaseImagePrevious not setup in Canvas. Can not show menu!"); }
     }
 	
 	// Update is called once per frame
@@ -54,12 +64,9 @@ public class PhaseJumpUI : MonoBehaviour {
             Debug.LogError("No PhaseJump script given.");
             return;
         }
-        GameObject phaseMenuImageO = GameObject.Find("PhaseImageMenu");
-        GameObject phaseNextImageO = GameObject.Find("PhaseImageNext");
-        GameObject phasePrevImageO = GameObject.Find("PhaseImagePrevious");
-        if( phaseMenuImageO == null) { Debug.LogError("PhaseImageMenu not setup in Canvas. Can not show menu!"); return; }
-        if (phaseNextImageO == null) { Debug.LogError("PhaseImageNext not setup in Canvas. Can not show menu!"); return; }
-        if (phasePrevImageO == null) { Debug.LogError("PhaseImagePrevious not setup in Canvas. Can not show menu!"); return; }
+        if( phaseMenuImageO == null) { return; }
+        if (phaseNextImageO == null) { return; }
+        if (phasePrevImageO == null) { return; }
 
         bool menuOpen = jump.phaseMenuIsOpen();
         if (!menuIsOpen && menuOpen == true)

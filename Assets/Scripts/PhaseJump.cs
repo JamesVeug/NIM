@@ -19,11 +19,6 @@ public class PhaseJump : MonoBehaviour
 
     // The PhaseVolume that we are current in
     private PhaseVolume currentPhaseVolume;
-<<<<<<< HEAD
-
-    // SOUNDS
-=======
->>>>>>> refs/remotes/origin/master
 
     // SOUNDS
     // Volumes (100 represents 100% volume intensity)
@@ -179,11 +174,7 @@ public class PhaseJump : MonoBehaviour
         Vector3 spawnPosition = Vector3.zero;
         MovementWaypoint newPhasePoint = null;
         getPhasePoint(phaseForward, out spawnPosition, out newPhasePoint);
-<<<<<<< HEAD
-        
-=======
 
->>>>>>> refs/remotes/origin/master
         // If we are inside any phaseCondition volumes. Call the beforePhase method
         callConditions(true, phaseForward);
 
@@ -199,11 +190,7 @@ public class PhaseJump : MonoBehaviour
     // We are current in a PhaseVolume. Check that we can phase
     private bool canPhaseJumpInVolume(MovementWaypoint current, bool phaseForward)
     {
-<<<<<<< HEAD
-        if( phaseForward && currentPhaseVolume.nextPhaseWaypoint == null)
-=======
         if (phaseForward && currentPhaseVolume.nextPhaseWaypoint == null)
->>>>>>> refs/remotes/origin/master
         {
             return false;
         }
@@ -217,11 +204,7 @@ public class PhaseJump : MonoBehaviour
 
     private bool canPhaseJump(MovementWaypoint current, bool phaseForward)
     {
-<<<<<<< HEAD
-        if( currentPhaseVolume != null)
-=======
         if (currentPhaseVolume != null)
->>>>>>> refs/remotes/origin/master
         {
             return canPhaseJumpInVolume(current, phaseForward);
         }
@@ -235,7 +218,6 @@ public class PhaseJump : MonoBehaviour
 
 
         MovementWaypoint nextPoint = current.next;
-
         if (nextPoint == null && current.previous == null)
         {
             // We can not move from this node. But we can still phase
@@ -301,12 +283,8 @@ public class PhaseJump : MonoBehaviour
     public void getPhasePoint(bool phaseForward, out Vector3 newPoint, out MovementWaypoint newPhasedPoint)
     {
         // If we are in a volume. Prioritize that
-<<<<<<< HEAD
-        if( currentPhaseVolume != null ){
-=======
         if (currentPhaseVolume != null)
         {
->>>>>>> refs/remotes/origin/master
             getPhasePointInVolume(phaseForward, out newPoint, out newPhasedPoint);
             return;
         }
@@ -591,16 +569,11 @@ public class PhaseJump : MonoBehaviour
     {
         this.currentPhaseVolume = v;
     }
-<<<<<<< HEAD
-=======
 
->>>>>>> refs/remotes/origin/master
     public PhaseVolume getPhaseVolume()
     {
         return currentPhaseVolume;
     }
-<<<<<<< HEAD
-=======
 
     public AudioSource getAudioSource()
     {
@@ -610,5 +583,4 @@ public class PhaseJump : MonoBehaviour
         }
         return audioSource;
     }
->>>>>>> refs/remotes/origin/master
 }

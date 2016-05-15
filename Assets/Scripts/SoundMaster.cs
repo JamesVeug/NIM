@@ -3,8 +3,11 @@ using System.Collections;
 
 public static class SoundMaster {
 
-    [Range(min:0, max:100)]
-    public static float Master_Volume = 100;
+    [Range(min:0, max:500)]
+    public static float Master_Volume = 500;
+
+    // Make the sound louder
+    private const float Master_Volume_SCALAR = 2.0f;
 
     // Play a random sound from a given array of sound files
     public static void playRandomSound(AudioClip[] clips, float[] volumes, AudioSource s)
@@ -25,7 +28,7 @@ public static class SoundMaster {
         }
 
         float volume = volumes.Length <= index ? 100 : volumes[index];
-        s.PlayOneShot(clip,(volume/100)*(Master_Volume/100));
+        s.PlayOneShot(clip,(volume/100)*(Master_Volume/100)* Master_Volume_SCALAR);
     }
 
     public static void setMasterVolume(float v)
