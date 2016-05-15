@@ -41,7 +41,11 @@ public class MovingPlatform : MonoBehaviour {
                 transform.Rotate(Vector3.right * 60 * Time.deltaTime);
 
                 float test = (float)Math.Round(transform.rotation.eulerAngles.x);
+<<<<<<< HEAD
                 //Debug.Log(test);
+=======
+        
+>>>>>>> DynamicBridge
                 if (test > 178f && test < 182f || test == 0f || test == 360f)
                 {
 
@@ -74,7 +78,11 @@ public class MovingPlatform : MonoBehaviour {
 
             if (Vector3.Distance(transform.position, pointA.transform.position) < 0.5f)
             {
+<<<<<<< HEAD
                 //Debug.Log("test");
+=======
+               
+>>>>>>> DynamicBridge
                 transform.position = Vector3.MoveTowards(transform.position, pointB.transform.position, speed * Time.deltaTime);
                 //transform.MovePosition(transform.position, pointB.transform.position, speed * Time.deltaTime);
                 pointATarget = !pointATarget;
