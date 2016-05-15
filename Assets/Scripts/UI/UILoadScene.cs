@@ -8,8 +8,10 @@ public class UILoadScene : MonoBehaviour {
 
 	public void LoadScene(int level){
 
-		loadingScreen.SetActive (true);
+		if (loadingScreen != null) {
+			loadingScreen.SetActive (true);
+		}
 		SceneManager.LoadScene (level);
-
+		Time.timeScale = 1;
 	}
 }
