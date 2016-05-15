@@ -192,7 +192,7 @@ public class Movement : MonoBehaviour {
         float zoom = Input.GetAxis("Mouse ScrollWheel");
         if (zoom != 0)
         {
-            //Debug.LogWarning("SCROLL " + zoom);
+            Debug.LogWarning("SCROLL " + zoom);
             Camera camera = Camera.main;
             ChasePlayer chase = camera.GetComponent<ChasePlayer>();
             chase.distance += -zoom*zoomScalar;
