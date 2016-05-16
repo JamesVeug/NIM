@@ -5,8 +5,15 @@ using System;
 
 public class DynamicStairs : MonoBehaviour {
 
-    public double position;
+    public float currentPosition;
     public float speed;
+    public Boolean consistentMove;
+    public float postion1;
+    public float position2;
+    public float timer;
+
+    private float counter = 0;
+
 
     private List<GameObject> steps;//A static amount of 6 steps are expected
 
@@ -43,12 +50,9 @@ public class DynamicStairs : MonoBehaviour {
         topY = float.MinValue;
         botY = float.MaxValue;
 
-        //if (steps.Count != 6) {
-        //    throw new System.ArgumentException("6 Steps are needed");
-       // }
         foreach (GameObject step in steps) {
-            float x = step.transform.position.x;
-            float y = step.transform.position.y;
+            float x = step.transform.localPosition.x;
+            float y = step.transform.localPosition.y;
 
             if (x < leftX) {
                 leftX = x;
@@ -61,28 +65,28 @@ public class DynamicStairs : MonoBehaviour {
         }
         scaleX = steps[0].transform.localScale.x;
         scaleY = steps[0].transform.localScale.y;
-        z = steps[0].transform.position.z;
+        z = steps[0].transform.localPosition.z;
 
        
             rightX = leftX + (scaleX * (steps.Count-1));
             topY = botY + (scaleY * (steps.Count-1));
     }
 
-    public void SetPosition()
+    public void SetPosition(float givenPosition)
     {
-        if (position < 1 || position > 4) {
+        if (givenPosition < 1 || givenPosition > 4) {
             throw new System.ArgumentException("Only accepts a position between 1 and 4");
         }
 
         
-        if (position == 1) {
+        if (givenPosition == 1) {
             SetPositionHelper(leftX,botY,scaleY, true);
         }
-        else if (position == 2)
+        else if (givenPosition == 2)
         {
             SetPositionHelper(leftX, topY, (scaleY * -1), true);
         }
-        else if (position == 3)
+        else if (givenPosition == 3)
         {
             SetPositionHelper(leftX, botY, scaleY, false);
         }
@@ -116,21 +120,21 @@ public class DynamicStairs : MonoBehaviour {
     */
     private void slowMove(float xPos, float yPos, GameObject step)
     {
-        if (Math.Abs(yPos - step.transform.position.y) > 0.05f)
+        if (Math.Abs(yPos - step.transform.localPosition.y) > 0.05f)
         {
-            if (yPos > step.transform.position.y)
+            if (yPos > step.transform.localPosition.y)
             {
-                float slowYInc = step.transform.position.y + (step.transform.localScale.y * 0.05f * speed);
-                step.transform.position = new Vector3(xPos, slowYInc, z);
+                float slowYInc = step.transform.localPosition.y + (step.transform.localScale.y * 0.05f * speed);
+                step.transform.localPosition = new Vector3(xPos, slowYInc, z);
             }
-            else if (yPos < step.transform.position.y)
+            else if (yPos < step.transform.localPosition.y)
             {
-                float slowYInc = step.transform.position.y - (step.transform.localScale.y * 0.05f * speed);
-                step.transform.position = new Vector3(xPos, slowYInc, z);
+                float slowYInc = step.transform.localPosition.y - (step.transform.localScale.y * 0.05f * speed);
+                step.transform.localPosition = new Vector3(xPos, slowYInc, z);
             }
         }
         else {
-            step.transform.position = new Vector3(xPos, yPos, z);
+            step.transform.localPosition = new Vector3(xPos, yPos, z);
 
         }
     }
@@ -139,7 +143,27 @@ public class DynamicStairs : MonoBehaviour {
 
 // Update is called once per frame
 void Update () {
-        SetPosition();
+        if (consistentMove == true) {
+            
+            if (counter >= 100 * timer) {
+                
+                SetPosition(currentPosition);
+                counter = 0;
+                if (currentPosition != postion1)
+                {
+                    currentPosition = postion1;
+
+                } else {
+                    currentPosition = position2;
+
+                }
+            } else {
+                counter++;
+            }
+        } 
+            SetPosition(currentPosition);
+        
+        
 	}
 }
 
