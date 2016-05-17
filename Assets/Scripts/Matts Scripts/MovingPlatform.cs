@@ -18,13 +18,13 @@ public class MovingPlatform : MonoBehaviour {
     
 
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    // Use this for initialization
+    void Start () {
+    
+    }
+    
+    // Update is called once per frame
+    void Update () {
        
         Patrol();
 
@@ -41,7 +41,6 @@ public class MovingPlatform : MonoBehaviour {
                 transform.Rotate(Vector3.right * 60 * Time.deltaTime);
 
                 float test = (float)Math.Round(transform.rotation.eulerAngles.x);
-                Debug.Log(test);
                 if (test > 178f && test < 182f || test == 0f || test == 360f)
                 {
 
@@ -74,7 +73,6 @@ public class MovingPlatform : MonoBehaviour {
 
             if (Vector3.Distance(transform.position, pointA.transform.position) < 0.5f)
             {
-                Debug.Log("test");
                 transform.position = Vector3.MoveTowards(transform.position, pointB.transform.position, speed * Time.deltaTime);
                 //transform.MovePosition(transform.position, pointB.transform.position, speed * Time.deltaTime);
                 pointATarget = !pointATarget;

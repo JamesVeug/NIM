@@ -1,0 +1,27 @@
+fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Sounds/OGG/Sound Design/Clicks/Click-002.ogg.meta
+guid: 63dd459fcf3e9fb418b89cf31692b39c
+timeCreated: 1462964839
+=======
+guid: 2854914023273514f95721e9b3e162aa
+timeCreated: 1463309858
+>>>>>>> refs/remotes/origin/master:Assets/Sounds/Clicks/Click-002.ogg.meta
+licenseType: Free
+AudioImporter:
+  serializedVersion: 6
+  defaultSettings:
+    loadType: 0
+    sampleRateSetting: 0
+    sampleRateOverride: 44100
+    compressionFormat: 1
+    quality: 1
+    conversionMode: 0
+  platformSettingOverrides: {}
+  forceToMono: 0
+  normalize: 1
+  preloadAudioData: 1
+  loadInBackground: 0
+  3D: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
