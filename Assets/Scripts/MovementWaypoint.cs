@@ -4,7 +4,7 @@ using System.Collections;
 public class MovementWaypoint : MonoBehaviour {
 
     // ONLY FOR DEBUGGING
-    public static bool drawLinks = false;
+    public static bool drawLinks = true;
 
     public int phaseLayer = 0;
 
@@ -18,9 +18,9 @@ public class MovementWaypoint : MonoBehaviour {
     // Drawing lines
     private Vector3 drawOffset = new Vector3(0f, 0.25f, 0f);
 
-
     // Use this for initialization
-    void Start () {
+    void OnDrawGizmos()
+    {
 	
         if( !drawLinks)
         {
@@ -59,13 +59,10 @@ public class MovementWaypoint : MonoBehaviour {
     }
 
     // Draw a visible line that can be seen in the editor and in game
-    public void makeLine(MovementWaypoint start, MovementWaypoint end, Color color, Vector3 offset)
+    private void makeLine(MovementWaypoint start, MovementWaypoint end, Color color, Vector3 offset)
     {
-        GameObject o = new GameObject();
-        LineRenderer line = o.AddComponent<LineRenderer>();
-        line.SetWidth(0.1f, 0.1f);
-        line.SetPositions(new Vector3[] { start.transform.position - offset, end.transform.position - offset });
-        line.material.color = color;
+        Gizmos.color = color;
+        Gizmos.DrawLine(start.transform.position - offset, end.transform.position - offset);
     }
 	
 	// Update is called once per frame

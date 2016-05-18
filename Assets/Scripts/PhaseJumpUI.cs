@@ -42,19 +42,21 @@ public class PhaseJumpUI : MonoBehaviour {
     private float directionSelected = 0;
 
 
-    private GameObject phaseMenuImageO = GameObject.Find("PhaseImageMenu");
-    private GameObject phaseNextImageO = GameObject.Find("PhaseImageNext");
-    private GameObject phasePrevImageO = GameObject.Find("PhaseImagePrevious");
+    private GameObject phaseMenuImageO;
+    private GameObject phaseNextImageO;
+    private GameObject phasePrevImageO;
 
     // Use this for initialization
     void Start () {
         jump = GetComponent<PhaseJump>();
         audioSource = GetComponent<AudioSource>();
 
-
+        /*phaseMenuImageO = GameObject.Find("PhaseImageMenu");
+        phaseNextImageO = GameObject.Find("PhaseImageNext");
+        phasePrevImageO = GameObject.Find("PhaseImagePrevious");
         if (phaseMenuImageO == null) { Debug.LogError("PhaseImageMenu not setup in Canvas. Can not show menu!"); }
         if (phaseNextImageO == null) { Debug.LogError("PhaseImageNext not setup in Canvas. Can not show menu!"); }
-        if (phasePrevImageO == null) { Debug.LogError("PhaseImagePrevious not setup in Canvas. Can not show menu!"); }
+        if (phasePrevImageO == null) { Debug.LogError("PhaseImagePrevious not setup in Canvas. Can not show menu!"); }*/
     }
 	
 	// Update is called once per frame
@@ -64,11 +66,8 @@ public class PhaseJumpUI : MonoBehaviour {
             Debug.LogError("No PhaseJump script given.");
             return;
         }
-        if( phaseMenuImageO == null) { return; }
-        if (phaseNextImageO == null) { return; }
-        if (phasePrevImageO == null) { return; }
 
-        bool menuOpen = jump.phaseMenuIsOpen();
+        /*bool menuOpen = jump.phaseMenuIsOpen();
         if (!menuIsOpen && menuOpen == true)
         {
             SoundMaster.playRandomSound(openMenuSound, openMenuSoundsVolume, getAudioSource());
@@ -76,10 +75,10 @@ public class PhaseJumpUI : MonoBehaviour {
         else if (menuIsOpen && menuOpen == false && directionSelected == 0)
         {
             SoundMaster.playRandomSound(closeMenuSound, closeMenuSoundsVolume, getAudioSource());
-        }
-        menuIsOpen = menuOpen;
+        }*/
+        //menuIsOpen = menuOpen;
 
-        Sprite menuImage = !menuOpen ? missing : menu;
+        /*Sprite menuImage = !menuOpen ? missing : menu;
         Image menuGuiImage = phaseMenuImageO.GetComponent<Image>();
         menuGuiImage.sprite = menuImage;
 
@@ -107,7 +106,9 @@ public class PhaseJumpUI : MonoBehaviour {
         {
             SoundMaster.playRandomSound(selectBackwardArrowSound, selectBackwardSoundsVolume, getAudioSource());
         }
-        backwardArrowSelected = direction == -1;
+        backwardArrowSelected = direction == -1;*/
+        
+        /*int direction = jump.getJumpDirection();
 
         // Preview the area
         if ((direction == 1 && jump.canPhaseForward()) || (direction == -1 && jump.canPhaseBack()))
@@ -121,15 +122,17 @@ public class PhaseJumpUI : MonoBehaviour {
             //jump.previewPhaseCamera(previewCamera, previewObject, spawnPosition, direction == 1);
 
 
-			mov.currentMovementWaypoint = newPhasePoint;
-            previewObject.transform.position = spawnPosition;
-            previewCamera.depth = 1;
+			//mov.currentMovementWaypoint = newPhasePoint;
+            //previewObject.transform.position = spawnPosition;
+            //previewCamera.depth = 1;
         }
         else
         {
-            previewCamera.depth = -1;
-            hideRenderers();
-        }
+            //previewCamera.depth = -1;
+            //hideRenderers();
+        }*/
+
+
     }
 
     private void hideRenderers()
