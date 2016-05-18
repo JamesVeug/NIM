@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Sounds/OGG/Sound Design/Clicks/Click-003.ogg.meta
+guid: a57188d1a5cb21147a6b59c6bde16a82
+timeCreated: 1462964863
+=======
 guid: 5299422da8b077249ae0044f1ceb95a7
 timeCreated: 1463309859
+>>>>>>> refs/remotes/origin/master:Assets/Sounds/Clicks/Click-003.ogg.meta
 licenseType: Free
 AudioImporter:
   serializedVersion: 6

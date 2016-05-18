@@ -3,7 +3,6 @@ using System.Collections;
 
 public static class SoundMaster
 {
-
     [Range(min: 0, max: 500)]
     public static float Master_Volume = 500;
 
@@ -29,7 +28,7 @@ public static class SoundMaster
         }
 
         float volume = volumes.Length <= index ? 100 : volumes[index];
-        s.PlayOneShot(clip, (volume / 100) * (Master_Volume / 100) * Master_Volume_SCALAR);
+        s.PlayOneShot(clip,(volume/100)*(Master_Volume/100)* Master_Volume_SCALAR);
     }
 
     public static void setMasterVolume(float v)

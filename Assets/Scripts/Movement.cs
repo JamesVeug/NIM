@@ -69,7 +69,12 @@ public class Movement : MonoBehaviour {
 			return;
 		}
 
-        zoomCamera();
+        // Stop the player from doing stuff if we are phasing
+        PhaseJump phaseJump = GetComponent<PhaseJump>();
+        if(phaseJump != null && phaseJump.isPhasing())
+        {
+            return;
+        }
 
         float moveHorizontal = EnableLeftRightMovement ? Input.GetAxis("Horizontal") : 0;
         float moveVertical = EnableForwardBackMovement ? Input.GetAxis("Vertical") : 0;
@@ -183,20 +188,6 @@ public class Movement : MonoBehaviour {
 
         // Can not move
         return Vector3.zero;
-    }
-
-    void zoomCamera()
-    {
-        const float zoomScalar = 10;
-
-        float zoom = Input.GetAxis("Mouse ScrollWheel");
-        if (zoom != 0)
-        {
-            Debug.LogWarning("SCROLL " + zoom);
-            Camera camera = Camera.main;
-            ChasePlayer chase = camera.GetComponent<ChasePlayer>();
-            chase.distance += -zoom*zoomScalar;
-        }
     }
 
     void rotateToFloor()
