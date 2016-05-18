@@ -23,13 +23,12 @@ public class SplineInterpolator : MonoBehaviour
 
 	List<SplineNode> mNodes = new List<SplineNode>();
 	string mState = "";
+    bool movingForward = true;
 	bool mRotations;
 
 	OnEndCallback mOnEndCallback;
 
-
-
-	void Awake()
+    void Awake()
 	{
 		Reset();
 	}
@@ -44,7 +43,7 @@ public class SplineInterpolator : MonoBehaviour
 		if (mState != "Reset")
 			throw new System.Exception("First reset, add points and then call here");
 
-		mState = mode == eWrapMode.ONCE ? "Once" : "Loop";
+		mState = "Stopped";
 		mRotations = bRotations;
 		mOnEndCallback = endCallback;
 
@@ -69,8 +68,24 @@ public class SplineInterpolator : MonoBehaviour
 		mNodes.Add(new SplineNode(pos, quat, timeInSeconds, easeInOut));
 	}
 
+    public void MoveForward()
+    {
+        movingForward = true;
+        mState = "Once";
+    }
 
-	void SetInput()
+    public void MoveBackward()
+    {
+        movingForward = false;
+        mState = "Once";
+    }
+
+    public void Stop()
+    {
+        mState = "Stopped";
+    }
+
+    void SetInput()
 	{
 		if (mNodes.Count < 2)
 			throw new System.Exception("Invalid number of points");
@@ -134,64 +149,131 @@ public class SplineInterpolator : MonoBehaviour
 		mNodes.Insert(0, firstNode);
 		mNodes.Add(lastNode);
 	}
-
-	float mCurrentTime;
+    
+    float mCurrentTime;
 	int mCurrentIdx = 1;
 
 	void Update()
 	{
-		/*if (mState == "Reset" || mState == "Stopped" || mNodes.Count < 4)
-			return;
+		if (mState == "Reset" || mState == "Stopped" || mNodes.Count < 4)
+        {
+            return;
+        }
 
-		mCurrentTime += Time.deltaTime;
 
-		// We advance to next point in the path
-		if (mCurrentTime >= mNodes[mCurrentIdx + 1].Time)
-		{
-			if (mCurrentIdx < mNodes.Count - 3)
-			{
-				mCurrentIdx++;
-			}
-			else
-			{
-				if (mState != "Loop")
-				{
-					mState = "Stopped";
-
-					// We stop right in the end point
-					transform.position = mNodes[mNodes.Count - 2].Point;
-
-					if (mRotations)
-						transform.rotation = mNodes[mNodes.Count - 2].Rot;
-
-					// We call back to inform that we are ended
-					if (mOnEndCallback != null)
-						mOnEndCallback();
-				}
-				else
-				{
-					mCurrentIdx = 1;
-					mCurrentTime = 0;
-				}
-			}
-		}
-
-		if (mState != "Stopped")
-		{
-			// Calculates the t param between 0 and 1
-			float param = (mCurrentTime - mNodes[mCurrentIdx].Time) / (mNodes[mCurrentIdx + 1].Time - mNodes[mCurrentIdx].Time);
-
-			// Smooth the param
-			param = MathUtils.Ease(param, mNodes[mCurrentIdx].EaseIO.x, mNodes[mCurrentIdx].EaseIO.y);
-
-			transform.position = GetHermiteInternal(mCurrentIdx, param);
-
-			if (mRotations)
-			{
-				transform.rotation = GetSquad(mCurrentIdx, param);
-			}
-		}*/
+        if (movingForward)
+        {
+            Debug.Log("Forward");
+            mCurrentTime += Time.deltaTime;
+            updateMoveForward();
+        }
+        else
+        {
+            Debug.Log("Back");
+            mCurrentTime = Mathf.Max(0,mCurrentTime-Time.deltaTime);
+            updateMoveBackward();
+        }
 	}
+
+    void updateMoveBackward()
+    {
+        // We advance to next point in the path
+        if (mCurrentTime >= mNodes[mCurrentIdx - 1].Time)
+        {
+            if (mCurrentIdx > 1)
+            {
+                mCurrentIdx--;
+            }
+            else
+            {
+                if (mState != "Loop")
+                {
+                    mState = "Stopped";
+
+                    // We stop right in the end point
+                    this.transform.position = mNodes[1].Point;
+
+                    if (mRotations)
+                        this.transform.rotation = mNodes[1].Rot;
+
+                    // We call back to inform that we are ended
+                    if (mOnEndCallback != null)
+                        mOnEndCallback();
+                }
+                else
+                {
+                    mCurrentIdx = mNodes.Count-2;
+                    mCurrentTime = 0;
+                }
+            }
+        }
+
+        if (mState != "Stopped")
+        {
+            // Calculates the t param between 0 and 1
+            float param = (mCurrentTime - mNodes[mCurrentIdx].Time) / (mNodes[mCurrentIdx - 1].Time - mNodes[mCurrentIdx].Time);
+
+            // Smooth the param
+            param = MathUtils.Ease(param, mNodes[mCurrentIdx].EaseIO.x, mNodes[mCurrentIdx].EaseIO.y);
+
+            this.transform.position = GetHermiteInternal(mCurrentIdx, param);
+
+            if (mRotations)
+            {
+                this.transform.rotation = GetSquad(mCurrentIdx, param);
+            }
+        }
+    }
+
+    void updateMoveForward()
+    {
+        // We advance to next point in the path
+        if (mCurrentTime >= mNodes[mCurrentIdx + 1].Time)
+        {
+            if (mCurrentIdx < mNodes.Count - 3)
+            {
+                mCurrentIdx++;
+            }
+            else
+            {
+                if (mState != "Loop")
+                {
+                    mState = "Stopped";
+
+                    // We stop right in the end point
+                    this.transform.position = mNodes[mNodes.Count - 2].Point;
+
+                    if (mRotations)
+                        this.transform.rotation = mNodes[mNodes.Count - 2].Rot;
+
+                    // We call back to inform that we are ended
+                    if (mOnEndCallback != null)
+                        mOnEndCallback();
+                }
+                else
+                {
+                    mCurrentIdx = 1;
+                    mCurrentTime = 0;
+                }
+            }
+        }
+
+        if (mState != "Stopped")
+        {
+            // Calculates the t param between 0 and 1
+            float param = (mCurrentTime - mNodes[mCurrentIdx].Time) / (mNodes[mCurrentIdx + 1].Time - mNodes[mCurrentIdx].Time);
+
+            // Smooth the param
+            param = MathUtils.Ease(param, mNodes[mCurrentIdx].EaseIO.x, mNodes[mCurrentIdx].EaseIO.y);
+
+            this.transform.position = GetHermiteInternal(mCurrentIdx, param);
+
+            if (mRotations)
+            {
+                this.transform.rotation = GetSquad(mCurrentIdx, param);
+            }
+        }
+    }
 
     public Vector3 getPosition(int index)
     {
@@ -262,15 +344,15 @@ public class SplineInterpolator : MonoBehaviour
 
     public static Vector3 GetHermiteInternal(MovementWaypoint current, float t)
     {
-        float t2 = t * t;
+        /*float t2 = t * t;
         float t3 = t2 * t;
 
         //Debug.Log("current " + current.gameObject.name);
         Debug.Log("t " + t);
-        Vector3 P0 = current.previous.transform.position;
-        Vector3 P1 = current.transform.position;
-        Vector3 P2 = current.next.transform.position;
-        Vector3 P3 = current.next.next.transform.position;
+        Vector3 P0 = current.previous.this.transform.position;
+        Vector3 P1 = current.this.transform.position;
+        Vector3 P2 = current.next.this.transform.position;
+        Vector3 P3 = current.next.next.this.transform.position;
 
         float tension = 0.5f;   // 0.5 equivale a catmull-rom
 
@@ -282,6 +364,7 @@ public class SplineInterpolator : MonoBehaviour
         float Blend3 = t3 - 2 * t2 + t;
         float Blend4 = t3 - t2;
 
-        return Blend1 * P1 + Blend2 * P2 + Blend3 * T1 + Blend4 * T2;
+        return Blend1 * P1 + Blend2 * P2 + Blend3 * T1 + Blend4 * T2;*/
+        return Vector3.zero;
     }
 }

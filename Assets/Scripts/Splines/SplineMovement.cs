@@ -210,13 +210,13 @@ public class SplineMovement : MonoBehaviour {
                 }
             }
         }
-
-        //movement.y = transform.position.y+0.1f;
+        
+        //movement.y = transform.position.y-0.1f;
         transform.LookAt(movement);
         transform.localEulerAngles = new Vector3(0, transform.localEulerAngles.y, transform.localEulerAngles.z);
 
         Vector3 newPos = transform.forward * Mathf.Abs(moveLeft) * speed.z;
-        //movement += transform.forward * moveForward * speed.x;
+        movement += transform.forward * moveForward * speed.x;
         newPos *= Time.deltaTime;
         return newPos;
     }

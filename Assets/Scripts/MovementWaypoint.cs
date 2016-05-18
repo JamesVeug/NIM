@@ -4,7 +4,7 @@ using System.Collections;
 public class MovementWaypoint : MonoBehaviour {
 
     // ONLY FOR DEBUGGING
-    public static bool drawLinks = true;
+    public static bool drawLinks = false;
 
     public int phaseLayer = 0;
 
@@ -30,6 +30,46 @@ public class MovementWaypoint : MonoBehaviour {
         
         // Next point for the character to walk to
         if ( next != null)
+        {
+            makeLine(this, next, Color.red, drawOffset);
+            //if (next.phaseLayer != this.phaseLayer) { Debug.LogWarning("The phaselayer for " + this.name + " is NOT same for it's next point!"); }
+        }
+
+        // When we walk left, it will walk here
+        if (previous != null)
+        {
+            makeLine(this, previous, Color.green, -drawOffset);
+            //if (previous.phaseLayer != this.phaseLayer) { Debug.LogWarning("The phaselayer for " + this.name + " is NOT same for it's previous point!"); }
+        }
+
+        // Next position to phase to
+        if (nextPhasePoint != null)
+        {
+            makeLine(this, nextPhasePoint, Color.blue, drawOffset);
+            //if( nextPhasePoint.phaseLayer == this.phaseLayer) { Debug.LogWarning("The phaselayer for " + this.name + " is the same for it's nextPhasePoint!"); }
+
+        }
+
+        // Previous point to phase to
+        if (previousPhasePoint != null)
+        {
+            makeLine(this, previousPhasePoint, Color.yellow, -drawOffset);
+            //if (previousPhasePoint.phaseLayer == this.phaseLayer) { Debug.LogWarning("The phaselayer for " + this.name + " is the same for it's previousPhasePoint!"); }
+        }
+    }
+
+    // Use this for initialization
+    void Start()
+    {
+
+        if (!drawLinks)
+        {
+            return;
+        }
+
+
+        // Next point for the character to walk to
+        if (next != null)
         {
             makeLine(this, next, Color.red, drawOffset);
             //if (next.phaseLayer != this.phaseLayer) { Debug.LogWarning("The phaselayer for " + this.name + " is NOT same for it's next point!"); }

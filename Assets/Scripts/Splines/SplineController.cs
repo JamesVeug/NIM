@@ -16,12 +16,15 @@ public class SplineController : MonoBehaviour
 	public bool AutoClose = true;
 	public bool HideOnExecute = true;
 
+    private bool isSetup = false;
 
 	SplineInterpolator mSplineInterp;
 	Transform[] mTransforms;
 
+    private MovementWaypoint currentWaypoint;
+
     // Draws the links for the spline
-	void OnDrawGizmos()
+	/*void OnDrawGizmos()
 	{
 		Transform[] trans = GetTransforms();
 		if (trans.Length < 2)
@@ -42,23 +45,23 @@ public class SplineController : MonoBehaviour
 			Gizmos.DrawLine(prevPos, currPos);
 			prevPos = currPos;
 		}
-	}
+	}*/
 
 
 	void Start()
 	{
 		mSplineInterp = GetComponent(typeof(SplineInterpolator)) as SplineInterpolator;
 
-		mTransforms = GetTransforms();
+        /*mTransforms = GetTransforms();
 
 		if (HideOnExecute)
 			DisableTransforms();
 
 		if (AutoStart)
-			FollowSpline();
-	}
+			FollowSpline(currentWaypoint);*/
+    }
 
-	public void SetupSplineInterpolator(SplineInterpolator interp, Transform[] trans)
+    public void SetupSplineInterpolator(SplineInterpolator interp, Transform[] trans)
 	{
 		interp.Reset();
 
@@ -96,9 +99,9 @@ public class SplineController : MonoBehaviour
 	/// </summary>
 	Transform[] GetTransforms()
 	{
-		if (SplineRoot != null)
+		if (currentWaypoint != null)
 		{
-			List<Component> components = new List<Component>(SplineRoot.GetComponentsInChildren(typeof(Transform)));
+			List<Component> components = new List<Component>(currentWaypoint.transform.parent.gameObject.GetComponentsInChildren(typeof(Transform)));
 			List<Transform> transforms = components.ConvertAll(c => (Transform)c);
 
 			transforms.Remove(SplineRoot.transform);
@@ -125,15 +128,50 @@ public class SplineController : MonoBehaviour
 	}
 
 
-	/// <summary>
-	/// Starts the interpolation
-	/// </summary>
-	void FollowSpline()
+    /// <summary>
+    /// Starts the interpolation
+    /// </summary>
+    public void FollowSpline(MovementWaypoint waypoint, bool moveForward)
 	{
-		if (mTransforms.Length > 0)
+        //Debug.Log("Follow1");
+        currentWaypoint = waypoint;
+
+        if( mTransforms == null)
+        {
+            Debug.Log("Follow2");
+            mTransforms = GetTransforms();
+        }
+        else if( !isSetup)
 		{
-			SetupSplineInterpolator(mSplineInterp, mTransforms);
+            Debug.Log("Follow3");
+            SetupSplineInterpolator(mSplineInterp, mTransforms);
 			mSplineInterp.StartInterpolation(null, true, WrapMode);
-		}
+            isSetup = true;
+        }
+        else if( moveForward )
+        {
+            Debug.Log("Follow4");
+            mSplineInterp.MoveForward();
+        }
+        else
+        {
+            mSplineInterp.MoveBackward();
+        }
 	}
+
+    public void stopFollowingSpline()
+    {
+        if( mTransforms == null)
+        {
+            return;
+        }
+        else if (mTransforms.Length == 0)
+        {
+            SetupSplineInterpolator(mSplineInterp, mTransforms);
+            mSplineInterp.StartInterpolation(null, true, WrapMode);
+        }
+        else {
+            mSplineInterp.Stop();
+        }
+    }
 }
