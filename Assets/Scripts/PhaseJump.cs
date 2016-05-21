@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using XInputDotNetPure;
 
 public class PhaseJump : MonoBehaviour
 {
@@ -115,6 +116,9 @@ public class PhaseJump : MonoBehaviour
             Vector3 scale = savedScale * curveScale;
             c.transform.localScale = scale;
 
+            // Vibration
+            GamePad.SetVibration(PlayerIndex.One, 1-curveScale, 1-curveScale);
+
             // TODO: Needs to be Fixed. Sometimes plays more than once!
             if (curveScale > 0.1 && curveScale < 0.3  && time < 1)
             {
@@ -129,6 +133,9 @@ public class PhaseJump : MonoBehaviour
                 canPhase = true;
                 phaseDirectionSelected = 0;
                 ShakeCamera();
+
+                // Stop vibration
+                GamePad.SetVibration(PlayerIndex.One, 0, 0);
             }
 
             return;

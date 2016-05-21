@@ -8,10 +8,12 @@ public class ChasePlayer : MonoBehaviour
     //public AnimationCurve ApertureChase;
     public GameObject whatToChase = null;
     public Vector3 rotationVector = new Vector3(0f, 0f, 0f);
-	public float distance = 10f;
+    public Vector3 currentOffset = new Vector3(0, 0, 0);
+    public Vector3 offset = new Vector3(10, 0, 10);
     public float chaseSpeed = 10f;
 	public float rotateSpeed = 20f;
     public float minFallShakeDistance = 0.5f;
+    public float flipXTime = 2f;
 
     public bool chaseX = true;
     public bool chaseY = true;
@@ -33,6 +35,7 @@ public class ChasePlayer : MonoBehaviour
     private float setX = float.MaxValue;
     private float setY = float.MaxValue;
     private float setZ = float.MaxValue;
+    private float flipXCurrentTime = 0f;
 
     // These values get changed in the constructor
     private bool originalChaseXState;
@@ -85,7 +88,7 @@ public class ChasePlayer : MonoBehaviour
         if (dofs != null)
         {
             FieldInfo fi = dofs.GetType().GetField("aperture");
-            fi.SetValue(dofs, Mathf.Abs(distance));
+            fi.SetValue(dofs, Mathf.Abs(offset.z));
         }
     }
 
@@ -93,16 +96,17 @@ public class ChasePlayer : MonoBehaviour
     {
         const float zoomScalar = 10;
 
+        //float xboxZoom = Input.GetAxisRaw("Xbox ScrollWheel")*Time.deltaTime;
         float zoom = Input.GetAxis("Mouse ScrollWheel");
         if (zoom != 0)
         {
-            distance += -zoom * zoomScalar;
+            offset.z += -zoom * zoomScalar;
 
             //  Blur according to the distance the camer is at
             if (dofs != null)
             {
                 FieldInfo fi = dofs.GetType().GetField("focalLength");
-                fi.SetValue(dofs, Mathf.Abs(distance));
+                fi.SetValue(dofs, Mathf.Abs(offset.z));
             }
         }
     }
@@ -113,7 +117,10 @@ public class ChasePlayer : MonoBehaviour
         //this.transform.position = lastPosition;
         zoomCamera();
 
-		//TODO: Fix chasing when phasing -- it looks weird
+
+        
+
+        //TODO: Fix chasing when phasing -- it looks weird
         if (enableChase)
         {
             Vector3 newPos = getNewPosition();
@@ -121,14 +128,13 @@ public class ChasePlayer : MonoBehaviour
 
             this.transform.position = Vector3.Slerp(transform.position, newPos, time);
         }
-        
 
         // Look at the object we want to chase
         if (lookAtPlayer)
         {
-			//float time = rotateSpeed * Time.deltaTime;
-            this.transform.LookAt(whatToChase.transform);
-			//transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(whatToChase.transform.position - transform.position), time);
+            //float time = rotateSpeed * Time.deltaTime;
+            this.transform.LookAt(whatToChase.transform.position);
+            //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(whatToChase.transform.position - transform.position), time);
         }
 
 
@@ -150,7 +156,7 @@ public class ChasePlayer : MonoBehaviour
             //Debug.Log("lastChange " + lastChangeInY);
         }
 
-
+        currentOffset = offset;
         //shake.DoShake();
     }
 
@@ -161,21 +167,45 @@ public class ChasePlayer : MonoBehaviour
         if (originalChaseYState != chaseY) { setY = whatToChase.transform.position.y; originalChaseYState = chaseY; }
         if (originalChaseZState != chaseZ) { setZ = whatToChase.transform.position.z; originalChaseZState = chaseZ; }
 
-        Vector3 offset = new Vector3(0, 0, -distance);
+        //Vector3 tempOffset = new Vector3(offset.x, offset.y,offset.z*-1);
+
+        
         Vector3 expectedPosition = Vector3.zero;
         if (chaseX) { expectedPosition.x = whatToChase.transform.position.x; } else { expectedPosition.x = setX; }
         if (chaseY) { expectedPosition.y = whatToChase.transform.position.y; } else { expectedPosition.y = setY; }
         if (chaseZ) { expectedPosition.z = whatToChase.transform.position.z; } else { expectedPosition.z = setZ; }
 
+        //Vector3 o = Vector3.forward * expectedPosition;
 
-        Vector3 offsetPosition = expectedPosition + offset;
-		Vector3 rotation = rotationVector;
-		if (waypointTracking) {
-			rotation += RotatePerpendicularToWaypoint ();
-		}
-		Vector3 rotatedVector = RotatePointAroundPivot(offsetPosition, expectedPosition, RotatePerpendicularToWaypoint()+rotationVector);
+        //Vector3 offsetPosition = offset;
+        if( flipXTime > 0 )
+        {
+            Vector3 offsetPosition = offset;
+            offsetPosition.x *= -1;
+            if ( whatToChase.transform.rotation.eulerAngles.y > 90)
+            {
+                flipXCurrentTime = Mathf.Min(flipXTime, flipXCurrentTime + Time.deltaTime);
+            }
+            else
+            {
+                flipXCurrentTime = Mathf.Max(0,flipXCurrentTime - Time.deltaTime);
+            }
+            currentOffset = Vector3.Slerp(currentOffset, offsetPosition, flipXCurrentTime/flipXTime);
+        }
+        else
+        {
+            flipXCurrentTime = Mathf.Max(0, flipXCurrentTime - Time.deltaTime);
+            currentOffset = Vector3.Slerp(currentOffset, offset, flipXCurrentTime / flipXTime);
+        }
+        
 
+		Vector3 rotatedVector = RotatePointAroundPivot(expectedPosition + currentOffset, expectedPosition, rotationVector);
 
+        //Transform temp = (Transform)Transform.Instantiate(transform, rotatedVector, new Quaternion(rotatedVector.x,rotatedVector.y,rotatedVector.z,0));
+        //Vector3 tempOffset = new Vector3(temp.forward.x* offset.x, temp.forward.y * offset.y, temp.forward.z * offset.z);
+
+        // Offset the camera now
+        //rotatedVector += tempOffset;
         //Debug.LogWarning("expectedPosition : " + expectedPosition);
         //Debug.LogWarning("offsetPosition : " + offsetPosition);
         //Debug.LogWarning("rotatedVector : " + rotatedVector);

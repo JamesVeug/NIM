@@ -65,7 +65,6 @@ public class SplineMovement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        zoomCamera();
 
         Vector3 movement = getSplinePoint(Input.GetAxis("Horizontal"), 0);
         if ( movement == Vector3.zero)
@@ -279,20 +278,6 @@ public class SplineMovement : MonoBehaviour {
         // Can not move
         return Vector3.zero;
     }*/
-
-    void zoomCamera()
-    {
-        const float zoomScalar = 10;
-
-        float zoom = Input.GetAxis("Mouse ScrollWheel");
-        if (zoom != 0)
-        {
-            //Debug.LogWarning("SCROLL " + zoom);
-            Camera camera = Camera.main;
-            ChasePlayer chase = camera.GetComponent<ChasePlayer>();
-            chase.distance += -zoom*zoomScalar;
-        }
-    }
 
     /*void rotateToFloor()
     {

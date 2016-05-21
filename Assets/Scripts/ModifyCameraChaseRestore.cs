@@ -40,9 +40,9 @@ public class ModifyCameraChaseRestore : MonoBehaviour {
 
             // Save
             newRotation1Exit = chase.rotationVector;
-            newDistance1Exit = chase.distance;
+            newDistance1Exit = chase.offset.z;
             newChasePlayer1Exit = chase.enableChase;
-            newDistance1Exit = chase.distance;
+            newDistance1Exit = chase.offset.z;
             newChaseX1Exit = chase.chaseX;
             newChaseY1Exit = chase.chaseY;
             newChaseZ1Exit = chase.chaseZ;
@@ -51,7 +51,7 @@ public class ModifyCameraChaseRestore : MonoBehaviour {
             if (modifyCameraRotation1Enter)
             {
                 chase.rotationVector = newRotation1Enter;
-                chase.distance = newDistance1Enter;
+                chase.offset.z = newDistance1Enter;
             }
             chase.enableChase = newChasePlayer1Enter;
             chase.chaseX = newChaseX1Enter;
@@ -66,7 +66,7 @@ public class ModifyCameraChaseRestore : MonoBehaviour {
         {
             ChasePlayer chase = cameraToEdit.GetComponent<ChasePlayer>();
             chase.rotationVector = newRotation1Exit;
-            chase.distance = newDistance1Exit;
+            chase.offset.z = newDistance1Exit;
             chase.enableChase = newChasePlayer1Exit;
             chase.chaseX = newChaseX1Exit;
             chase.chaseY = newChaseY1Exit;
