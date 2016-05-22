@@ -10,6 +10,7 @@ public class ChasePlayer : MonoBehaviour
     public Vector3 rotationVector = new Vector3(0f, 0f, 0f);
     public Vector3 currentOffset = new Vector3(0, 0, 0);
     public Vector3 offset = new Vector3(10, 0, 10);
+    public Vector2 ScrollDistanceRange = new Vector2(-10, -2);
     public float chaseSpeed = 10f;
 	public float rotateSpeed = 20f;
     public float minFallShakeDistance = 0.5f;
@@ -30,6 +31,7 @@ public class ChasePlayer : MonoBehaviour
     private Vector3 lastWatchedPosition;
     private float lastChangeInY;
 
+    private Quaternion expectedRotation;
     private Component dofs;
     private float savedAperture;
     private float setX = float.MaxValue;
@@ -54,6 +56,7 @@ public class ChasePlayer : MonoBehaviour
         originalChaseXState = !chaseX;
         originalChaseYState = !chaseY;
         originalChaseZState = !chaseZ;
+        expectedRotation = transform.localRotation;
 
         // Set our position to where we should be
         if (startInPosition)
@@ -100,7 +103,9 @@ public class ChasePlayer : MonoBehaviour
         float zoom = Input.GetAxis("Mouse ScrollWheel");
         if (zoom != 0)
         {
-            offset.z += -zoom * zoomScalar;
+            offset.z = offset.z + -zoom * zoomScalar;
+            offset.z = Mathf.Max(ScrollDistanceRange.x, offset.z);
+            offset.z = Mathf.Min(ScrollDistanceRange.y, offset.z);
 
             //  Blur according to the distance the camer is at
             if (dofs != null)
@@ -117,8 +122,8 @@ public class ChasePlayer : MonoBehaviour
         //this.transform.position = lastPosition;
         zoomCamera();
 
+        this.transform.localRotation = expectedRotation;
 
-        
 
         //TODO: Fix chasing when phasing -- it looks weird
         if (enableChase)
@@ -148,7 +153,7 @@ public class ChasePlayer : MonoBehaviour
         {
             //Debug.Log("=Change " + changeInY);
             //Debug.Log("=lastChange " + lastChangeInY);
-            shake.DoShake();
+            //shake.DoShake();
         }
         else if (changeInY > 0.1 || changeInY < -0.1 )
         {

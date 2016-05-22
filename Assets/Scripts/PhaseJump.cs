@@ -11,7 +11,6 @@ public class PhaseJump : MonoBehaviour
     private bool canPhase = true;
     private int phaseDirectionSelected = 0;
     public AnimationCurve scaleCurve;
-    public float phaseTime = 1f; // 1 second
 
     private bool phasing = false;
     private Vector3 savedScale = Vector3.zero;
@@ -22,6 +21,8 @@ public class PhaseJump : MonoBehaviour
 
     private List<PhaseCondition> conditions = new List<PhaseCondition>();
 
+    public float phaseTime = 0.5f; // 1 second
+    public float vibrationScale = 0.5f;
     public bool copyYOnPhase = false;
     public bool copyJumpedHeightOnPhase = true;
     public bool moveCameraOnPhase = false;
@@ -117,7 +118,8 @@ public class PhaseJump : MonoBehaviour
             c.transform.localScale = scale;
 
             // Vibration
-            GamePad.SetVibration(PlayerIndex.One, 1-curveScale, 1-curveScale);
+            float vibration = (1 - curveScale)*vibrationScale;
+            GamePad.SetVibration(PlayerIndex.One, vibration, vibration);
 
             // TODO: Needs to be Fixed. Sometimes plays more than once!
             if (curveScale > 0.1 && curveScale < 0.3  && time < 1)

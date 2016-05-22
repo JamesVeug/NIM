@@ -33,12 +33,15 @@ public class ShakeCamera : MonoBehaviour
     {
         if (CurrentShakeIntensity > 0)
         {
+            OriginalPos = transform.position;
+            OriginalRot = transform.rotation;
+
             //Debug.Log("Shaking");
-            transform.position += Random.insideUnitSphere * CurrentShakeIntensity;
-            transform.rotation *= new Quaternion(Random.Range(-CurrentShakeIntensity, CurrentShakeIntensity) * .2f,
-                                            Random.Range(-CurrentShakeIntensity, CurrentShakeIntensity) * .2f,
-                                            Random.Range(-CurrentShakeIntensity, CurrentShakeIntensity) * .2f,
-                                            Random.Range(-CurrentShakeIntensity, CurrentShakeIntensity) * .2f);
+            transform.position = OriginalPos + Random.insideUnitSphere * CurrentShakeIntensity;
+            transform.rotation = new Quaternion(OriginalRot.x + Random.Range(-CurrentShakeIntensity, CurrentShakeIntensity) * .2f,
+                                            OriginalRot.y + Random.Range(-CurrentShakeIntensity, CurrentShakeIntensity) * .2f,
+                                            OriginalRot.z + Random.Range(-CurrentShakeIntensity, CurrentShakeIntensity) * .2f,
+                                            OriginalRot.w + Random.Range(-CurrentShakeIntensity, CurrentShakeIntensity) * .2f);
 
             CurrentShakeIntensity -= CurrentShakeDecay;
         }
@@ -48,8 +51,9 @@ public class ShakeCamera : MonoBehaviour
         }
 
         // Vibrate controller
-        float vibrationIntensity = (ShakeIntensity / CurrentShakeIntensity)* XboxVibrateIntensity;
+        float vibrationIntensity = Mathf.Max(0,(CurrentShakeIntensity/ ShakeIntensity) * XboxVibrateIntensity);
         GamePad.SetVibration(PlayerIndex.One, vibrationIntensity, vibrationIntensity);
+        Debug.Log("vibration " + vibrationIntensity);
 
         // Use triggers to toggle vibration
         //GamePadState state = GamePad.GetState(PlayerIndex.One);
@@ -58,10 +62,16 @@ public class ShakeCamera : MonoBehaviour
 
     public void DoShake()
     {
-        OriginalPos = transform.position;
-        OriginalRot = transform.rotation;
 
         CurrentShakeIntensity = ShakeIntensity;
+        CurrentShakeDecay = ShakeDecay;
+        Shaking = true;
+    }
+
+    public void DoShake(float intensity)
+    {
+
+        CurrentShakeIntensity = intensity;
         CurrentShakeDecay = ShakeDecay;
         Shaking = true;
     }
