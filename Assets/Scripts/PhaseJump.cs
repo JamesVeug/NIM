@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using XInputDotNetPure;
 
 public class PhaseJump : MonoBehaviour
 {
@@ -10,7 +11,6 @@ public class PhaseJump : MonoBehaviour
     private bool canPhase = true;
     private int phaseDirectionSelected = 0;
     public AnimationCurve scaleCurve;
-    public float phaseTime = 1f; // 1 second
 
     private bool phasing = false;
     private Vector3 savedScale = Vector3.zero;
@@ -21,6 +21,8 @@ public class PhaseJump : MonoBehaviour
 
     private List<PhaseCondition> conditions = new List<PhaseCondition>();
 
+    public float phaseTime = 0.5f; // 1 second
+    public float vibrationScale = 0.5f;
     public bool copyYOnPhase = false;
     public bool copyJumpedHeightOnPhase = true;
     public bool moveCameraOnPhase = false;
@@ -115,6 +117,10 @@ public class PhaseJump : MonoBehaviour
             Vector3 scale = savedScale * curveScale;
             c.transform.localScale = scale;
 
+            // Vibration
+            float vibration = (1 - curveScale)*vibrationScale;
+            GamePad.SetVibration(PlayerIndex.One, vibration, vibration);
+
             // TODO: Needs to be Fixed. Sometimes plays more than once!
             if (curveScale > 0.1 && curveScale < 0.3  && time < 1)
             {
@@ -129,6 +135,9 @@ public class PhaseJump : MonoBehaviour
                 canPhase = true;
                 phaseDirectionSelected = 0;
                 ShakeCamera();
+
+                // Stop vibration
+                GamePad.SetVibration(PlayerIndex.One, 0, 0);
             }
 
             return;

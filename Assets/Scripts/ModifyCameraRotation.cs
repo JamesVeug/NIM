@@ -36,7 +36,7 @@ public class ModifyCameraRotation : MonoBehaviour {
 
             // Rotate to new Stuff
             chase.rotationVector = newRotation1Enter;
-            chase.distance = newDistance1Enter;
+            chase.offset.z = newDistance1Enter;
         }
     }
 
@@ -52,12 +52,12 @@ public class ModifyCameraRotation : MonoBehaviour {
             if (choose == 1)
             {
                 chase.rotationVector = newRotation1Exit;
-                chase.distance = newDistance1Exit;
+                chase.offset.z = newDistance1Exit;
             }
             else if (choose == 2)
             {
                 chase.rotationVector = newRotation2Exit;
-                chase.distance = newDistance2Exit;
+                chase.offset.z = newDistance2Exit;
             }
         }
     }

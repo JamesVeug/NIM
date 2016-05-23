@@ -11,7 +11,8 @@ public class PickupTemp : MonoBehaviour {
 
     public Material[] materials;
     public Mesh[] meshes;
-    
+
+    [Range(min: 0, max: 100)]
     public float[] picksupSoundsVolumes;
     public AudioClip[] pickupSounds;
 
@@ -67,12 +68,12 @@ public class PickupTemp : MonoBehaviour {
             }
             else
             {
-                Debug.Log("2");
+                //Debug.Log("2");
             }
         }
         else
         {
-            Debug.Log("3");
+            //Debug.Log("3");
         }
 
         AudioSource source = other.gameObject.GetComponent<AudioSource>();
