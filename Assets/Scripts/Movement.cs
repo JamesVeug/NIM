@@ -62,9 +62,19 @@ public class Movement : MonoBehaviour {
             }
         }
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    public void ShakeCamera(float intensity)
+    {
+        Camera cam = Camera.main;
+        ShakeCamera shake = cam.GetComponent<ShakeCamera>();
+        if (shake != null)
+        {
+            shake.DoShake(intensity);
+        }
+    }
+
+    // Update is called once per frame
+    void Update () {
 		if (controller == null) { //If the player can't be controlled, don't let it move
 			return;
 		}
@@ -102,8 +112,13 @@ public class Movement : MonoBehaviour {
 
             if (falling < 0 && !fallSoundPlayed)
             {
+                //Debug.Log("Falled");
                 SoundMaster.playRandomSound(fallSounds, fallSoundsVolume, getAudioSource());
                 fallSoundPlayed = true;
+
+                float intensity = Mathf.Max(0, Mathf.Min(1,Mathf.Abs((falling))*0.5f));
+                ShakeCamera(intensity);
+                //Debug.Log("Shake " + intensity);
             }
         }
         else

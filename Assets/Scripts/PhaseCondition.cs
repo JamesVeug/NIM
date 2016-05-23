@@ -80,7 +80,7 @@ public class PhaseCondition : MonoBehaviour {
             cam.chaseY = cameraChaseY;
             cam.chaseZ = cameraChaseZ;
             cam.rotationVector = cameraRotation;
-            cam.distance = cameraDistance;
+            cam.offset.z = cameraDistance;
             cam.lookAtPlayer = camLookAtPlayer;
             cam.chaseSpeed = camChaseSpeed;
             cam.enableChase = camChasePlayer;

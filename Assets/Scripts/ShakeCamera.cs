@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using XInputDotNetPure;
 
 public class ShakeCamera : MonoBehaviour
 {
@@ -7,8 +8,10 @@ public class ShakeCamera : MonoBehaviour
     private float CurrentShakeDecay;
     private float CurrentShakeIntensity;
 
+
     public float ShakeIntensity = 0.085f;
     public float ShakeDecay = 0.005f;
+    public float XboxVibrateIntensity = 0.5f;
 
     private Vector3 OriginalPos;
     private Quaternion OriginalRot;
@@ -30,12 +33,15 @@ public class ShakeCamera : MonoBehaviour
     {
         if (CurrentShakeIntensity > 0)
         {
+            OriginalPos = transform.position;
+            OriginalRot = transform.rotation;
+
             //Debug.Log("Shaking");
-            transform.position += Random.insideUnitSphere * CurrentShakeIntensity;
-            transform.rotation *= new Quaternion(Random.Range(-CurrentShakeIntensity, CurrentShakeIntensity) * .2f,
-                                            Random.Range(-CurrentShakeIntensity, CurrentShakeIntensity) * .2f,
-                                            Random.Range(-CurrentShakeIntensity, CurrentShakeIntensity) * .2f,
-                                            Random.Range(-CurrentShakeIntensity, CurrentShakeIntensity) * .2f);
+            transform.position = OriginalPos + Random.insideUnitSphere * CurrentShakeIntensity;
+            transform.rotation = new Quaternion(OriginalRot.x + Random.Range(-CurrentShakeIntensity, CurrentShakeIntensity) * .2f,
+                                            OriginalRot.y + Random.Range(-CurrentShakeIntensity, CurrentShakeIntensity) * .2f,
+                                            OriginalRot.z + Random.Range(-CurrentShakeIntensity, CurrentShakeIntensity) * .2f,
+                                            OriginalRot.w + Random.Range(-CurrentShakeIntensity, CurrentShakeIntensity) * .2f);
 
             CurrentShakeIntensity -= CurrentShakeDecay;
         }
@@ -43,14 +49,29 @@ public class ShakeCamera : MonoBehaviour
         {
             Shaking = false;
         }
+
+        // Vibrate controller
+        float vibrationIntensity = Mathf.Max(0,(CurrentShakeIntensity/ ShakeIntensity) * XboxVibrateIntensity);
+        GamePad.SetVibration(PlayerIndex.One, vibrationIntensity, vibrationIntensity);
+        //Debug.Log("vibration " + vibrationIntensity);
+
+        // Use triggers to toggle vibration
+        //GamePadState state = GamePad.GetState(PlayerIndex.One);
+        //GamePad.SetVibration(PlayerIndex.One, state.Triggers.Left, state.Triggers.Right);
     }
 
     public void DoShake()
     {
-        OriginalPos = transform.position;
-        OriginalRot = transform.rotation;
 
         CurrentShakeIntensity = ShakeIntensity;
+        CurrentShakeDecay = ShakeDecay;
+        Shaking = true;
+    }
+
+    public void DoShake(float intensity)
+    {
+
+        CurrentShakeIntensity = intensity;
         CurrentShakeDecay = ShakeDecay;
         Shaking = true;
     }

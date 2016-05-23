@@ -9,6 +9,7 @@ public class PhaseVolume : MonoBehaviour
 
     public MovementWaypoint nextPhaseWaypoint;
     public MovementWaypoint previousPhaseWaypoint;
+    
 
     void OnTriggerEnter(Collider other)
     {
@@ -36,6 +37,7 @@ public class PhaseVolume : MonoBehaviour
         {
             return;
         }
+        
 
         // Next position to phase to
         if (nextPhaseWaypoint != null)
@@ -50,6 +52,17 @@ public class PhaseVolume : MonoBehaviour
         {
             makeLine(this.transform.position, previousPhaseWaypoint.transform.position, Color.yellow, -drawOffset);
             //if (previousPhasePoint.phaseLayer == this.phaseLayer) { Debug.LogWarning("The phaselayer for " + this.name + " is the same for it's previousPhasePoint!"); }
+        }
+
+
+        BoxCollider collider = GetComponent<BoxCollider>();
+        if(nextPhaseWaypoint != null && collider.bounds.Contains(nextPhaseWaypoint.transform.position))
+        {
+            Debug.LogWarning("PhaseVolume " + name + " has a nextPhasePoint within itself!");
+        }
+        if (previousPhaseWaypoint != null && collider.bounds.Contains(previousPhaseWaypoint.transform.position))
+        {
+            Debug.LogWarning("PhaseVolume " + name + " has a previousPhasePoint within itself!");
         }
     }
 

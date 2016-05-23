@@ -28,11 +28,11 @@ public class ModifyCameraOptions : MonoBehaviour {
 
             // Save current state
             savedRotation = chase.rotationVector;
-            savedDistance = chase.distance;
+            savedDistance = chase.offset.z;
 
             // Rotate to new Stuff
             chase.rotationVector = newRotation;
-            chase.distance = newDistance;
+            chase.offset.z = newDistance;
         }
     }
 
@@ -43,7 +43,7 @@ public class ModifyCameraOptions : MonoBehaviour {
             Camera cam = Camera.main;
             ChasePlayer chase = cam.GetComponent<ChasePlayer>();
             chase.rotationVector = savedRotation;
-            chase.distance = savedDistance;
+            chase.offset.z = savedDistance;
 
             // Reset
             savedRotation = Vector3.zero;

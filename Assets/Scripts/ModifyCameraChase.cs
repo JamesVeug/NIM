@@ -51,7 +51,7 @@ public class ModifyCameraChase : MonoBehaviour {
             if (modifyCameraRotation1Enter)
             {
                 chase.rotationVector = newRotation1Enter;
-                chase.distance = newDistance1Enter;
+                chase.offset.z = newDistance1Enter;
             }
             chase.enableChase = newChasePlayer1Enter;
             chase.chaseX = newChaseX1Enter;
@@ -72,7 +72,7 @@ public class ModifyCameraChase : MonoBehaviour {
             if (choose == 1)
             {
                 chase.rotationVector = newRotation1Exit;
-                chase.distance = newDistance1Exit;
+                chase.offset.z = newDistance1Exit;
                 chase.enableChase = newChasePlayer1Exit;
                 chase.chaseX = newChaseX1Exit;
                 chase.chaseY = newChaseY1Exit;
@@ -81,7 +81,7 @@ public class ModifyCameraChase : MonoBehaviour {
             else if (choose == 2)
             {
                 chase.rotationVector = newRotation2Exit;
-                chase.distance = newDistance2Exit;
+                chase.offset.z = newDistance2Exit;
                 chase.enableChase = newChasePlayer2Exit;
                 chase.chaseX = newChaseX2Exit;
                 chase.chaseY = newChaseY2Exit;
