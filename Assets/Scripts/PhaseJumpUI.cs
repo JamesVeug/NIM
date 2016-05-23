@@ -4,149 +4,97 @@ using UnityEngine.UI;
 
 public class PhaseJumpUI : MonoBehaviour {
     private PhaseJump jump;
-    private AudioSource audioSource;
+    private GameObject staff;
+    private GameObject effects;
+    private GameObject gem;
 
-    public Sprite canPhaseLeft;
-    public Sprite canPhaseRight;
-    public Sprite canNotPhaseLeft;
-    public Sprite canNotPhaseRight;
-    public Sprite selectPhaseLeft;
-    public Sprite selectPhaseRight;
-    public Sprite missing;
-    public Sprite menu;
-
-    public GameObject previewObject;
-    public Camera previewCamera;
-
-    // SOUNDS
-	//private float maxVolume = 200f;
-    // Volumes (200 represents 200% volume intensity)
-	[Range(min: 0, max: 100)]
-    public float[] openMenuSoundsVolume;
-	[Range(min: 0, max: 100)]
-    public float[] closeMenuSoundsVolume;
-	[Range(min: 0, max: 100)]
-    public float[] selectForwardSoundsVolume;
-	[Range(min: 0, max: 100)]
-    public float[] selectBackwardSoundsVolume;
-
-    // Clips
-    public AudioClip[] openMenuSound;
-    public AudioClip[] closeMenuSound;
-    public AudioClip[] selectForwardArrowSound;
-    public AudioClip[] selectBackwardArrowSound;
-
-    private bool menuIsOpen = false;
-    private bool forwardArrowSelected = false;
-    private bool backwardArrowSelected = false;
-    private float directionSelected = 0;
-
-
-    private GameObject phaseMenuImageO;
-    private GameObject phaseNextImageO;
-    private GameObject phasePrevImageO;
+    public Material standaredMaterial;
+    public Material glowMaterial;
 
     // Use this for initialization
     void Start () {
         jump = GetComponent<PhaseJump>();
-        audioSource = GetComponent<AudioSource>();
 
-        /*phaseMenuImageO = GameObject.Find("PhaseImageMenu");
-        phaseNextImageO = GameObject.Find("PhaseImageNext");
-        phasePrevImageO = GameObject.Find("PhaseImagePrevious");
-        if (phaseMenuImageO == null) { Debug.LogError("PhaseImageMenu not setup in Canvas. Can not show menu!"); }
-        if (phaseNextImageO == null) { Debug.LogError("PhaseImageNext not setup in Canvas. Can not show menu!"); }
-        if (phasePrevImageO == null) { Debug.LogError("PhaseImagePrevious not setup in Canvas. Can not show menu!"); }*/
+        GameObject Model = gameObject.transform.FindChild("Model").gameObject;
+        if (Model != null)
+        {
+            staff = Model.transform.FindChild("Staff_Nim").gameObject;
+            if (staff != null)
+            {
+                effects = staff.transform.FindChild("Effects").gameObject;
+                gem = staff.transform.FindChild("MagTealGem").gameObject;
+            }
+        }
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update()
+    {
 	    if( jump == null)
         {
             Debug.LogError("No PhaseJump script given.");
             return;
         }
 
-        /*bool menuOpen = jump.phaseMenuIsOpen();
-        if (!menuIsOpen && menuOpen == true)
-        {
-            SoundMaster.playRandomSound(openMenuSound, openMenuSoundsVolume, getAudioSource());
-        }
-        else if (menuIsOpen && menuOpen == false && directionSelected == 0)
-        {
-            SoundMaster.playRandomSound(closeMenuSound, closeMenuSoundsVolume, getAudioSource());
-        }*/
-        //menuIsOpen = menuOpen;
-
-        /*Sprite menuImage = !menuOpen ? missing : menu;
-        Image menuGuiImage = phaseMenuImageO.GetComponent<Image>();
-        menuGuiImage.sprite = menuImage;
-
-        // Which direction have we selected from the menu?
-        int direction = jump.getJumpDirection();
-        directionSelected = direction;
 
         // Phase Forward Button
-        bool canJumpForward = jump.canPhaseForward();
-        Sprite nextImage = !menuOpen ? missing : canJumpForward ? (direction == 1 ? selectPhaseRight : canPhaseRight) : canNotPhaseRight;
-        Image nextGuiImage = phaseNextImageO.GetComponent<Image>();
-        nextGuiImage.sprite = nextImage;
-        if (!forwardArrowSelected && direction == 1)
+        if ( jump.canPhaseForward() )
         {
-            SoundMaster.playRandomSound(selectForwardArrowSound, selectForwardSoundsVolume, getAudioSource());
+            GrowStuff(true);
         }
-        forwardArrowSelected = direction == 1;
-
-        // Phase Back button
-        bool canJumpBackwards = jump.canPhaseBack();
-        Sprite previousImage = !menuOpen ? missing : canJumpBackwards ? (direction == -1 ? selectPhaseLeft : canPhaseLeft) : canNotPhaseLeft;
-        Image previousGuiImage = phasePrevImageO.GetComponent<Image>();
-        previousGuiImage.sprite = previousImage;
-        if (!backwardArrowSelected && direction == -1)
+        else if (jump.canPhaseBack())
         {
-            SoundMaster.playRandomSound(selectBackwardArrowSound, selectBackwardSoundsVolume, getAudioSource());
-        }
-        backwardArrowSelected = direction == -1;*/
-        
-        /*int direction = jump.getJumpDirection();
-
-        // Preview the area
-        if ((direction == 1 && jump.canPhaseForward()) || (direction == -1 && jump.canPhaseBack()))
-        {
-			Movement mov = previewObject.GetComponent<Movement> ();
-
-            // Move the preview object
-            Vector3 spawnPosition = Vector3.zero;
-            MovementWaypoint newPhasePoint = null; 
-            jump.getPhasePoint(direction == 1, out spawnPosition, out newPhasePoint);
-            //jump.previewPhaseCamera(previewCamera, previewObject, spawnPosition, direction == 1);
-
-
-			//mov.currentMovementWaypoint = newPhasePoint;
-            //previewObject.transform.position = spawnPosition;
-            //previewCamera.depth = 1;
+            GrowStuff(true);
         }
         else
         {
-            //previewCamera.depth = -1;
-            //hideRenderers();
-        }*/
-
-
-    }
-
-    private void hideRenderers()
-    {
-        previewObject.transform.position = new Vector3(0,-2000,0);
-    }
-
-    public AudioSource getAudioSource()
-    {
-        if (audioSource == null)
-        {
-            Debug.LogError("Object " + gameObject.name + " does not have an AudioSource Component!");
+            GrowStuff(false);
         }
-        return audioSource;
+    }
+
+    public void GrowStuff(bool shouldGlow)
+    {
+        if (effects == null)
+        {
+            Debug.Log("can not find child Effects in Model!");
+            return;
+        }
+
+        // effects
+        foreach (Transform child in effects.transform)
+        {
+            ParticleSystemRenderer r = child.gameObject.GetComponent<ParticleSystemRenderer>();
+            if (r != null) { r.enabled = shouldGlow; }
+
+
+            Light l = child.gameObject.GetComponent<Light>();
+            if (l != null) { l.enabled = shouldGlow; }
+        }
+        
+
+        // Gem glow
+        Renderer gemRenderer = gem.GetComponent<Renderer>();
+        if (gemRenderer != null)
+        {
+
+            Debug.Log("Renderer");
+            if (shouldGlow)
+            {
+                
+
+                Debug.Log("Glow");
+                gemRenderer.material = glowMaterial;
+            }
+            else
+            {
+                Debug.Log("No Glow");
+                gemRenderer.material = standaredMaterial;
+            }
+        }
+        else
+        {
+            Debug.Log("No Renderer for gem");
+        }
     }
 }
 

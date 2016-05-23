@@ -108,7 +108,8 @@ public class PhaseJump : MonoBehaviour
         {
 
             float time = phaseRemainingTime / phaseTime;
-            transform.position = Vector3.Slerp(transform.position, phaseToPosition, time);
+            Vector3 newPos = Vector3.Slerp(transform.position, phaseToPosition, time);
+            transform.position = newPos;
             phaseRemainingTime += Time.deltaTime;
 
             // Scale character
