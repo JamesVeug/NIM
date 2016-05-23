@@ -38,11 +38,11 @@ public class PhaseJumpUI : MonoBehaviour {
 
 
         // Phase Forward Button
-        if ( jump.canPhaseForward() )
+        if ( !jump.isPhasing() && jump.canPhaseForward() )
         {
             GrowStuff(true);
         }
-        else if (jump.canPhaseBack())
+        else if ( !jump.isPhasing() && jump.canPhaseBack())
         {
             GrowStuff(true);
         }
@@ -76,18 +76,13 @@ public class PhaseJumpUI : MonoBehaviour {
         Renderer gemRenderer = gem.GetComponent<Renderer>();
         if (gemRenderer != null)
         {
-
-            Debug.Log("Renderer");
+            
             if (shouldGlow)
             {
-                
-
-                Debug.Log("Glow");
                 gemRenderer.material = glowMaterial;
             }
             else
             {
-                Debug.Log("No Glow");
                 gemRenderer.material = standaredMaterial;
             }
         }

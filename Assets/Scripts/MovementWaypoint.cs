@@ -4,7 +4,7 @@ using System.Collections;
 public class MovementWaypoint : MonoBehaviour {
 
     // ONLY FOR DEBUGGING
-    public static bool drawLinks = false;
+    public static bool drawLinks = true;
 
     public int phaseLayer = 0;
 

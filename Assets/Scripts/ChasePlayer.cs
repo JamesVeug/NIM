@@ -187,7 +187,8 @@ public class ChasePlayer : MonoBehaviour
         {
             Vector3 offsetPosition = offset;
             offsetPosition.x *= -1;
-            if ( whatToChase.transform.rotation.eulerAngles.y > 90)
+
+            if ( whatToChase.transform.rotation.eulerAngles.y > 91)
             {
                 flipXCurrentTime = Mathf.Min(flipXTime, flipXCurrentTime + Time.deltaTime);
             }
