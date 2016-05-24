@@ -49,6 +49,7 @@ public class PhaseJump : MonoBehaviour
     {
         playerMovement = GetComponent<Movement>();
         audioSource = GetComponent<AudioSource>();
+        coolDownRemainingTime = phaseCoolDown;
     }
 
     public int getJumpDirection()
@@ -259,10 +260,11 @@ public class PhaseJump : MonoBehaviour
         // Check cooldown
         if(coolDownRemainingTime < phaseCoolDown)
         {
-            Debug.Log("Cooling down... " + coolDownRemainingTime);
+            // Still cooling down!
             return false;
         }
 
+        // Are we inside a volume?
         if (currentPhaseVolume != null)
         {
             return canPhaseJumpInVolume(current, phaseForward);

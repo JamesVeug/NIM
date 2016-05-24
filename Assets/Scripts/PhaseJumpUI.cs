@@ -4,15 +4,20 @@ using UnityEngine.UI;
 
 public class PhaseJumpUI : MonoBehaviour
 {
+    private Renderer gemRenderer;
+
     private PhaseJump jump;
     private GameObject staff;
     private GameObject effects;
     private GameObject gem;
 
+    
     public Material standaredMaterial;
     public Material glowMaterial;
     public Material cooldownMaterial;
 
+    private Text phaseForwardText;
+    private Text phasebackwardText;
 
     // Use this for initialization
     void Start()
@@ -27,8 +32,13 @@ public class PhaseJumpUI : MonoBehaviour
             {
                 effects = staff.transform.FindChild("Effects").gameObject;
                 gem = staff.transform.FindChild("MagTealGem").gameObject;
+                gemRenderer = gem.GetComponent<Renderer>();
             }
         }
+
+        // Get the text off the canvas
+        phaseForwardText = FindObjectOfType<Canvas>().transform.FindChild("PhaseForwardText").gameObject.GetComponent<Text>();
+        phasebackwardText = FindObjectOfType<Canvas>().transform.FindChild("PhaseBackText").gameObject.GetComponent<Text>();
     }
 
     // Update is called once per frame
@@ -40,8 +50,7 @@ public class PhaseJumpUI : MonoBehaviour
             return;
         }
 
-
-        // Phase Forward Button
+        // Show nims phasing status as to if he can phase or not
         if (jump.isCoolingDown())
         {
             GrowStuff(true);
@@ -58,6 +67,28 @@ public class PhaseJumpUI : MonoBehaviour
         {
             GrowStuff(false);
         }
+
+        // Show GUI text
+        bool canPhaseForward = jump.canPhaseForward();
+        if( !jump.isPhasing() && canPhaseForward)
+        {
+            phaseForwardText.enabled = true;
+        }
+        else
+        {
+            phaseForwardText.enabled = false;
+        }
+
+        bool canPhaseBackward = jump.canPhaseBack();
+        if (!jump.isPhasing() && canPhaseBackward)
+        {
+            phasebackwardText.enabled = true;
+        }
+        else
+        {
+            phasebackwardText.enabled = false;
+        }
+        
     }
 
     public void GrowStuff(bool shouldGlow)
@@ -81,7 +112,7 @@ public class PhaseJumpUI : MonoBehaviour
 
 
         // Gem glow
-        Renderer gemRenderer = gem.GetComponent<Renderer>();
+        gemRenderer = gem.GetComponent<Renderer>();
         if (gemRenderer != null)
         {
 
