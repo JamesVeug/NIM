@@ -2,17 +2,26 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class PhaseJumpUI : MonoBehaviour {
+public class PhaseJumpUI : MonoBehaviour
+{
+    private Renderer gemRenderer;
+
     private PhaseJump jump;
     private GameObject staff;
     private GameObject effects;
     private GameObject gem;
 
+    
     public Material standaredMaterial;
     public Material glowMaterial;
+    public Material cooldownMaterial;
+
+    private Text phaseForwardText;
+    private Text phasebackwardText;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         jump = GetComponent<PhaseJump>();
 
         GameObject Model = gameObject.transform.FindChild("Model").gameObject;
@@ -23,26 +32,34 @@ public class PhaseJumpUI : MonoBehaviour {
             {
                 effects = staff.transform.FindChild("Effects").gameObject;
                 gem = staff.transform.FindChild("MagTealGem").gameObject;
+                gemRenderer = gem.GetComponent<Renderer>();
             }
         }
+
+        // Get the text off the canvas
+        phaseForwardText = FindObjectOfType<Canvas>().transform.FindChild("PhaseForwardText").gameObject.GetComponent<Text>();
+        phasebackwardText = FindObjectOfType<Canvas>().transform.FindChild("PhaseBackText").gameObject.GetComponent<Text>();
     }
 
     // Update is called once per frame
     void Update()
     {
-	    if( jump == null)
+        if (jump == null)
         {
             Debug.LogError("No PhaseJump script given.");
             return;
         }
 
-
-        // Phase Forward Button
-        if ( !jump.isPhasing() && jump.canPhaseForward() )
+        // Show nims phasing status as to if he can phase or not
+        if (jump.isCoolingDown())
         {
             GrowStuff(true);
         }
-        else if ( !jump.isPhasing() && jump.canPhaseBack())
+        else if (!jump.isPhasing() && jump.canPhaseForward())
+        {
+            GrowStuff(true);
+        }
+        else if (!jump.isPhasing() && jump.canPhaseBack())
         {
             GrowStuff(true);
         }
@@ -50,6 +67,28 @@ public class PhaseJumpUI : MonoBehaviour {
         {
             GrowStuff(false);
         }
+
+        // Show GUI text
+        bool canPhaseForward = jump.canPhaseForward();
+        if( !jump.isPhasing() && canPhaseForward)
+        {
+            phaseForwardText.enabled = true;
+        }
+        else
+        {
+            phaseForwardText.enabled = false;
+        }
+
+        bool canPhaseBackward = jump.canPhaseBack();
+        if (!jump.isPhasing() && canPhaseBackward)
+        {
+            phasebackwardText.enabled = true;
+        }
+        else
+        {
+            phasebackwardText.enabled = false;
+        }
+        
     }
 
     public void GrowStuff(bool shouldGlow)
@@ -70,20 +109,24 @@ public class PhaseJumpUI : MonoBehaviour {
             Light l = child.gameObject.GetComponent<Light>();
             if (l != null) { l.enabled = shouldGlow; }
         }
-        
+
 
         // Gem glow
-        Renderer gemRenderer = gem.GetComponent<Renderer>();
+        gemRenderer = gem.GetComponent<Renderer>();
         if (gemRenderer != null)
         {
-            
-            if (shouldGlow)
+
+            if (!shouldGlow)
             {
-                gemRenderer.material = glowMaterial;
+                gemRenderer.material = standaredMaterial; 
+            }
+            else if ( jump.isCoolingDown())
+            {
+                gemRenderer.material = cooldownMaterial;
             }
             else
             {
-                gemRenderer.material = standaredMaterial;
+                gemRenderer.material = glowMaterial;
             }
         }
         else
