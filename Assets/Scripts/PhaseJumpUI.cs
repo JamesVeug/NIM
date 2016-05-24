@@ -2,7 +2,8 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class PhaseJumpUI : MonoBehaviour {
+public class PhaseJumpUI : MonoBehaviour
+{
     private PhaseJump jump;
     private GameObject staff;
     private GameObject effects;
@@ -10,9 +11,12 @@ public class PhaseJumpUI : MonoBehaviour {
 
     public Material standaredMaterial;
     public Material glowMaterial;
+    public Material cooldownMaterial;
+
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         jump = GetComponent<PhaseJump>();
 
         GameObject Model = gameObject.transform.FindChild("Model").gameObject;
@@ -30,7 +34,7 @@ public class PhaseJumpUI : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-	    if( jump == null)
+        if (jump == null)
         {
             Debug.LogError("No PhaseJump script given.");
             return;
@@ -38,11 +42,15 @@ public class PhaseJumpUI : MonoBehaviour {
 
 
         // Phase Forward Button
-        if ( !jump.isPhasing() && jump.canPhaseForward() )
+        if (jump.isCoolingDown())
         {
             GrowStuff(true);
         }
-        else if ( !jump.isPhasing() && jump.canPhaseBack())
+        else if (!jump.isPhasing() && jump.canPhaseForward())
+        {
+            GrowStuff(true);
+        }
+        else if (!jump.isPhasing() && jump.canPhaseBack())
         {
             GrowStuff(true);
         }
@@ -70,20 +78,24 @@ public class PhaseJumpUI : MonoBehaviour {
             Light l = child.gameObject.GetComponent<Light>();
             if (l != null) { l.enabled = shouldGlow; }
         }
-        
+
 
         // Gem glow
         Renderer gemRenderer = gem.GetComponent<Renderer>();
         if (gemRenderer != null)
         {
-            
-            if (shouldGlow)
+
+            if (!shouldGlow)
             {
-                gemRenderer.material = glowMaterial;
+                gemRenderer.material = standaredMaterial; 
+            }
+            else if ( jump.isCoolingDown())
+            {
+                gemRenderer.material = cooldownMaterial;
             }
             else
             {
-                gemRenderer.material = standaredMaterial;
+                gemRenderer.material = glowMaterial;
             }
         }
         else

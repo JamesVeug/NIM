@@ -14,6 +14,7 @@ public class PhaseJump : MonoBehaviour
 
     private bool phasing = false;
     private Vector3 savedScale = Vector3.zero;
+    private float coolDownRemainingTime = 0f;
     private float phaseRemainingTime = 0f;
     private Vector3 phaseFromPosition = Vector3.zero;
     private Vector3 phaseToPosition = Vector3.zero;
@@ -21,7 +22,8 @@ public class PhaseJump : MonoBehaviour
 
     private List<PhaseCondition> conditions = new List<PhaseCondition>();
 
-    public float phaseTime = 0.5f; // 1 second
+    public float phaseCoolDown = 1; // 1 second
+    public float phaseTime = 0.5f; // half a second
     public float vibrationScale = 0.5f;
     public bool copyYOnPhase = false;
     public bool copyJumpedHeightOnPhase = true;
@@ -104,7 +106,10 @@ public class PhaseJump : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(phasing)
+        coolDownRemainingTime += Time.deltaTime;
+
+
+        if (phasing)
         {
 
             float time = phaseRemainingTime / phaseTime;
@@ -135,6 +140,9 @@ public class PhaseJump : MonoBehaviour
                 canPhase = true;
                 phaseDirectionSelected = 0;
                 ShakeCamera();
+
+                // Reset cooldown
+                coolDownRemainingTime = 0f;
 
                 // Stop vibration
                 GamePad.SetVibration(PlayerIndex.One, 0, 0);
@@ -248,6 +256,13 @@ public class PhaseJump : MonoBehaviour
 
     private bool canPhaseJump(MovementWaypoint current, bool phaseForward)
     {
+        // Check cooldown
+        if(coolDownRemainingTime < phaseCoolDown)
+        {
+            Debug.Log("Cooling down... " + coolDownRemainingTime);
+            return false;
+        }
+
         if (currentPhaseVolume != null)
         {
             return canPhaseJumpInVolume(current, phaseForward);
@@ -637,5 +652,10 @@ public class PhaseJump : MonoBehaviour
     public bool isPhasing()
     {
         return phasing;
+    }
+
+    public bool isCoolingDown()
+    {
+        return coolDownRemainingTime < phaseCoolDown;
     }
 }
