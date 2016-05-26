@@ -32,7 +32,7 @@ public class WaypointGroup : MonoBehaviour
 
     public Vector3 getPoint(MovementWaypoint p, float speed)
     {
-        SplineInterpolator interp = GetComponent<SplineInterpolator>();
+        //SplineInterpolator interp = GetComponent<SplineInterpolator>();
         return SplineInterpolator.GetHermiteInternal(p, speed);
     }
 

@@ -74,7 +74,7 @@ public class Movement : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update () {
+    void Update() {
 		if (controller == null) { //If the player can't be controlled, don't let it move
 			return;
 		}
@@ -116,8 +116,8 @@ public class Movement : MonoBehaviour {
                 SoundMaster.playRandomSound(fallSounds, fallSoundsVolume, getAudioSource());
                 fallSoundPlayed = true;
 
-                float intensity = Mathf.Max(0, Mathf.Min(1,Mathf.Abs((falling))*0.5f));
-                ShakeCamera(intensity);
+                //float intensity = Mathf.Max(0, Mathf.Min(1,Mathf.Abs((falling))*0.5f));
+                //ShakeCamera(intensity);
                 //Debug.Log("Shake " + intensity);
             }
         }

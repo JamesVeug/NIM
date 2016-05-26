@@ -18,7 +18,7 @@ public class PhaseJump : MonoBehaviour
     private float phaseRemainingTime = 0f;
     private Vector3 phaseFromPosition = Vector3.zero;
     private Vector3 phaseToPosition = Vector3.zero;
-    private MovementWaypoint waypoint = null;
+    //private MovementWaypoint waypoint = null;
 
     private List<PhaseCondition> conditions = new List<PhaseCondition>();
 
@@ -88,7 +88,7 @@ public class PhaseJump : MonoBehaviour
 
         // Get the next phase waypoint to end up on
         MovementWaypoint nextPhasePoint = phaseForward ? currentPoint.nextPhasePoint : currentPoint.previousPhasePoint;
-
+        
         // Move to new point
         bool phased = phaseToWayPoint(currentPoint, nextPhasePoint, phaseForward);
 
@@ -114,7 +114,7 @@ public class PhaseJump : MonoBehaviour
         {
 
             float time = phaseRemainingTime / phaseTime;
-            transform.position = Vector3.Slerp(transform.position, phaseToPosition, time);
+            transform.position = Vector3.Slerp(phaseFromPosition, phaseToPosition, time);
             phaseRemainingTime += Time.deltaTime;
 
             // Scale character
@@ -168,6 +168,9 @@ public class PhaseJump : MonoBehaviour
         float phaseJumpDirection = Input.GetAxis("PhaseJump");
         if (Mathf.Abs(phaseJumpDirection) == 1 && canPhase)
         {
+            //Debug.Log("Rotation2 " + Camera.main.transform.localEulerAngles);
+            //Debug.Log("Position2 " + Camera.main.transform.position);
+            //pauseGame();
 
             // Phase forward
             if (phaseJumpDirection == 1 && canPhaseForward())
@@ -238,6 +241,13 @@ public class PhaseJump : MonoBehaviour
         // If we are inside any phaseCondition volumes. Call the afterPhase method
         callConditions(false, phaseForward);
         return true;
+    }
+
+    void pauseGame()
+    {
+        if (Time.timeScale == 1f)
+            Time.timeScale = 0f;
+        else Time.timeScale = 1f;
     }
 
     // We are current in a PhaseVolume. Check that we can phase
