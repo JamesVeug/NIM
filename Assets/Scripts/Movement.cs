@@ -74,7 +74,7 @@ public class Movement : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update () {
+    void Update() {
 		if (controller == null) { //If the player can't be controlled, don't let it move
 			return;
 		}
