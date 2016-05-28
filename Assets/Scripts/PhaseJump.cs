@@ -79,6 +79,7 @@ public class PhaseJump : MonoBehaviour
 
     private bool phase(bool phaseForward)
     {
+        Debug.Log("Running");
         MovementWaypoint currentPoint = playerMovement.currentMovementWaypoint;
         if (currentPoint == null)
         {
@@ -91,14 +92,6 @@ public class PhaseJump : MonoBehaviour
         
         // Move to new point
         bool phased = phaseToWayPoint(currentPoint, nextPhasePoint, phaseForward);
-
-        // move camera
-        if (phased && moveCameraOnPhase)
-        {
-            ChasePlayer chase = Camera.main.GetComponent<ChasePlayer>();
-            if (chase != null) chase.instantlyMoveToPlayer();
-        }
-
 
         // Return if we phased or not
         return phased;

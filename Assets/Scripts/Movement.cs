@@ -8,8 +8,9 @@ public class Movement : MonoBehaviour {
 
     public bool EnableLeftRightMovement = true; // can we move left/right?
     public bool EnableForwardBackMovement = false; // can we move forward/back?
-    public bool EnableMoveAccordingToCamera = true; // We move accorging to the angle of the camera
     public Vector3 speed = new Vector3(5f, 5f, 5f);
+    public float movementDecay = 0.25f;
+    public float movementIncrement = 2f;
     public float turnSpeed = 10f;
     public float gravity = 1f;
     public float jump = 5f;
@@ -18,6 +19,8 @@ public class Movement : MonoBehaviour {
     public float changeWaypointDistance = 1; // Distance we must get to in order to chaneg to the next waypoint
 
     private float falling = 0f;
+    private float moveTime = 0f;
+    private Vector3 moveToPosition = new Vector3(0, 0, 0);
     private Quaternion rotateTo = Quaternion.identity;
 
     // SOUNDS
@@ -55,13 +58,10 @@ public class Movement : MonoBehaviour {
 			transform.position = currentMovementWaypoint.transform.position;
 		}
 
-        if( !EnableMoveAccordingToCamera)
+        // Look at the next point
+        if (currentMovementWaypoint != null && currentMovementWaypoint.next != null)
         {
-            // Look at the next point
-            if (currentMovementWaypoint != null && currentMovementWaypoint.next != null)
-            {
-                transform.LookAt(currentMovementWaypoint.next.transform);
-            }
+            transform.LookAt(currentMovementWaypoint.next.transform);
         }
     }
 
@@ -91,20 +91,23 @@ public class Movement : MonoBehaviour {
         {
             return;
         }
-
-        // TODO Hardcode smoth stop movement
+        
+        // Start walking to waypoint
         float moveHorizontal = EnableLeftRightMovement ? Input.GetAxisRaw("Horizontal") : 0;
+        Vector3 movement = moveToPosition;
+        if (moveHorizontal != 0)
+        {
+            // Get the move vector and slowy start moving
+            moveToPosition = moveWithWaypoints(moveHorizontal);
+            movement = moveToPosition;
+            moveTime = Mathf.Min(1, moveTime+Time.deltaTime* movementIncrement);
 
-        Vector3 movement = Vector3.zero;
-        if( EnableMoveAccordingToCamera)
-        {
-            movement = Camera.main.transform.right * moveHorizontal * speed.x;
-            movement *= Time.deltaTime;
         }
-        else if( moveHorizontal != 0 )
-        {
-            movement = moveWithWaypoints(moveHorizontal);
+        else {
+            // Slowly stop moving
+            moveTime = Mathf.Max(0, moveTime - Time.deltaTime * movementDecay);
         }
+        movement *= moveTime;
 
 
         if (controller.isGrounded)
@@ -198,15 +201,15 @@ public class Movement : MonoBehaviour {
             var flatVectorToTarget = transform.position - nextPoint.transform.position;
             flatVectorToTarget.y = 0;
             Quaternion newRotation = Quaternion.LookRotation(flatVectorToTarget);
-            Debug.Log("AngleA " + Quaternion.Angle(transform.rotation, newRotation));
-            Debug.Log("AngleT " + transform.rotation.eulerAngles);
+            //Debug.Log("AngleA " + Quaternion.Angle(transform.rotation, newRotation));
+            //Debug.Log("AngleT " + transform.rotation.eulerAngles);
             newRotation *= Quaternion.Euler(0, 178, 0);
 
             Vector3 camPos = Camera.main.transform.position;
 
             float thingAngle = Vector3.Angle(transform.forward, camPos - transform.position);
             bool facing = thingAngle > 90;
-            Debug.Log("Is Rotating to Camera: " + facing + " (" + thingAngle + ")");
+            //Debug.Log("Is Rotating to Camera: " + facing + " (" + thingAngle + ")");
 
 
             //Debug.Log("Angle " + newRotation.eulerAngles);
