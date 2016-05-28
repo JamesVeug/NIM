@@ -1,0 +1,199 @@
+fileFormatVersion: 2
+guid: 53943a2fdc19e074e8e61c2396811e95
+timeCreated: 1462081445
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: controls
+    100004: crystalElemental
+    100006: hipControlIK
+    100008: hipMain
+    100010: IK
+    100012: leftFoot
+    100014: leftHipsIK
+    100016: leftKnee
+    100018: leftKneeIK
+    100020: LeftLegControl
+    100022: leftUpperLeg
+    100024: mainBodyLowerIK
+    100026: mainHipControl
+    100028: mainUpperControl
+    100030: rightFoot
+    100032: rightHipsIK
+    100034: rightKnee
+    100036: rightKneeIK
+    100038: RighttLegControl
+    100040: rightUpperLeg
+    100042: spine1
+    100044: spineMiddle
+    100046: spineTop
+    400000: //RootNode
+    400002: controls
+    400004: crystalElemental
+    400006: hipControlIK
+    400008: hipMain
+    400010: IK
+    400012: leftFoot
+    400014: leftHipsIK
+    400016: leftKnee
+    400018: leftKneeIK
+    400020: LeftLegControl
+    400022: leftUpperLeg
+    400024: mainBodyLowerIK
+    400026: mainHipControl
+    400028: mainUpperControl
+    400030: rightFoot
+    400032: rightHipsIK
+    400034: rightKnee
+    400036: rightKneeIK
+    400038: RighttLegControl
+    400040: rightUpperLeg
+    400042: spine1
+    400044: spineMiddle
+    400046: spineTop
+    7400000: charEleUnfold
+    9500000: //RootNode
+    11100000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: charEleUnfold
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 85
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: controls
+        weight: 1
+      - path: controls/LeftLegControl
+        weight: 1
+      - path: controls/mainHipControl
+        weight: 1
+      - path: controls/mainUpperControl
+        weight: 1
+      - path: controls/RighttLegControl
+        weight: 1
+      - path: crystalElemental
+        weight: 1
+      - path: crystalElemental/hipMain
+        weight: 1
+      - path: crystalElemental/hipMain/leftUpperLeg
+        weight: 1
+      - path: crystalElemental/hipMain/leftUpperLeg/leftKnee
+        weight: 1
+      - path: crystalElemental/hipMain/leftUpperLeg/leftKnee/rightFoot
+        weight: 1
+      - path: crystalElemental/hipMain/rightUpperLeg
+        weight: 1
+      - path: crystalElemental/hipMain/rightUpperLeg/rightKnee
+        weight: 1
+      - path: crystalElemental/hipMain/rightUpperLeg/rightKnee/leftFoot
+        weight: 1
+      - path: crystalElemental/hipMain/spine1
+        weight: 1
+      - path: crystalElemental/hipMain/spine1/spineMiddle
+        weight: 1
+      - path: crystalElemental/hipMain/spine1/spineMiddle/spineTop
+        weight: 1
+      - path: IK
+        weight: 1
+      - path: IK/hipControlIK
+        weight: 1
+      - path: IK/leftHipsIK
+        weight: 1
+      - path: IK/leftKneeIK
+        weight: 1
+      - path: IK/mainBodyLowerIK
+        weight: 1
+      - path: IK/rightHipsIK
+        weight: 1
+      - path: IK/rightKneeIK
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 15
+    normalImportMode: 1
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 1
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: b087c56a4d882d8498c4de8df840c612,
+    type: 3}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
