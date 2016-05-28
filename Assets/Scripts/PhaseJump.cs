@@ -22,7 +22,7 @@ public class PhaseJump : MonoBehaviour
 
     private List<PhaseCondition> conditions = new List<PhaseCondition>();
 
-    public float phaseCoolDown = 1; // 1 second
+    public float phaseCoolDown = 0.5f; // half second
     public float phaseTime = 0.5f; // half a second
     public float vibrationScale = 0.5f;
     public bool copyYOnPhase = false;
@@ -79,7 +79,7 @@ public class PhaseJump : MonoBehaviour
 
     private bool phase(bool phaseForward)
     {
-        Debug.Log("Running");
+        //Debug.Log("Running");
         MovementWaypoint currentPoint = playerMovement.currentMovementWaypoint;
         if (currentPoint == null)
         {

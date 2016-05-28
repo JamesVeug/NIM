@@ -5,12 +5,10 @@ public class Movement : MonoBehaviour {
     
     private CharacterController controller;
     private AudioSource audioSource;
-
-    public bool EnableLeftRightMovement = true; // can we move left/right?
-    public bool EnableForwardBackMovement = false; // can we move forward/back?
+    
     public Vector3 speed = new Vector3(5f, 5f, 5f);
-    public float movementDecay = 0.25f;
-    public float movementIncrement = 2f;
+    public float movementDecay = 3f;
+    public float movementIncrement = 3f;
     public float turnSpeed = 10f;
     public float gravity = 1f;
     public float jump = 5f;
@@ -92,18 +90,21 @@ public class Movement : MonoBehaviour {
             return;
         }
         
+        float moveHorizontal = Input.GetAxisRaw("Horizontal");
+        MovementWaypoint nextPoint = getNextWaypoint(moveHorizontal);
+        rotatePlayer(moveHorizontal, nextPoint);
+
         // Start walking to waypoint
-        float moveHorizontal = EnableLeftRightMovement ? Input.GetAxisRaw("Horizontal") : 0;
         Vector3 movement = moveToPosition;
         if (moveHorizontal != 0)
         {
             // Get the move vector and slowy start moving
-            moveToPosition = moveWithWaypoints(moveHorizontal);
+            moveToPosition = moveWithWaypoints(nextPoint);
             movement = moveToPosition;
             moveTime = Mathf.Min(1, moveTime+Time.deltaTime* movementIncrement);
 
         }
-        else {
+        else  {
             // Slowly stop moving
             moveTime = Mathf.Max(0, moveTime - Time.deltaTime * movementDecay);
         }
@@ -154,16 +155,36 @@ public class Movement : MonoBehaviour {
         }
     }
 
-    Vector3 moveWithWaypoints(float moveLeft)
+    void rotatePlayer(float moveLeft, MovementWaypoint nextPoint)
     {
-        if( currentMovementWaypoint == null)
+        if( nextPoint == null)
+        {
+            // Can't rotate
+            return;
+        }
+
+        // Face in drection of movement
+        var flatVectorToTarget = transform.position - nextPoint.transform.position;
+        flatVectorToTarget.y = 0;
+        Quaternion newRotation = Quaternion.LookRotation(flatVectorToTarget);
+        //Debug.Log("AngleA " + Quaternion.Angle(transform.rotation, newRotation));
+        //Debug.Log("AngleT " + transform.rotation.eulerAngles);
+        newRotation *= Quaternion.Euler(0, 178, 0);
+
+        //Debug.Log("Angle " + newRotation.eulerAngles);
+        rotateTo = newRotation;
+    }
+
+    MovementWaypoint getNextWaypoint(float moveLeft)
+    {
+        if (currentMovementWaypoint == null)
         {
             Debug.LogError("No Waypoint assigned to player. Can not move!");
         }
 
         // Get the next point we want to move to
         MovementWaypoint nextPoint = null;
-        if( moveLeft > 0 && currentMovementWaypoint.next != null )
+        if (moveLeft > 0 && currentMovementWaypoint.next != null)
         {
             nextPoint = currentMovementWaypoint.next;
 
@@ -175,7 +196,7 @@ public class Movement : MonoBehaviour {
                 nextPoint = nextPoint.next;
             }
         }
-        else if (moveLeft < 0 )
+        else if (moveLeft < 0)
         {
             // When moving left. We want to move BACK to the current waypoint.
             nextPoint = currentMovementWaypoint;
@@ -187,55 +208,42 @@ public class Movement : MonoBehaviour {
                 nextPoint = nextPoint.previous;
 
                 // If we do not have a previosu waypoint to move to. Don't save it as our current waypoint
-                if (currentMovementWaypoint.previous != null) { 
+                if (currentMovementWaypoint.previous != null)
+                {
                     currentMovementWaypoint = nextPoint;
                 }
             }
         }
-        
+        return nextPoint;
+    }
+
+    Vector3 moveWithWaypoints(MovementWaypoint nextPoint)
+    {
 
         // Make sure we can move somewhere
-        if (nextPoint != null)
+        if (nextPoint == null)
         {
-            // Face in drection of movement
-            var flatVectorToTarget = transform.position - nextPoint.transform.position;
-            flatVectorToTarget.y = 0;
-            Quaternion newRotation = Quaternion.LookRotation(flatVectorToTarget);
-            //Debug.Log("AngleA " + Quaternion.Angle(transform.rotation, newRotation));
-            //Debug.Log("AngleT " + transform.rotation.eulerAngles);
-            newRotation *= Quaternion.Euler(0, 178, 0);
 
-            Vector3 camPos = Camera.main.transform.position;
-
-            float thingAngle = Vector3.Angle(transform.forward, camPos - transform.position);
-            bool facing = thingAngle > 90;
-            //Debug.Log("Is Rotating to Camera: " + facing + " (" + thingAngle + ")");
-
-
-            //Debug.Log("Angle " + newRotation.eulerAngles);
-            rotateTo = newRotation;
-
-            // Move towards target
-            Vector3 moveToPoint = nextPoint.transform.position-transform.position;
-            float mag = moveToPoint.magnitude;
-            float scalar = 2f / mag;
-            moveToPoint *= scalar;
-
-            moveToPoint += transform.position;
-            moveToPoint.y = transform.position.y;
-
-
-            float time = speed.z * Time.deltaTime;
-            Vector3 nextPosition = Vector3.MoveTowards(transform.position, moveToPoint, time);
-
-            Vector3 movement = nextPosition - transform.position;
-            //Debug.Log("movement " + movement + " mag " + movement.magnitude);
-            return movement;
+            // Can not move
+            return Vector3.zero;
         }
 
+        // Move towards target
+        Vector3 moveToPoint = nextPoint.transform.position-transform.position;
+        float mag = moveToPoint.magnitude;
+        float scalar = 2f / mag;
+        moveToPoint *= scalar;
 
-        // Can not move
-        return Vector3.zero;
+        moveToPoint += transform.position;
+        moveToPoint.y = transform.position.y;
+
+
+        float time = speed.z * Time.deltaTime;
+        Vector3 nextPosition = Vector3.MoveTowards(transform.position, moveToPoint, time);
+
+        Vector3 movement = nextPosition - transform.position;
+        //Debug.Log("movement " + movement + " mag " + movement.magnitude);
+        return movement;
     }
 
     void rotateToFloor()
