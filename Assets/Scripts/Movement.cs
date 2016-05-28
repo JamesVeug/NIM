@@ -17,7 +17,7 @@ public class Movement : MonoBehaviour {
     public float changeWaypointDistance = 1; // Distance we must get to in order to chaneg to the next waypoint
 
     private float falling = 0f;
-    private float moveTime = 0f;
+    private float moveTime = 1f;
     private Vector3 moveToPosition = new Vector3(0, 0, 0);
     private Quaternion rotateTo = Quaternion.identity;
 

@@ -20,6 +20,14 @@ public class PhaseJump : MonoBehaviour
     private Vector3 phaseToPosition = Vector3.zero;
     //private MovementWaypoint waypoint = null;
 
+    private List<PhaseObjectTravel> phasingObects = new List<PhaseObjectTravel>();
+    struct PhaseObjectTravel
+    {
+        public Vector3 startPos;
+        public GameObject o;
+        public Vector3 defaultScale;
+    }
+
     private List<PhaseCondition> conditions = new List<PhaseCondition>();
 
     public float phaseCoolDown = 0.5f; // half second
@@ -107,6 +115,12 @@ public class PhaseJump : MonoBehaviour
         {
 
             float time = phaseRemainingTime / phaseTime;
+            if (time == 0)
+            {
+                // Suck objects into us
+                pullObjects();
+            }
+
             transform.position = Vector3.Slerp(phaseFromPosition, phaseToPosition, time);
             phaseRemainingTime += Time.deltaTime;
 
@@ -114,7 +128,17 @@ public class PhaseJump : MonoBehaviour
             GameObject c = gameObject.transform.FindChild("Model").gameObject;
             float curveScale = scaleCurve.Evaluate(time);
             Vector3 scale = savedScale * curveScale;
-            c.transform.localScale = scale;
+            c.transform.localScale = c.transform.lossyScale*curveScale;
+
+            foreach (PhaseObjectTravel p in phasingObects)
+            {
+                // move each object
+                Vector3 endPos = p.startPos + (phaseToPosition - phaseFromPosition);
+                p.o.transform.position = Vector3.Slerp(p.startPos, endPos, time);
+
+                // Scale
+                p.o.transform.localScale = p.defaultScale * curveScale;
+            }
 
             // Vibration
             float vibration = (1 - curveScale)*vibrationScale;
@@ -125,6 +149,7 @@ public class PhaseJump : MonoBehaviour
             {
                 SoundMaster.playRandomSound(phaseBackSounds, phaseBackSoundsVolume, getAudioSource());
             }
+
             // Finished phasing
             else if (time >= 1)
             {
@@ -135,13 +160,31 @@ public class PhaseJump : MonoBehaviour
                 phaseDirectionSelected = 0;
                 ShakeCamera();
 
+                // Reset Each object traveling with us
+                foreach (PhaseObjectTravel p in phasingObects)
+                {
+                    // move each object
+                    Vector3 endPos = p.startPos + (phaseToPosition - phaseFromPosition);
+                    p.o.transform.position = endPos;
+
+                    // Scale
+                    p.o.transform.localScale = p.defaultScale;
+                }
+                phasingObects.Clear();
+
                 // Reset cooldown
                 coolDownRemainingTime = 0f;
 
                 // Stop vibration
                 GamePad.SetVibration(PlayerIndex.One, 0, 0);
+
+                // Push objects away
+                pushObjects();
             }
 
+
+
+            // Don't continue this method
             return;
         }
         
@@ -187,6 +230,40 @@ public class PhaseJump : MonoBehaviour
             canPhase = true;
         }
 
+    }
+
+    private void pushObjects()
+    {
+        foreach (Collider col in Physics.OverlapSphere(transform.position, 5))
+        {
+            Rigidbody rig = col.GetComponent<Rigidbody>();
+            if (rig != null)
+            {
+                rig.AddExplosionForce(1000f, transform.position, 5);
+            }
+        }
+    }
+
+    private void pullObjects()
+    {
+        foreach (Collider col in Physics.OverlapSphere(transform.position, 5))
+        {
+            if ((col.transform.position - transform.position).magnitude < 2 && col.gameObject.layer == 8)
+            {
+                PhaseObjectTravel p = new PhaseObjectTravel();
+                p.startPos = col.transform.position;
+                p.o = col.gameObject;
+                p.defaultScale = p.o.transform.localScale;
+                phasingObects.Add(p);
+            }
+            else {
+                Rigidbody rig = col.GetComponent<Rigidbody>();
+                if (rig != null)
+                {
+                    rig.AddExplosionForce(-500f, transform.position, 5);
+                }
+            }
+        }
     }
 
     /*
