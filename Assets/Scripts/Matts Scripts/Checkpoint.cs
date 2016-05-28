@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Checkpoints : MonoBehaviour {
+public class Checkpoint : MonoBehaviour {
 
     public CheckpointPlayer playerScript;
     private MovementWaypoint waypoint;
