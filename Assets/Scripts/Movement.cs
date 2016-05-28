@@ -10,13 +10,15 @@ public class Movement : MonoBehaviour {
     public bool EnableForwardBackMovement = false; // can we move forward/back?
     public bool EnableMoveAccordingToCamera = true; // We move accorging to the angle of the camera
     public Vector3 speed = new Vector3(5f, 5f, 5f);
+    public float turnSpeed = 10f;
     public float gravity = 1f;
     public float jump = 5f;
 
     public MovementWaypoint currentMovementWaypoint;
     public float changeWaypointDistance = 1; // Distance we must get to in order to chaneg to the next waypoint
 
-    float falling = 0f;
+    private float falling = 0f;
+    private Quaternion rotateTo = Quaternion.identity;
 
     // SOUNDS
     private bool fallSoundPlayed = false;
@@ -75,9 +77,13 @@ public class Movement : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-		if (controller == null) { //If the player can't be controlled, don't let it move
-			return;
-		}
+        if (controller == null) { //If the player can't be controlled, don't let it move
+            return;
+        }
+
+        if (rotateTo != Quaternion.identity) {
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotateTo, Time.deltaTime * turnSpeed);
+        }
 
         // Stop the player from doing stuff if we are phasing
         PhaseJump phaseJump = GetComponent<PhaseJump>();
@@ -86,19 +92,18 @@ public class Movement : MonoBehaviour {
             return;
         }
 
-        float moveHorizontal = EnableLeftRightMovement ? Input.GetAxis("Horizontal") : 0;
-        float moveVertical = EnableForwardBackMovement ? Input.GetAxis("Vertical") : 0;
+        // TODO Hardcode smoth stop movement
+        float moveHorizontal = EnableLeftRightMovement ? Input.GetAxisRaw("Horizontal") : 0;
 
         Vector3 movement = Vector3.zero;
         if( EnableMoveAccordingToCamera)
         {
-            movement = Camera.main.transform.forward * moveVertical* speed.z;
-            movement += Camera.main.transform.right * moveHorizontal * speed.x;
+            movement = Camera.main.transform.right * moveHorizontal * speed.x;
             movement *= Time.deltaTime;
         }
-        else
+        else if( moveHorizontal != 0 )
         {
-            movement = moveWithWaypoints(moveHorizontal, moveVertical);
+            movement = moveWithWaypoints(moveHorizontal);
         }
 
 
@@ -146,7 +151,7 @@ public class Movement : MonoBehaviour {
         }
     }
 
-    Vector3 moveWithWaypoints(float moveLeft, float moveForward)
+    Vector3 moveWithWaypoints(float moveLeft)
     {
         if( currentMovementWaypoint == null)
         {
@@ -184,22 +189,47 @@ public class Movement : MonoBehaviour {
                 }
             }
         }
+        
 
         // Make sure we can move somewhere
         if (nextPoint != null)
         {
-            //Debug.LogWarning("Current point " + currentMovementWaypoint.name);
-            //Debug.LogWarning("Next point " + nextPoint.name);
+            // Face in drection of movement
+            var flatVectorToTarget = transform.position - nextPoint.transform.position;
+            flatVectorToTarget.y = 0;
+            Quaternion newRotation = Quaternion.LookRotation(flatVectorToTarget);
+            Debug.Log("AngleA " + Quaternion.Angle(transform.rotation, newRotation));
+            Debug.Log("AngleT " + transform.rotation.eulerAngles);
+            newRotation *= Quaternion.Euler(0, 178, 0);
 
-            // Look at the next point
-            transform.LookAt(nextPoint.transform);
-            transform.localEulerAngles = new Vector3(0, transform.localEulerAngles.y, transform.localEulerAngles.z);
+            Vector3 camPos = Camera.main.transform.position;
 
-            Vector3 movement = transform.forward * Mathf.Abs(moveLeft) * speed.z;
-            //movement += transform.forward * moveForward * speed.x;
-            movement *= Time.deltaTime;
+            float thingAngle = Vector3.Angle(transform.forward, camPos - transform.position);
+            bool facing = thingAngle > 90;
+            Debug.Log("Is Rotating to Camera: " + facing + " (" + thingAngle + ")");
+
+
+            //Debug.Log("Angle " + newRotation.eulerAngles);
+            rotateTo = newRotation;
+
+            // Move towards target
+            Vector3 moveToPoint = nextPoint.transform.position-transform.position;
+            float mag = moveToPoint.magnitude;
+            float scalar = 2f / mag;
+            moveToPoint *= scalar;
+
+            moveToPoint += transform.position;
+            moveToPoint.y = transform.position.y;
+
+
+            float time = speed.z * Time.deltaTime;
+            Vector3 nextPosition = Vector3.MoveTowards(transform.position, moveToPoint, time);
+
+            Vector3 movement = nextPosition - transform.position;
+            //Debug.Log("movement " + movement + " mag " + movement.magnitude);
             return movement;
         }
+
 
         // Can not move
         return Vector3.zero;
