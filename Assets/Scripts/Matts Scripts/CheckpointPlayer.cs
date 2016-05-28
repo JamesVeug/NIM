@@ -4,6 +4,7 @@ using System.Collections;
 public class CheckpointPlayer : MonoBehaviour {
 
     public Checkpoint currentCheckpoint;
+    public float levelBottom = -10f;
     public Movement movementScript;
 	// Use this for initialization
 	void Start () {
@@ -21,7 +22,7 @@ public class CheckpointPlayer : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () {
        // Debug.Log("TRANSFORM Y: " + this.transform.position.y );
-        if (this.transform.position.y < -10) {
+        if (this.transform.position.y < levelBottom) {
             transform.position = currentCheckpoint.transform.position;
             movementScript.currentMovementWaypoint = currentCheckpoint.getWaypoint();
 
