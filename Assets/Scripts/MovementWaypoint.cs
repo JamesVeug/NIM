@@ -4,7 +4,8 @@ using System.Collections;
 public class MovementWaypoint : MonoBehaviour {
 
     // ONLY FOR DEBUGGING
-    public static bool drawLinks = true;
+    public static bool drawLinks = true; // Draw a link to all the points we are connected to
+    public static bool drawText = true; // Draw the name of the waypoint on it to help with level design 
 
     public int phaseLayer = 0;
 
@@ -28,40 +29,43 @@ public class MovementWaypoint : MonoBehaviour {
     // Use this for initialization
     void OnDrawGizmos()
     {
-	
-        if( !drawLinks)
+        if (drawText)
         {
-            return;
+            TextGizmo.Instance.DrawText(Camera.main, transform.position, gameObject.name);
         }
 
-        
-        // Next point for the character to walk to
-        if ( next != null)
+        if (drawLinks)
         {
-            makeLine(this, next, Color.red, drawOffset);
-            //if (next.phaseLayer != this.phaseLayer) { Debug.LogWarning("The phaselayer for " + this.name + " is NOT same for it's next point!"); }
-        }
 
-        // When we walk left, it will walk here
-        if (previous != null)
-        {
-            makeLine(this, previous, Color.green, -drawOffset);
-            //if (previous.phaseLayer != this.phaseLayer) { Debug.LogWarning("The phaselayer for " + this.name + " is NOT same for it's previous point!"); }
-        }
 
-        // Next position to phase to
-        if (nextPhasePoint != null)
-        {
-            makeLine(this, nextPhasePoint, Color.blue, drawOffset);
-            //if( nextPhasePoint.phaseLayer == this.phaseLayer) { Debug.LogWarning("The phaselayer for " + this.name + " is the same for it's nextPhasePoint!"); }
+            // Next point for the character to walk to
+            if (next != null)
+            {
+                makeLine(this, next, Color.red, drawOffset);
+                //if (next.phaseLayer != this.phaseLayer) { Debug.LogWarning("The phaselayer for " + this.name + " is NOT same for it's next point!"); }
+            }
 
-        }
+            // When we walk left, it will walk here
+            if (previous != null)
+            {
+                makeLine(this, previous, Color.green, -drawOffset);
+                //if (previous.phaseLayer != this.phaseLayer) { Debug.LogWarning("The phaselayer for " + this.name + " is NOT same for it's previous point!"); }
+            }
 
-        // Previous point to phase to
-        if (previousPhasePoint != null)
-        {
-            makeLine(this, previousPhasePoint, Color.yellow, -drawOffset);
-            //if (previousPhasePoint.phaseLayer == this.phaseLayer) { Debug.LogWarning("The phaselayer for " + this.name + " is the same for it's previousPhasePoint!"); }
+            // Next position to phase to
+            if (nextPhasePoint != null)
+            {
+                makeLine(this, nextPhasePoint, Color.blue, drawOffset);
+                //if( nextPhasePoint.phaseLayer == this.phaseLayer) { Debug.LogWarning("The phaselayer for " + this.name + " is the same for it's nextPhasePoint!"); }
+
+            }
+
+            // Previous point to phase to
+            if (previousPhasePoint != null)
+            {
+                makeLine(this, previousPhasePoint, Color.yellow, -drawOffset);
+                //if (previousPhasePoint.phaseLayer == this.phaseLayer) { Debug.LogWarning("The phaselayer for " + this.name + " is the same for it's previousPhasePoint!"); }
+            }
         }
     }
 

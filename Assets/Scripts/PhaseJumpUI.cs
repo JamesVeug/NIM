@@ -37,8 +37,11 @@ public class PhaseJumpUI : MonoBehaviour
         }
 
         // Get the text off the canvas
-        phaseForwardText = FindObjectOfType<Canvas>().transform.FindChild("PhaseForwardText").gameObject.GetComponent<Text>();
-        phasebackwardText = FindObjectOfType<Canvas>().transform.FindChild("PhaseBackText").gameObject.GetComponent<Text>();
+        Transform forwardText = FindObjectOfType<Canvas>().transform.FindChild("PhaseForwardText");
+        if (forwardText != null) { phaseForwardText = forwardText.gameObject.GetComponent<Text>(); }
+
+        Transform backText = FindObjectOfType<Canvas>().transform.FindChild("PhaseBackText");
+        if (backText != null) { phasebackwardText = backText.gameObject.GetComponent<Text>(); }
     }
 
     // Update is called once per frame
@@ -69,24 +72,27 @@ public class PhaseJumpUI : MonoBehaviour
         }
 
         // Show GUI text
-        bool canPhaseForward = jump.canPhaseForward();
-        if( !jump.isPhasing() && canPhaseForward)
+        if (phaseForwardText != null)
         {
-            phaseForwardText.enabled = true;
-        }
-        else
-        {
-            phaseForwardText.enabled = false;
-        }
+            bool canPhaseForward = jump.canPhaseForward();
+            if (!jump.isPhasing() && canPhaseForward)
+            {
+                phaseForwardText.enabled = true;
+            }
+            else
+            {
+                phaseForwardText.enabled = false;
+            }
 
-        bool canPhaseBackward = jump.canPhaseBack();
-        if (!jump.isPhasing() && canPhaseBackward)
-        {
-            phasebackwardText.enabled = true;
-        }
-        else
-        {
-            phasebackwardText.enabled = false;
+            bool canPhaseBackward = jump.canPhaseBack();
+            if (!jump.isPhasing() && canPhaseBackward)
+            {
+                phasebackwardText.enabled = true;
+            }
+            else
+            {
+                phasebackwardText.enabled = false;
+            }
         }
         
     }
