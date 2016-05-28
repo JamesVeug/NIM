@@ -7,7 +7,7 @@ public class Movement : MonoBehaviour {
     private AudioSource audioSource;
     
     public Vector3 speed = new Vector3(5f, 5f, 5f);
-    public float movementDecay = 3f;
+    public float movementDecay = 4f;
     public float movementIncrement = 3f;
     public float turnSpeed = 10f;
     public float gravity = 1f;
