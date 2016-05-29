@@ -5,18 +5,21 @@ public class Movement : MonoBehaviour {
     
     private CharacterController controller;
     private AudioSource audioSource;
-
-    public bool EnableLeftRightMovement = true; // can we move left/right?
-    public bool EnableForwardBackMovement = false; // can we move forward/back?
-    public bool EnableMoveAccordingToCamera = true; // We move accorging to the angle of the camera
+    
     public Vector3 speed = new Vector3(5f, 5f, 5f);
+    public float movementDecay = 4f;
+    public float movementIncrement = 3f;
+    public float turnSpeed = 10f;
     public float gravity = 1f;
     public float jump = 5f;
 
     public MovementWaypoint currentMovementWaypoint;
     public float changeWaypointDistance = 1; // Distance we must get to in order to chaneg to the next waypoint
 
-    float falling = 0f;
+    private float falling = 0f;
+    private float moveTime = 1f;
+    private Vector3 moveToPosition = new Vector3(0, 0, 0);
+    private Quaternion rotateTo = Quaternion.identity;
 
     // SOUNDS
     private bool fallSoundPlayed = false;
@@ -53,13 +56,10 @@ public class Movement : MonoBehaviour {
 			transform.position = currentMovementWaypoint.transform.position;
 		}
 
-        if( !EnableMoveAccordingToCamera)
+        // Look at the next point
+        if (currentMovementWaypoint != null && currentMovementWaypoint.next != null)
         {
-            // Look at the next point
-            if (currentMovementWaypoint != null && currentMovementWaypoint.next != null)
-            {
-                transform.LookAt(currentMovementWaypoint.next.transform);
-            }
+            transform.LookAt(currentMovementWaypoint.next.transform);
         }
     }
 
@@ -75,9 +75,13 @@ public class Movement : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-		if (controller == null) { //If the player can't be controlled, don't let it move
-			return;
-		}
+        if (controller == null) { //If the player can't be controlled, don't let it move
+            return;
+        }
+
+        if (rotateTo != Quaternion.identity) {
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotateTo, Time.deltaTime * turnSpeed);
+        }
 
         // Stop the player from doing stuff if we are phasing
         PhaseJump phaseJump = GetComponent<PhaseJump>();
@@ -85,21 +89,26 @@ public class Movement : MonoBehaviour {
         {
             return;
         }
+        
+        float moveHorizontal = Input.GetAxisRaw("Horizontal");
+        MovementWaypoint nextPoint = getNextWaypoint(moveHorizontal);
+        rotatePlayer(moveHorizontal, nextPoint);
 
-        float moveHorizontal = EnableLeftRightMovement ? Input.GetAxis("Horizontal") : 0;
-        float moveVertical = EnableForwardBackMovement ? Input.GetAxis("Vertical") : 0;
+        // Start walking to waypoint
+        Vector3 movement = moveToPosition;
+        if (moveHorizontal != 0)
+        {
+            // Get the move vector and slowy start moving
+            moveToPosition = moveWithWaypoints(nextPoint);
+            movement = moveToPosition;
+            moveTime = Mathf.Min(1, moveTime+Time.deltaTime* movementIncrement);
 
-        Vector3 movement = Vector3.zero;
-        if( EnableMoveAccordingToCamera)
-        {
-            movement = Camera.main.transform.forward * moveVertical* speed.z;
-            movement += Camera.main.transform.right * moveHorizontal * speed.x;
-            movement *= Time.deltaTime;
         }
-        else
-        {
-            movement = moveWithWaypoints(moveHorizontal, moveVertical);
+        else  {
+            // Slowly stop moving
+            moveTime = Mathf.Max(0, moveTime - Time.deltaTime * movementDecay);
         }
+        movement *= moveTime;
 
 
         if (controller.isGrounded)
@@ -146,16 +155,36 @@ public class Movement : MonoBehaviour {
         }
     }
 
-    Vector3 moveWithWaypoints(float moveLeft, float moveForward)
+    void rotatePlayer(float moveLeft, MovementWaypoint nextPoint)
     {
-        if( currentMovementWaypoint == null)
+        if( nextPoint == null)
+        {
+            // Can't rotate
+            return;
+        }
+
+        // Face in drection of movement
+        var flatVectorToTarget = transform.position - nextPoint.transform.position;
+        flatVectorToTarget.y = 0;
+        Quaternion newRotation = Quaternion.LookRotation(flatVectorToTarget);
+        //Debug.Log("AngleA " + Quaternion.Angle(transform.rotation, newRotation));
+        //Debug.Log("AngleT " + transform.rotation.eulerAngles);
+        newRotation *= Quaternion.Euler(0, 178, 0);
+
+        //Debug.Log("Angle " + newRotation.eulerAngles);
+        rotateTo = newRotation;
+    }
+
+    MovementWaypoint getNextWaypoint(float moveLeft)
+    {
+        if (currentMovementWaypoint == null)
         {
             Debug.LogError("No Waypoint assigned to player. Can not move!");
         }
 
         // Get the next point we want to move to
         MovementWaypoint nextPoint = null;
-        if( moveLeft > 0 && currentMovementWaypoint.next != null )
+        if (moveLeft > 0 && currentMovementWaypoint.next != null)
         {
             nextPoint = currentMovementWaypoint.next;
 
@@ -167,7 +196,7 @@ public class Movement : MonoBehaviour {
                 nextPoint = nextPoint.next;
             }
         }
-        else if (moveLeft < 0 )
+        else if (moveLeft < 0)
         {
             // When moving left. We want to move BACK to the current waypoint.
             nextPoint = currentMovementWaypoint;
@@ -179,30 +208,42 @@ public class Movement : MonoBehaviour {
                 nextPoint = nextPoint.previous;
 
                 // If we do not have a previosu waypoint to move to. Don't save it as our current waypoint
-                if (currentMovementWaypoint.previous != null) { 
+                if (currentMovementWaypoint.previous != null)
+                {
                     currentMovementWaypoint = nextPoint;
                 }
             }
         }
+        return nextPoint;
+    }
+
+    Vector3 moveWithWaypoints(MovementWaypoint nextPoint)
+    {
 
         // Make sure we can move somewhere
-        if (nextPoint != null)
+        if (nextPoint == null)
         {
-            //Debug.LogWarning("Current point " + currentMovementWaypoint.name);
-            //Debug.LogWarning("Next point " + nextPoint.name);
 
-            // Look at the next point
-            transform.LookAt(nextPoint.transform);
-            transform.localEulerAngles = new Vector3(0, transform.localEulerAngles.y, transform.localEulerAngles.z);
-
-            Vector3 movement = transform.forward * Mathf.Abs(moveLeft) * speed.z;
-            //movement += transform.forward * moveForward * speed.x;
-            movement *= Time.deltaTime;
-            return movement;
+            // Can not move
+            return Vector3.zero;
         }
 
-        // Can not move
-        return Vector3.zero;
+        // Move towards target
+        Vector3 moveToPoint = nextPoint.transform.position-transform.position;
+        float mag = moveToPoint.magnitude;
+        float scalar = 2f / mag;
+        moveToPoint *= scalar;
+
+        moveToPoint += transform.position;
+        moveToPoint.y = transform.position.y;
+
+
+        float time = speed.z * Time.deltaTime;
+        Vector3 nextPosition = Vector3.MoveTowards(transform.position, moveToPoint, time);
+
+        Vector3 movement = nextPosition - transform.position;
+        //Debug.Log("movement " + movement + " mag " + movement.magnitude);
+        return movement;
     }
 
     void rotateToFloor()
