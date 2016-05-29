@@ -18,6 +18,7 @@ public class PhaseJump : MonoBehaviour
     private float phaseRemainingTime = 0f;
     private Vector3 phaseFromPosition = Vector3.zero;
     private Vector3 phaseToPosition = Vector3.zero;
+    private bool phaseButtonPressed = false;
     //private MovementWaypoint waypoint = null;
 
     private List<PhaseObjectTravel> phasingObects = new List<PhaseObjectTravel>();
@@ -48,9 +49,13 @@ public class PhaseJump : MonoBehaviour
     [Range(min: 0, max: 100)]
     public float[] phaseBackSoundsVolume;
 
+    [Range(min: 0, max: 100)]
+    public float[] cantPhaseSoundsVolume;
+
     // Clips
     public AudioClip[] phaseForwardSounds;
     public AudioClip[] phaseBackSounds;
+    public AudioClip[] cantPhaseSounds;
 
     // Use this for initialization
     void Start()
@@ -209,17 +214,31 @@ public class PhaseJump : MonoBehaviour
             //pauseGame();
 
             // Phase forward
-            if (phaseJumpDirection == 1 && canPhaseForward())
+            if (phaseJumpDirection == 1 )
             {
-                phaseDirectionSelected = 1;
-                canPhase = false;
+                if (canPhaseForward())
+                {
+                    phaseDirectionSelected = 1;
+                    canPhase = false;
+                }
+                else if (!phaseButtonPressed)
+                {
+                    SoundMaster.playRandomSound(cantPhaseSounds,cantPhaseSoundsVolume, getAudioSource());
+                }
             }
 
             // Phase Backward
-            if (phaseJumpDirection == -1 && canPhaseBack())
+            if (phaseJumpDirection == -1 )
             {
-                phaseDirectionSelected = -1;
-                canPhase = false;
+                if (canPhaseBack())
+                {
+                    phaseDirectionSelected = -1;
+                    canPhase = false;
+                }
+                else if ( !phaseButtonPressed )
+                {
+                    SoundMaster.playRandomSound(cantPhaseSounds, cantPhaseSoundsVolume, getAudioSource());
+                }
             }
         }
         else if (phaseJumpDirection == 0 && !canPhase)
@@ -229,7 +248,7 @@ public class PhaseJump : MonoBehaviour
             phaseDirectionSelected = 0;
             canPhase = true;
         }
-
+        phaseButtonPressed = phaseJumpDirection != 0;
     }
 
     private void pushObjects()

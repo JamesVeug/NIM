@@ -7,6 +7,7 @@ public class PickupTemp : MonoBehaviour {
     private static int pickups = 0;
     private bool addedThisPickup = false; // TEMP. Checks if we have added this crystal to the total pickups
 
+    private GameObject glowObject;
     private Text pickupCounterText;
 
     private float y0;
@@ -55,6 +56,12 @@ public class PickupTemp : MonoBehaviour {
                 pickupCounterText.text = pickups.ToString() + "/" + totalPickups.ToString();
             }
         }
+
+        glowObject = GameObject.Find("NimGlow");
+        /*f( glow != null)
+        {
+            glow.GetComponent<SpriteRenderer>();
+        }*/
     }
 
     void updatePickupCounter()
