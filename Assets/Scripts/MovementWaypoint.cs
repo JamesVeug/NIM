@@ -31,7 +31,7 @@ public class MovementWaypoint : MonoBehaviour {
     {
         if (drawText)
         {
-            //TextGizmo.Instance.DrawText(Camera.main, transform.position, gameObject.name);
+            TextGizmo.Instance.DrawText(Camera.main, transform.position, gameObject.name);
         }
 
         if (drawLinks)
