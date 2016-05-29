@@ -5,7 +5,9 @@ using UnityEngine.UI;
 public class PickupTemp : MonoBehaviour {
     private static int totalPickups = 0;
     private static int pickups = 0;
-    private Text menuGuiImage;
+    private bool addedThisPickup = false; // TEMP. Checks if we have added this crystal to the total pickups
+
+    private Text pickupCounterText;
 
     private float y0;
     private float amplitude = 1;
@@ -22,7 +24,8 @@ public class PickupTemp : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         y0 = transform.position.y;
-        totalPickups++;
+        pickups = 0;
+        totalPickups = 0;
         //transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
 
         amplitude = Random.Range(0.15f, 0.25f);
@@ -43,21 +46,34 @@ public class PickupTemp : MonoBehaviour {
             renderer.material = materials[materialsI];
         }
 
-        GameObject phaseMenuImageO = GameObject.Find("PickupCounter");
-        if (phaseMenuImageO != null)
+        GameObject counter = GameObject.Find("PickupCounter");
+        if (counter != null)
         {
-            menuGuiImage = phaseMenuImageO.GetComponent<Text>();
-            if (menuGuiImage != null)
+            pickupCounterText = counter.GetComponent<Text>();
+            if (pickupCounterText != null)
             {
-                menuGuiImage.text = pickups.ToString() + "/" + totalPickups.ToString();
+                pickupCounterText.text = pickups.ToString() + "/" + totalPickups.ToString();
             }
+        }
+    }
+
+    void updatePickupCounter()
+    {
+        if (pickupCounterText != null)
+        {
+            pickupCounterText.text = pickups.ToString() + "/" + totalPickups.ToString();
         }
     }
 	
 	// Update is called once per frame
 	void Update () {
         // Save the y position prior to start floating (maybe in the Start function):
-
+        if (!addedThisPickup)
+        {
+            addedThisPickup = true;
+            totalPickups++;
+            updatePickupCounter();
+        }
 
         // Put the floating movement in the Update function:
         Vector3 p = transform.position;
@@ -77,11 +93,7 @@ public class PickupTemp : MonoBehaviour {
 
         pickups++;
 
-        GameObject phaseMenuImageO = GameObject.Find("PickupCounter");
-        if (menuGuiImage != null)
-        {
-            menuGuiImage.text = pickups.ToString() + "/" + totalPickups.ToString();
-        }
+        updatePickupCounter();
 
         AudioSource source = other.gameObject.GetComponent<AudioSource>();
         if (source != null) { 
