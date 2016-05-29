@@ -1,0 +1,706 @@
+fileFormatVersion: 2
+guid: d8d7243d26c10504398296dc729b4386
+timeCreated: 1461452046
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: crystalBaseRock
+    100002: crystalPoint
+    100004: crystalPoint 1
+    100006: crystalPoint 2
+    100008: crystalPoint 3
+    100010: crystalPoint 4
+    100012: crystalPoint 5
+    100014: crystalPoint0
+    100016: crystalPoint0 1
+    100018: crystalPoint0 2
+    100020: crystalPoint0 3
+    100022: crystalPoint0 4
+    100024: crystalPoint0 5
+    100026: crystalPoint1
+    100028: crystalPoint1 1
+    100030: crystalPoint1 2
+    100032: crystalPoint1 3
+    100034: crystalPoint1 4
+    100036: crystalPoint1 5
+    100038: crystalPoint2
+    100040: crystalPoint2 1
+    100042: crystalPoint2 2
+    100044: crystalPoint2 3
+    100046: crystalPoint2 4
+    100048: crystalPoint2 5
+    100050: crystalPoint3
+    100052: crystalPoint3 1
+    100054: crystalPoint3 2
+    100056: crystalPoint3 3
+    100058: crystalPoint3 4
+    100060: crystalPoint3 5
+    100062: crystalPoint4
+    100064: crystalPoint4 1
+    100066: crystalPoint4 2
+    100068: crystalPoint4 3
+    100070: crystalPoint4 4
+    100072: crystalPoint4 5
+    100074: crystalPoint5
+    100076: crystalPoint5 1
+    100078: crystalPoint5 2
+    100080: crystalPoint5 3
+    100082: crystalPoint5 4
+    100084: crystalPoint5 5
+    100086: crystalPoint6
+    100088: crystalPoint6 1
+    100090: crystalPoint6 2
+    100092: crystalPoint6 3
+    100094: crystalPoint6 4
+    100096: crystalPoint6 5
+    100098: crystalPoint7
+    100100: crystalPoint7 1
+    100102: crystalPoint7 2
+    100104: crystalPoint7 3
+    100106: crystalPoint7 4
+    100108: crystalPoint7 5
+    100110: crystalPoint8
+    100112: crystalPoint8 1
+    100114: crystalPoint8 2
+    100116: crystalPoint8 3
+    100118: crystalPoint8 4
+    100120: crystalPoint8 5
+    100122: crystalPoint9
+    100124: crystalSet0
+    100126: crystalSet1
+    100128: crystalSet2
+    100130: crystalSet3
+    100132: crystalSet4
+    100134: crystalSet5
+    100136: crystalSquare
+    100138: crystalSquare 1
+    100140: crystalSquare 2
+    100142: crystalSquare 3
+    100144: crystalSquare 4
+    100146: crystalSquare 5
+    100148: crystalSquare0
+    100150: crystalSquare0 1
+    100152: crystalSquare0 2
+    100154: crystalSquare0 3
+    100156: crystalSquare0 4
+    100158: crystalSquare0 5
+    100160: crystalSquare1
+    100162: crystalSquare1 1
+    100164: crystalSquare1 2
+    100166: crystalSquare1 3
+    100168: crystalSquare1 4
+    100170: crystalSquare1 5
+    100172: crystalSquare2
+    100174: crystalSquare2 1
+    100176: crystalSquare2 2
+    100178: crystalSquare2 3
+    100180: crystalSquare2 4
+    100182: crystalSquare2 5
+    100184: crystalSquare3
+    100186: crystalSquare3 1
+    100188: crystalSquare3 2
+    100190: crystalSquare3 3
+    100192: crystalSquare3 4
+    100194: crystalSquare3 5
+    100196: crystalSquare4
+    100198: crystalSquare4 1
+    100200: crystalSquare4 2
+    100202: crystalSquare4 3
+    100204: crystalSquare4 4
+    100206: crystalSquare4 5
+    100208: crystalSquare5
+    100210: crystalSquare5 1
+    100212: crystalSquare5 2
+    100214: crystalSquare5 3
+    100216: crystalSquare5 4
+    100218: crystalSquare5 5
+    100220: crystalSquare6
+    100222: crystalSquare6 1
+    100224: crystalSquare6 2
+    100226: crystalSquare6 3
+    100228: crystalSquare6 4
+    100230: crystalSquare6 5
+    100232: crystalSquare7
+    100234: crystalSquare7 1
+    100236: crystalSquare7 2
+    100238: crystalSquare7 3
+    100240: crystalSquare7 4
+    100242: crystalSquare7 5
+    100244: //RootNode
+    100246: feature
+    100248: feature 1
+    100250: feature 2
+    100252: feature 3
+    100254: feature 4
+    100256: feature 5
+    100258: feature0
+    100260: feature0 1
+    100262: feature0 2
+    100264: feature0 3
+    100266: feature0 4
+    100268: feature0 5
+    100270: feature1
+    100272: feature1 1
+    100274: feature1 2
+    100276: feature1 3
+    100278: feature1 4
+    100280: feature1 5
+    100282: feature2
+    400000: crystalBaseRock
+    400002: crystalPoint
+    400004: crystalPoint 1
+    400006: crystalPoint 2
+    400008: crystalPoint 3
+    400010: crystalPoint 4
+    400012: crystalPoint 5
+    400014: crystalPoint0
+    400016: crystalPoint0 1
+    400018: crystalPoint0 2
+    400020: crystalPoint0 3
+    400022: crystalPoint0 4
+    400024: crystalPoint0 5
+    400026: crystalPoint1
+    400028: crystalPoint1 1
+    400030: crystalPoint1 2
+    400032: crystalPoint1 3
+    400034: crystalPoint1 4
+    400036: crystalPoint1 5
+    400038: crystalPoint2
+    400040: crystalPoint2 1
+    400042: crystalPoint2 2
+    400044: crystalPoint2 3
+    400046: crystalPoint2 4
+    400048: crystalPoint2 5
+    400050: crystalPoint3
+    400052: crystalPoint3 1
+    400054: crystalPoint3 2
+    400056: crystalPoint3 3
+    400058: crystalPoint3 4
+    400060: crystalPoint3 5
+    400062: crystalPoint4
+    400064: crystalPoint4 1
+    400066: crystalPoint4 2
+    400068: crystalPoint4 3
+    400070: crystalPoint4 4
+    400072: crystalPoint4 5
+    400074: crystalPoint5
+    400076: crystalPoint5 1
+    400078: crystalPoint5 2
+    400080: crystalPoint5 3
+    400082: crystalPoint5 4
+    400084: crystalPoint5 5
+    400086: crystalPoint6
+    400088: crystalPoint6 1
+    400090: crystalPoint6 2
+    400092: crystalPoint6 3
+    400094: crystalPoint6 4
+    400096: crystalPoint6 5
+    400098: crystalPoint7
+    400100: crystalPoint7 1
+    400102: crystalPoint7 2
+    400104: crystalPoint7 3
+    400106: crystalPoint7 4
+    400108: crystalPoint7 5
+    400110: crystalPoint8
+    400112: crystalPoint8 1
+    400114: crystalPoint8 2
+    400116: crystalPoint8 3
+    400118: crystalPoint8 4
+    400120: crystalPoint8 5
+    400122: crystalPoint9
+    400124: crystalSet0
+    400126: crystalSet1
+    400128: crystalSet2
+    400130: crystalSet3
+    400132: crystalSet4
+    400134: crystalSet5
+    400136: crystalSquare
+    400138: crystalSquare 1
+    400140: crystalSquare 2
+    400142: crystalSquare 3
+    400144: crystalSquare 4
+    400146: crystalSquare 5
+    400148: crystalSquare0
+    400150: crystalSquare0 1
+    400152: crystalSquare0 2
+    400154: crystalSquare0 3
+    400156: crystalSquare0 4
+    400158: crystalSquare0 5
+    400160: crystalSquare1
+    400162: crystalSquare1 1
+    400164: crystalSquare1 2
+    400166: crystalSquare1 3
+    400168: crystalSquare1 4
+    400170: crystalSquare1 5
+    400172: crystalSquare2
+    400174: crystalSquare2 1
+    400176: crystalSquare2 2
+    400178: crystalSquare2 3
+    400180: crystalSquare2 4
+    400182: crystalSquare2 5
+    400184: crystalSquare3
+    400186: crystalSquare3 1
+    400188: crystalSquare3 2
+    400190: crystalSquare3 3
+    400192: crystalSquare3 4
+    400194: crystalSquare3 5
+    400196: crystalSquare4
+    400198: crystalSquare4 1
+    400200: crystalSquare4 2
+    400202: crystalSquare4 3
+    400204: crystalSquare4 4
+    400206: crystalSquare4 5
+    400208: crystalSquare5
+    400210: crystalSquare5 1
+    400212: crystalSquare5 2
+    400214: crystalSquare5 3
+    400216: crystalSquare5 4
+    400218: crystalSquare5 5
+    400220: crystalSquare6
+    400222: crystalSquare6 1
+    400224: crystalSquare6 2
+    400226: crystalSquare6 3
+    400228: crystalSquare6 4
+    400230: crystalSquare6 5
+    400232: crystalSquare7
+    400234: crystalSquare7 1
+    400236: crystalSquare7 2
+    400238: crystalSquare7 3
+    400240: crystalSquare7 4
+    400242: crystalSquare7 5
+    400244: //RootNode
+    400246: feature
+    400248: feature 1
+    400250: feature 2
+    400252: feature 3
+    400254: feature 4
+    400256: feature 5
+    400258: feature0
+    400260: feature0 1
+    400262: feature0 2
+    400264: feature0 3
+    400266: feature0 4
+    400268: feature0 5
+    400270: feature1
+    400272: feature1 1
+    400274: feature1 2
+    400276: feature1 3
+    400278: feature1 4
+    400280: feature1 5
+    400282: feature2
+    2300000: crystalBaseRock
+    2300002: crystalPoint0
+    2300004: crystalPoint0 1
+    2300006: crystalPoint0 2
+    2300008: crystalPoint0 3
+    2300010: crystalPoint0 4
+    2300012: crystalPoint0 5
+    2300014: crystalPoint1
+    2300016: crystalPoint1 1
+    2300018: crystalPoint1 2
+    2300020: crystalPoint1 3
+    2300022: crystalPoint1 4
+    2300024: crystalPoint1 5
+    2300026: crystalPoint2
+    2300028: crystalPoint2 1
+    2300030: crystalPoint2 2
+    2300032: crystalPoint2 3
+    2300034: crystalPoint2 4
+    2300036: crystalPoint2 5
+    2300038: crystalPoint3
+    2300040: crystalPoint3 1
+    2300042: crystalPoint3 2
+    2300044: crystalPoint3 3
+    2300046: crystalPoint3 4
+    2300048: crystalPoint3 5
+    2300050: crystalPoint4
+    2300052: crystalPoint4 1
+    2300054: crystalPoint4 2
+    2300056: crystalPoint4 3
+    2300058: crystalPoint4 4
+    2300060: crystalPoint4 5
+    2300062: crystalPoint5
+    2300064: crystalPoint5 1
+    2300066: crystalPoint5 2
+    2300068: crystalPoint5 3
+    2300070: crystalPoint5 4
+    2300072: crystalPoint5 5
+    2300074: crystalPoint6
+    2300076: crystalPoint6 1
+    2300078: crystalPoint6 2
+    2300080: crystalPoint6 3
+    2300082: crystalPoint6 4
+    2300084: crystalPoint6 5
+    2300086: crystalPoint7
+    2300088: crystalPoint7 1
+    2300090: crystalPoint7 2
+    2300092: crystalPoint7 3
+    2300094: crystalPoint7 4
+    2300096: crystalPoint7 5
+    2300098: crystalPoint8
+    2300100: crystalPoint8 1
+    2300102: crystalPoint8 2
+    2300104: crystalPoint8 3
+    2300106: crystalPoint8 4
+    2300108: crystalPoint8 5
+    2300110: crystalPoint9
+    2300112: crystalSquare0
+    2300114: crystalSquare0 1
+    2300116: crystalSquare0 2
+    2300118: crystalSquare0 3
+    2300120: crystalSquare0 4
+    2300122: crystalSquare0 5
+    2300124: crystalSquare1
+    2300126: crystalSquare1 1
+    2300128: crystalSquare1 2
+    2300130: crystalSquare1 3
+    2300132: crystalSquare1 4
+    2300134: crystalSquare1 5
+    2300136: crystalSquare2
+    2300138: crystalSquare2 1
+    2300140: crystalSquare2 2
+    2300142: crystalSquare2 3
+    2300144: crystalSquare2 4
+    2300146: crystalSquare2 5
+    2300148: crystalSquare3
+    2300150: crystalSquare3 1
+    2300152: crystalSquare3 2
+    2300154: crystalSquare3 3
+    2300156: crystalSquare3 4
+    2300158: crystalSquare3 5
+    2300160: crystalSquare4
+    2300162: crystalSquare4 1
+    2300164: crystalSquare4 2
+    2300166: crystalSquare4 3
+    2300168: crystalSquare4 4
+    2300170: crystalSquare4 5
+    2300172: crystalSquare5
+    2300174: crystalSquare5 1
+    2300176: crystalSquare5 2
+    2300178: crystalSquare5 3
+    2300180: crystalSquare5 4
+    2300182: crystalSquare5 5
+    2300184: crystalSquare6
+    2300186: crystalSquare6 1
+    2300188: crystalSquare6 2
+    2300190: crystalSquare6 3
+    2300192: crystalSquare6 4
+    2300194: crystalSquare6 5
+    2300196: crystalSquare7
+    2300198: crystalSquare7 1
+    2300200: crystalSquare7 2
+    2300202: crystalSquare7 3
+    2300204: crystalSquare7 4
+    2300206: crystalSquare7 5
+    2300208: feature0
+    2300210: feature0 1
+    2300212: feature0 2
+    2300214: feature0 3
+    2300216: feature0 4
+    2300218: feature0 5
+    2300220: feature1
+    2300222: feature1 1
+    2300224: feature1 2
+    2300226: feature1 3
+    2300228: feature1 4
+    2300230: feature1 5
+    2300232: feature2
+    3300000: crystalBaseRock
+    3300002: crystalPoint0
+    3300004: crystalPoint0 1
+    3300006: crystalPoint0 2
+    3300008: crystalPoint0 3
+    3300010: crystalPoint0 4
+    3300012: crystalPoint0 5
+    3300014: crystalPoint1
+    3300016: crystalPoint1 1
+    3300018: crystalPoint1 2
+    3300020: crystalPoint1 3
+    3300022: crystalPoint1 4
+    3300024: crystalPoint1 5
+    3300026: crystalPoint2
+    3300028: crystalPoint2 1
+    3300030: crystalPoint2 2
+    3300032: crystalPoint2 3
+    3300034: crystalPoint2 4
+    3300036: crystalPoint2 5
+    3300038: crystalPoint3
+    3300040: crystalPoint3 1
+    3300042: crystalPoint3 2
+    3300044: crystalPoint3 3
+    3300046: crystalPoint3 4
+    3300048: crystalPoint3 5
+    3300050: crystalPoint4
+    3300052: crystalPoint4 1
+    3300054: crystalPoint4 2
+    3300056: crystalPoint4 3
+    3300058: crystalPoint4 4
+    3300060: crystalPoint4 5
+    3300062: crystalPoint5
+    3300064: crystalPoint5 1
+    3300066: crystalPoint5 2
+    3300068: crystalPoint5 3
+    3300070: crystalPoint5 4
+    3300072: crystalPoint5 5
+    3300074: crystalPoint6
+    3300076: crystalPoint6 1
+    3300078: crystalPoint6 2
+    3300080: crystalPoint6 3
+    3300082: crystalPoint6 4
+    3300084: crystalPoint6 5
+    3300086: crystalPoint7
+    3300088: crystalPoint7 1
+    3300090: crystalPoint7 2
+    3300092: crystalPoint7 3
+    3300094: crystalPoint7 4
+    3300096: crystalPoint7 5
+    3300098: crystalPoint8
+    3300100: crystalPoint8 1
+    3300102: crystalPoint8 2
+    3300104: crystalPoint8 3
+    3300106: crystalPoint8 4
+    3300108: crystalPoint8 5
+    3300110: crystalPoint9
+    3300112: crystalSquare0
+    3300114: crystalSquare0 1
+    3300116: crystalSquare0 2
+    3300118: crystalSquare0 3
+    3300120: crystalSquare0 4
+    3300122: crystalSquare0 5
+    3300124: crystalSquare1
+    3300126: crystalSquare1 1
+    3300128: crystalSquare1 2
+    3300130: crystalSquare1 3
+    3300132: crystalSquare1 4
+    3300134: crystalSquare1 5
+    3300136: crystalSquare2
+    3300138: crystalSquare2 1
+    3300140: crystalSquare2 2
+    3300142: crystalSquare2 3
+    3300144: crystalSquare2 4
+    3300146: crystalSquare2 5
+    3300148: crystalSquare3
+    3300150: crystalSquare3 1
+    3300152: crystalSquare3 2
+    3300154: crystalSquare3 3
+    3300156: crystalSquare3 4
+    3300158: crystalSquare3 5
+    3300160: crystalSquare4
+    3300162: crystalSquare4 1
+    3300164: crystalSquare4 2
+    3300166: crystalSquare4 3
+    3300168: crystalSquare4 4
+    3300170: crystalSquare4 5
+    3300172: crystalSquare5
+    3300174: crystalSquare5 1
+    3300176: crystalSquare5 2
+    3300178: crystalSquare5 3
+    3300180: crystalSquare5 4
+    3300182: crystalSquare5 5
+    3300184: crystalSquare6
+    3300186: crystalSquare6 1
+    3300188: crystalSquare6 2
+    3300190: crystalSquare6 3
+    3300192: crystalSquare6 4
+    3300194: crystalSquare6 5
+    3300196: crystalSquare7
+    3300198: crystalSquare7 1
+    3300200: crystalSquare7 2
+    3300202: crystalSquare7 3
+    3300204: crystalSquare7 4
+    3300206: crystalSquare7 5
+    3300208: feature0
+    3300210: feature0 1
+    3300212: feature0 2
+    3300214: feature0 3
+    3300216: feature0 4
+    3300218: feature0 5
+    3300220: feature1
+    3300222: feature1 1
+    3300224: feature1 2
+    3300226: feature1 3
+    3300228: feature1 4
+    3300230: feature1 5
+    3300232: feature2
+    4300000: crystalBaseRock
+    4300002: feature0
+    4300004: feature1
+    4300006: crystalPoint0
+    4300008: crystalPoint1
+    4300010: crystalPoint2
+    4300012: crystalPoint3
+    4300014: crystalPoint4
+    4300016: crystalPoint5
+    4300018: crystalPoint6
+    4300020: crystalPoint8
+    4300022: crystalPoint7
+    4300024: crystalSquare0
+    4300026: crystalSquare1
+    4300028: crystalSquare2
+    4300030: crystalSquare3
+    4300032: crystalSquare4
+    4300034: crystalSquare5
+    4300036: crystalSquare6
+    4300038: crystalSquare7
+    4300040: feature0
+    4300042: feature1
+    4300044: feature2
+    4300046: crystalPoint0
+    4300048: crystalPoint1
+    4300050: crystalPoint2
+    4300052: crystalPoint3
+    4300054: crystalPoint4
+    4300056: crystalPoint5
+    4300058: crystalPoint6
+    4300060: crystalPoint8
+    4300062: crystalPoint7
+    4300064: crystalPoint9
+    4300066: crystalSquare0
+    4300068: crystalSquare1
+    4300070: crystalSquare2
+    4300072: crystalSquare3
+    4300074: crystalSquare4
+    4300076: crystalSquare5
+    4300078: crystalSquare6
+    4300080: crystalSquare7
+    4300082: feature0
+    4300084: feature1
+    4300086: crystalPoint0
+    4300088: crystalPoint1
+    4300090: crystalPoint2
+    4300092: crystalPoint3
+    4300094: crystalPoint4
+    4300096: crystalPoint5
+    4300098: crystalPoint6
+    4300100: crystalPoint8
+    4300102: crystalPoint7
+    4300104: crystalSquare0
+    4300106: crystalSquare1
+    4300108: crystalSquare2
+    4300110: crystalSquare3
+    4300112: crystalSquare4
+    4300114: crystalSquare5
+    4300116: crystalSquare6
+    4300118: crystalSquare7
+    4300120: feature0
+    4300122: feature1
+    4300124: crystalPoint0
+    4300126: crystalPoint1
+    4300128: crystalPoint2
+    4300130: crystalPoint3
+    4300132: crystalPoint4
+    4300134: crystalPoint5
+    4300136: crystalPoint6
+    4300138: crystalPoint8
+    4300140: crystalPoint7
+    4300142: crystalSquare0
+    4300144: crystalSquare1
+    4300146: crystalSquare2
+    4300148: crystalSquare3
+    4300150: crystalSquare4
+    4300152: crystalSquare5
+    4300154: crystalSquare6
+    4300156: crystalSquare7
+    4300158: feature0
+    4300160: feature1
+    4300162: crystalPoint0
+    4300164: crystalPoint1
+    4300166: crystalPoint2
+    4300168: crystalPoint3
+    4300170: crystalPoint4
+    4300172: crystalPoint5
+    4300174: crystalPoint6
+    4300176: crystalPoint8
+    4300178: crystalPoint7
+    4300180: crystalSquare0
+    4300182: crystalSquare1
+    4300184: crystalSquare2
+    4300186: crystalSquare3
+    4300188: crystalSquare4
+    4300190: crystalSquare5
+    4300192: crystalSquare6
+    4300194: crystalSquare7
+    4300196: feature0
+    4300198: feature1
+    4300200: crystalPoint0
+    4300202: crystalPoint1
+    4300204: crystalPoint2
+    4300206: crystalPoint3
+    4300208: crystalPoint4
+    4300210: crystalPoint5
+    4300212: crystalPoint6
+    4300214: crystalPoint8
+    4300216: crystalPoint7
+    4300218: crystalSquare0
+    4300220: crystalSquare1
+    4300222: crystalSquare2
+    4300224: crystalSquare3
+    4300226: crystalSquare4
+    4300228: crystalSquare5
+    4300230: crystalSquare6
+    4300232: crystalSquare7
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 1
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 15
+    normalImportMode: 1
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
