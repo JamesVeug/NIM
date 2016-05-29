@@ -17,10 +17,10 @@ public class SplineMovement2 : MonoBehaviour {
     public MovementWaypoint currentMovementWaypoint;
     public float changeWaypointDistance = 1; // Distance we must get to in order to chaneg to the next waypoint
 
-    float falling = 0f;
+    //float falling = 0f;
 
     // SOUNDS
-    private bool fallSoundPlayed = false;
+    //private bool fallSoundPlayed = false;
     private bool nextFootStepSoundLeft = true;
     private float nextFootStepSound = 0f;
     public float footStepSoundDelay = 1f;

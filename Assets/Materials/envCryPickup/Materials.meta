@@ -1,7 +1,13 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Materials/envCryPickup/Materials.meta
 guid: 202da67ca644f814b8f8ad50ddda4428
 folderAsset: yes
 timeCreated: 1464166351
+=======
+guid: 995a422257377d946b9567d2a5f5ba98
+folderAsset: yes
+timeCreated: 1464477049
+>>>>>>> refs/remotes/origin/master:Assets/Materials/envCryPickup/Materials.meta
 licenseType: Free
 DefaultImporter:
   userData: 

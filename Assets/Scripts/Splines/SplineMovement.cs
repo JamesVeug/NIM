@@ -7,7 +7,7 @@ using System.Collections;
 public class SplineMovement : MonoBehaviour {
 
     private SplineController splineController;
-    private SplineInterpolator interp;
+    //private SplineInterpolator interp;
     private CharacterController controller;
     private AudioSource audioSource;
     
@@ -51,7 +51,7 @@ public class SplineMovement : MonoBehaviour {
     void Start () {
         controller = GetComponent<CharacterController>();
         audioSource = GetComponent<AudioSource>();
-        interp = GetComponent<SplineInterpolator>();
+        //interp = GetComponent<SplineInterpolator>();
         splineController = GetComponent<SplineController>();
 
         transform.position = currentMovementWaypoint.transform.position;
