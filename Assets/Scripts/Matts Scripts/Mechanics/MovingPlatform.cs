@@ -7,21 +7,29 @@ public class MovingPlatform : MonoBehaviour {
     
     public GameObject pointA;
     public GameObject pointB;
-    public float speed;
+    public float movementSpeed;
     public Boolean flippingPlatform;
+    public Boolean isTrigger;
     public float flipTimer = 1;
 
     private Boolean pointATarget = true;
     private float timer = 0;
     private Collision collidedObject;
     private Boolean flipping = false;
+    private float speed;
     
 
 
     // Use this for initialization
     void Start () {
-    
-    }
+        if (isTrigger)
+        {
+            speed = 0;
+        }
+        else {
+            speed = movementSpeed;
+        }
+}
     
     // Update is called once per frame
     void Update () {
@@ -76,9 +84,14 @@ public class MovingPlatform : MonoBehaviour {
                 transform.position = Vector3.MoveTowards(transform.position, pointB.transform.position, speed * Time.deltaTime);
                 //transform.MovePosition(transform.position, pointB.transform.position, speed * Time.deltaTime);
                 pointATarget = !pointATarget;
+                if (isTrigger)
+                {
+                    speed = 0;
+                }
             }
             else {
                 transform.position = Vector3.MoveTowards(transform.position, pointA.transform.position, speed * Time.deltaTime);
+                
             }
             
             
@@ -88,10 +101,16 @@ public class MovingPlatform : MonoBehaviour {
             {
                 transform.position = Vector3.MoveTowards(transform.position, pointA.transform.position, speed * Time.deltaTime);
                 pointATarget = !pointATarget;
+                if (isTrigger)
+                {
+                    speed = 0;
+                }
             }
             else {
                 transform.position = Vector3.MoveTowards(transform.position, pointB.transform.position, speed * Time.deltaTime);
+                
             }
+
 
 
 
@@ -111,5 +130,33 @@ public class MovingPlatform : MonoBehaviour {
     {
        col.transform.parent = null;
         collidedObject = null;
+    }
+
+    public void triggerPlatform(Boolean trig)
+    {
+        if (trig == true)
+        {
+            pointATarget = true;
+
+            if (Vector3.Distance(transform.position, pointA.transform.position) > 0.5f)
+            {
+                speed = movementSpeed;
+            }
+            else {
+                speed = 0;
+            }
+        }
+        else {
+            pointATarget = false;
+            if (Vector3.Distance(transform.position, pointB.transform.position) > 0.5f)
+            {
+                speed = movementSpeed;
+            }
+            else {
+                speed = 0;
+            }
+
+        }
+        
     }
 }
