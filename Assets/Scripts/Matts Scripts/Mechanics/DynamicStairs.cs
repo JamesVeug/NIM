@@ -165,5 +165,16 @@ void Update () {
         
         
 	}
+
+    public void triggerStairs()
+    {
+        if (currentPosition == postion1)
+        {
+            currentPosition = position2;
+        }
+        else {
+            currentPosition = postion1;
+        }
+    }
 }
 

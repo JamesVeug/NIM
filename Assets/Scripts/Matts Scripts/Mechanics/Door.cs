@@ -21,7 +21,7 @@ public class Door : MonoBehaviour {
         botClosed = bottom.transform.position;
         topOpen = new Vector3(topClosed.x,topClosed.y + top.transform.localScale.y, topClosed.z);
         botOpen= new Vector3(botClosed.x, botClosed.y - bottom.transform.localScale.y, topClosed.z);
-
+       
     }
 	
 	// Update is called once per frame
@@ -59,6 +59,10 @@ public class Door : MonoBehaviour {
             doorBlock.transform.position = desiredPos;
 
         }
+    }
+    public void triggerDoor() {
+        
+        open = !open;
     }
 
    
