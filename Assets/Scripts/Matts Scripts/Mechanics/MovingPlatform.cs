@@ -8,9 +8,9 @@ public class MovingPlatform : MonoBehaviour {
     public GameObject pointA;
     public GameObject pointB;
     public float movementSpeed;
-    public Boolean flippingPlatform;
+   // public Boolean flippingPlatform;
     public Boolean isTrigger;
-    public float flipTimer = 1;
+   // public float flipTimer = 1;
 
     private Boolean pointATarget = true;
     private float timer = 0;
@@ -38,34 +38,34 @@ public class MovingPlatform : MonoBehaviour {
 
         //Debug.Log(timer);
         //Debug.Log(test);
-        if (flippingPlatform)
-        {
-            if (timer >= 100*flipTimer)
-            {
-                flipping = true;
-                if (collidedObject != null) {
-                    collidedObject.transform.parent = null;
-                }
-                transform.Rotate(Vector3.right * 60 * Time.deltaTime);
+        //if (flippingPlatform)
+        //{
+        //    if (timer >= 100*flipTimer)
+        //    {
+        //        flipping = true;
+        //        if (collidedObject != null) {
+        //            collidedObject.transform.parent = null;
+        //        }
+        //        transform.Rotate(Vector3.right * 60 * Time.deltaTime);
 
-                float test = (float)Math.Round(transform.rotation.eulerAngles.x);
-                if (test > 178f && test < 182f || test == 0f || test == 360f)
-                {
-
-
-                    timer = 0;
-                    flipping = false;
-                }
+        //        float test = (float)Math.Round(transform.rotation.eulerAngles.x);
+        //        if (test > 178f && test < 182f || test == 0f || test == 360f)
+        //        {
 
 
+        //            timer = 0;
+        //            flipping = false;
+        //        }
 
 
 
-            }
-            else {
-                timer++;
-            }
-        }
+
+
+        //    }
+        //    else {
+        //        timer++;
+        //    }
+        //}
 
 
     }
@@ -117,20 +117,6 @@ public class MovingPlatform : MonoBehaviour {
         }
     }
 
-    public void OnCollisionEnter (Collision col) {
-        if (flipping == false && collidedObject == null)
-        {
-            collidedObject = col;
-            col.transform.parent = transform;
-        }
-        
-    }
-
-    public void OnCollisionExit(Collision col)
-    {
-       col.transform.parent = null;
-        collidedObject = null;
-    }
 
     public void triggerPlatform(Boolean trig)
     {
@@ -158,5 +144,9 @@ public class MovingPlatform : MonoBehaviour {
 
         }
         
+    }
+
+    public bool checkFlipping() {
+        return flipping;
     }
 }

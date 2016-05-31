@@ -9,8 +9,6 @@ public class PressurePlate : MonoBehaviour
     private Vector3 PositionOn;
 
     public GameObject[] partners;
-
-    public partType partnerType;
     private bool triggered;
 
     // Use this for initialization
