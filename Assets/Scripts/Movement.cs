@@ -10,8 +10,8 @@ public class Movement : MonoBehaviour {
     public float movementDecay = 4f;
     public float movementIncrement = 3f;
     public float turnSpeed = 10f;
-    public float gravity = 1f;
-    public float jump = 5f;
+    public float gravity = 12f; //gravity acceleration
+    public float jump = 5f; // jump velocity
 
     public MovementWaypoint currentMovementWaypoint;
     public float changeWaypointDistance = 1; // Distance we must get to in order to chaneg to the next waypoint
@@ -102,7 +102,6 @@ public class Movement : MonoBehaviour {
             moveToPosition = moveWithWaypoints(nextPoint);
             movement = moveToPosition;
             moveTime = Mathf.Min(1, moveTime+Time.deltaTime* movementIncrement);
-
         }
         else  {
             // Slowly stop moving
@@ -113,13 +112,14 @@ public class Movement : MonoBehaviour {
 
         if (controller.isGrounded)
         {
-            if (Input.GetButtonDown("Jump"))
-            {
-                SoundMaster.playRandomSound(jumpSounds, jumpSoundsVolume, getAudioSource());
-                falling = jump;
-            }
+			if (Input.GetButtonDown ("Jump")) {
+				SoundMaster.playRandomSound (jumpSounds, jumpSoundsVolume, getAudioSource ());
+				falling = jump;
+			} else {
+				falling = -1f; //Reset falling speed to stop massively quick falls
+			}
 
-            if (falling < 0 && !fallSoundPlayed)
+            if (falling < 0f && !fallSoundPlayed)
             {
                 //Debug.Log("Falled");
                 SoundMaster.playRandomSound(fallSounds, fallSoundsVolume, getAudioSource());
@@ -132,15 +132,17 @@ public class Movement : MonoBehaviour {
         }
         else
         {
-            falling -= gravity;
             fallSoundPlayed = false;
         }
+
+		//Apply gravity (always, or isGrounded doesn't work properly)
+		falling -= gravity * Time.deltaTime; //convert gravity to velocity
 
         // Save current Y
         float currentY = transform.position.y;
 
         // Move
-        controller.Move(new Vector3(movement.x, falling, movement.z));
+		controller.Move (new Vector3 (movement.x, falling, movement.z) * Time.deltaTime);
 
         // Did we hit something moving up?
         if(falling > 0 && transform.position.y == currentY)
@@ -219,51 +221,23 @@ public class Movement : MonoBehaviour {
 
     Vector3 moveWithWaypoints(MovementWaypoint nextPoint)
     {
-
         // Make sure we can move somewhere
-        if (nextPoint == null)
-        {
-
+        if (nextPoint == null){
             // Can not move
             return Vector3.zero;
         }
 
-        // Move towards target
-        Vector3 moveToPoint = nextPoint.transform.position-transform.position;
-        float mag = moveToPoint.magnitude;
-        float scalar = 2f / mag;
-        moveToPoint *= scalar;
-
-        moveToPoint += transform.position;
-        moveToPoint.y = transform.position.y;
-
+		//Get target position, ignoring y
+		Vector3 moveToPoint = new Vector3 (nextPoint.transform.position.x, transform.position.y, nextPoint.transform.position.z);
 
         float time = speed.z * Time.deltaTime;
-        Vector3 nextPosition = Vector3.MoveTowards(transform.position, moveToPoint, time);
+		Vector3 nextPosition = Vector3.MoveTowards(transform.position, moveToPoint, time);
 
         Vector3 movement = nextPosition - transform.position;
-        //Debug.Log("movement " + movement + " mag " + movement.magnitude);
-        return movement;
+
+		return movement.normalized * speed.x;
     }
-
-    void rotateToFloor()
-    {
-        float range = 1000f;
-        float speed = 50.0f;
-
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, -transform.up, out hit, range))
-        {
-            GameObject o = hit.collider.gameObject;
-            //Debug.LogWarning("XHIT TARGET " + o.name + " " + o.tag);
-            if (o != null)
-            {
-                var targetRotation = o.transform.rotation;
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, speed * Time.deltaTime);
-            }
-        }
-    }
-
+		
     private void playFootStep()
     {
         if( Time.time < nextFootStepSound)
