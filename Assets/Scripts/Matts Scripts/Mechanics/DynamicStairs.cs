@@ -135,7 +135,7 @@ public class DynamicStairs : MonoBehaviour {
         }
         else {
             step.transform.localPosition = new Vector3(xPos, yPos, z);
-
+		
         }
     }
     
