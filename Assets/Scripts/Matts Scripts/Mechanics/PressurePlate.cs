@@ -8,10 +8,10 @@ public class PressurePlate : MonoBehaviour
     private Vector3 PositionOff;
     private Vector3 PositionOn;
 
-    public GameObject partner;
-    public partType partnerType;
-    public bool triggered;
+    public GameObject[] partners;
 
+    public partType partnerType;
+    private bool triggered;
 
     // Use this for initialization
     void Start()
@@ -19,14 +19,10 @@ public class PressurePlate : MonoBehaviour
         PositionOff = this.transform.localPosition;
         //moved half the trigger plate down
         PositionOn = new Vector3(this.transform.localPosition.x, this.transform.localPosition.y - (this.transform.position.y / 2), this.transform.localPosition.z);
-        CastePartner();
 
     }
 
-    private void CastePartner()
-    {
-       
-    }
+
 
     // Update is called once per frame
     void FixedUpdate()
@@ -72,34 +68,41 @@ public class PressurePlate : MonoBehaviour
 
     private void triggerReact()
     {
-
-        if (partnerType == partType.Door)
+        for (int i = 0; i < partners.Length; i++)
         {
-            Door partnerScript = partner.GetComponent<Door>();
-            partnerScript.triggerDoor();
-        }
-        else if (partnerType == partType.Stairs)
-        {
-            DynamicStairs partnerScript = partner.GetComponent<DynamicStairs>();
-            partnerScript.triggerStairs();
-        }
-        else {
-            if (triggered)
+            if (partners[i].GetComponent<Door>() != null)
             {
-                MovingPlatform partnerScript = partner.GetComponent<MovingPlatform>();
-                partnerScript.triggerPlatform(true);
+                Door partnerScript = partners[i].GetComponent<Door>();
+                partnerScript.triggerDoor();
+            }
+            else if (partners[i].GetComponent<DynamicStairs>() != null)
+            {
+                DynamicStairs partnerScript = partners[i].GetComponent<DynamicStairs>();
+                partnerScript.triggerStairs();
+            }
+            else if (partners[i].GetComponent<MovingPlatform>() != null)
+            {
+                if (triggered)
+                {
+                    MovingPlatform partnerScript = partners[i].GetComponent<MovingPlatform>();
+                    partnerScript.triggerPlatform(true);
+                }
+                else {
+                    MovingPlatform partnerScript = partners[i].GetComponent<MovingPlatform>();
+                    partnerScript.triggerPlatform(false);
+                }
+
             }
             else {
-                MovingPlatform partnerScript = partner.GetComponent<MovingPlatform>();
-                partnerScript.triggerPlatform(false);
+                Debug.Log("Must give a Door, platform or stairs script");
             }
-            
         }
-   
+
     }
 
-    public enum partType{
-        Door,Stairs,Platform
+    public enum partType
+    {
+        Door, Stairs, Platform
     }
 
 
