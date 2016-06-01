@@ -17,7 +17,7 @@ public class PressurePlate : MonoBehaviour
     {
         PositionOff = this.transform.localPosition;
         //moved half the trigger plate down
-        PositionOn = new Vector3(this.transform.localPosition.x, this.transform.localPosition.y - (this.transform.position.y / 2), this.transform.localPosition.z);
+        PositionOn = new Vector3(this.transform.localPosition.x, this.transform.localPosition.y - (this.transform.localScale.y / 2), this.transform.localPosition.z);
 
     }
 

@@ -19,7 +19,6 @@ public class PressureTrigger : MonoBehaviour {
 
     public void OnTriggerEnter(Collider other)
     {
-        Debug.Log("TEST");
         
         count++;
         if (count == 1) {
