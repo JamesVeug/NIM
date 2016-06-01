@@ -4,6 +4,7 @@ using System.Collections;
 public class PressureTrigger : MonoBehaviour {
 
     public PressurePlate plate;
+    public bool triggerOnExit = true;
     int count = 0;
 
 	// Use this for initialization
@@ -22,7 +23,7 @@ public class PressureTrigger : MonoBehaviour {
         
         count++;
         if (count == 1) {
-            plate.setTrigger(true);
+            plate.setTriggerReact(true);
         }
         
     }
@@ -32,7 +33,14 @@ public class PressureTrigger : MonoBehaviour {
 
         count--;
         if (count == 0) {
-            plate.setTrigger(false);
+            if (triggerOnExit == true)
+            {
+                plate.setTriggerReact(false);
+            }
+            else {
+                plate.setTriggerNoReact(false);
+            }
+            
         }
     }
 }

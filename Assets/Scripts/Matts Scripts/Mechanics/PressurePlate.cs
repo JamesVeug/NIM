@@ -9,6 +9,7 @@ public class PressurePlate : MonoBehaviour
     private Vector3 PositionOn;
 
     public GameObject[] partners;
+    public bool triggerTester = false;
     private bool triggered;
 
     // Use this for initialization
@@ -25,14 +26,21 @@ public class PressurePlate : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (triggerTester == true) {
+            triggered = !triggered;
+            triggerReact();
+            triggerTester = false;
+        }
         if (triggered)
         {
             slowMove(PositionOn);
+
 
         }
         else {
             slowMove(PositionOff);
         }
+        
     }
 
     private void slowMove(Vector3 desiredPos)
@@ -58,10 +66,15 @@ public class PressurePlate : MonoBehaviour
     }
 
 
-    public void setTrigger(bool trig)
+    public void setTriggerReact(bool trig)
     {
         triggered = trig;
         triggerReact();
+    }
+
+    public void setTriggerNoReact(bool trig)
+    {
+        triggered = trig;
     }
 
     private void triggerReact()
