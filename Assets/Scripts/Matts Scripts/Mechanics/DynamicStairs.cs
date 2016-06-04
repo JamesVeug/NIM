@@ -101,9 +101,6 @@ public class DynamicStairs : MonoBehaviour {
     }
 
 
-   
-
-
     public void SetPositionHelper(float xPos, float yPos, float scaleY, Boolean diag)
     {
         foreach (GameObject step in steps)
@@ -114,9 +111,7 @@ public class DynamicStairs : MonoBehaviour {
             {
                 yPos = yPos + scaleY;
             }
-
         }
-
     }
 
     /**
