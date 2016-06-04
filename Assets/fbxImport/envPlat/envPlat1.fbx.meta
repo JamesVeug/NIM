@@ -14,6 +14,11 @@ ModelImporter:
     100012: runesStripe1
     100014: runesStripe2
     100016: runSwril
+    100018: envPlat1 1
+    100020: runeSwirl
+    100022: runeSwirl0
+    100024: runeSwirl1
+    100026: runeSwirl2
     400000: curve1
     400002: //RootNode
     400004: platform1
@@ -23,18 +28,35 @@ ModelImporter:
     400012: runesStripe1
     400014: runesStripe2
     400016: runSwril
+    400018: envPlat1 1
+    400020: runeSwirl
+    400022: runeSwirl0
+    400024: runeSwirl1
+    400026: runeSwirl2
     2300000: platform1 1
     2300002: runesStripe1
     2300004: runesStripe2
     2300006: runSwril
+    2300008: envPlat1 1
+    2300010: runeSwirl0
+    2300012: runeSwirl1
+    2300014: runeSwirl2
     3300000: platform1 1
     3300002: runesStripe1
     3300004: runesStripe2
     3300006: runSwril
+    3300008: envPlat1 1
+    3300010: runeSwirl0
+    3300012: runeSwirl1
+    3300014: runeSwirl2
     4300000: platform1
     4300002: runesStripe1
     4300004: runesStripe2
     4300006: runSwril
+    4300008: envPlat1
+    4300010: runeSwirl0
+    4300012: runeSwirl1
+    4300014: runeSwirl2
   materials:
     importMaterials: 1
     materialName: 0
@@ -60,11 +82,11 @@ ModelImporter:
   meshes:
     lODScreenPercentages: []
     globalScale: 50
-    meshCompression: 2
+    meshCompression: 0
     addColliders: 0
     importBlendShapes: 1
     swapUVChannels: 0
-    generateSecondaryUV: 0
+    generateSecondaryUV: 1
     useFileUnits: 1
     optimizeMeshForGPU: 1
     keepQuads: 0
