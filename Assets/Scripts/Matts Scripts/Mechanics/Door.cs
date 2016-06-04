@@ -17,11 +17,11 @@ public class Door : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        topClosed = top.transform.position;
-        botClosed = bottom.transform.position;
+        topClosed = top.transform.localPosition;
+        botClosed = bottom.transform.localPosition;
         topOpen = new Vector3(topClosed.x,topClosed.y + top.transform.localScale.y, topClosed.z);
         botOpen= new Vector3(botClosed.x, botClosed.y - bottom.transform.localScale.y, topClosed.z);
-
+       
     }
 	
 	// Update is called once per frame
@@ -42,23 +42,27 @@ public class Door : MonoBehaviour {
 
     private void slowMove(Vector3 desiredPos, GameObject doorBlock)
     {
-        if (Math.Abs(desiredPos.y - doorBlock.transform.position.y) > 0.05f)
+        if (Math.Abs(desiredPos.y - doorBlock.transform.localPosition.y) > 0.05f)
         {
-            if (desiredPos.y > doorBlock.transform.position.y)
+            if (desiredPos.y > doorBlock.transform.localPosition.y)
             {
-                float slowYInc = doorBlock.transform.position.y + (doorBlock.transform.localScale.y * 0.05f * speed);
-                doorBlock.transform.position = new Vector3(doorBlock.transform.position.x, slowYInc, doorBlock.transform.position.z);
+                float slowYInc = doorBlock.transform.localPosition.y + (doorBlock.transform.localScale.y * 0.05f * speed);
+                doorBlock.transform.localPosition = new Vector3(doorBlock.transform.localPosition.x, slowYInc, doorBlock.transform.localPosition.z);
             }
-            else if (desiredPos.y < doorBlock.transform.position.y)
+            else if (desiredPos.y < doorBlock.transform.localPosition.y)
             {
-                float slowYInc = doorBlock.transform.position.y - (doorBlock.transform.localScale.y * 0.05f * speed);
-                doorBlock.transform.position = new Vector3(doorBlock.transform.position.x, slowYInc, doorBlock.transform.position.z);
+                float slowYInc = doorBlock.transform.localPosition.y - (doorBlock.transform.localScale.y * 0.05f * speed);
+                doorBlock.transform.localPosition = new Vector3(doorBlock.transform.localPosition.x, slowYInc, doorBlock.transform.localPosition.z);
             }
         }
         else {
-            doorBlock.transform.position = desiredPos;
+            doorBlock.transform.localPosition = desiredPos;
 
         }
+    }
+    public void triggerDoor() {
+        
+        open = !open;
     }
 
    
