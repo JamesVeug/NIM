@@ -39,7 +39,12 @@ public class PhaseJumpUI : MonoBehaviour
                 effects = staff.transform.FindChild("Effects").gameObject;
                 gem = staff.transform.FindChild("MagTealGem").gameObject;
                 gemRenderer = gem.GetComponent<Renderer>();
-                light = effects.transform.FindChild("Light").gameObject.GetComponent<Light>();
+
+                Transform lightO = effects.transform.FindChild("Light");
+                if (lightO != null)
+                {
+                    light = lightO.gameObject.GetComponent<Light>();
+                }
             }
         }
 
@@ -66,17 +71,28 @@ public class PhaseJumpUI : MonoBehaviour
             return;
         }
         glowTime = Mathf.Max(0, glowTime - Time.deltaTime);
-        glowImage.enabled = glowTime > 0;
-        if( jump.isPhasing())
+        if(glowImage!= null )glowImage.enabled = glowTime > 0;
+        if (jump.isPhasing())
         {
-            glowImage.enabled = false;
-            glowImage.transform.localScale = new Vector3(0, 0, 0);
+            if (glowImage != null)
+            {
+                glowImage.enabled = false;
+                glowImage.transform.localScale = new Vector3(0, 0, 0);
+            }
+
             glowTime = 0f;
-            glowImage2.enabled = false;
+
+            if (glowImage2 != null)
+            {
+                glowImage2.enabled = false;
+            }
         }
         else
         {
-            glowImage2.enabled = true;
+            // We are not phasing, so show the glow
+            if (glowImage2 != null) {
+                glowImage2.enabled = true;
+            }
         }
 
         // Show nims phasing status as to if he can phase or not
@@ -139,17 +155,23 @@ public class PhaseJumpUI : MonoBehaviour
             hasGlown = false;
         }
 
+        // Move the position
+        // Change the color
+        // HACK HACK HACK HACK HACK HACK
         Vector3 screenPos = Camera.main.WorldToScreenPoint(gem.transform.position)+new Vector3(0,1,0);
-        glowImage.transform.position = screenPos;
-        glowImage2.transform.position = screenPos;
-        Color c = glowImage.color;
-        c.a = glowTime/2;
-        glowImage.color = c;
+        if (glowImage != null) glowImage.transform.position = screenPos;
+        if (glowImage2 != null) glowImage2.transform.position = screenPos;
+        if (glowImage != null)
+        {
+            Color c = glowImage.color;
+            c.a = glowTime / 2;
+            glowImage.color = c;
+        }
 
 
         // Scale the glow
         float scale = (1 - glowTime) * 5;
-        glowImage.transform.localScale = new Vector3(scale, scale, scale);
+        if (glowImage != null) glowImage.transform.localScale = new Vector3(scale, scale, scale);
 
 
         // effects
@@ -173,33 +195,43 @@ public class PhaseJumpUI : MonoBehaviour
             {
                 // No glow
                 gemRenderer.material = standaredMaterial;
-                Color col = glowImage2.color;
-                col.a = 0;
-                light.color = col;
-                glowImage2.color = col;
+                if (glowImage2 != null)
+                {
+                    Color col = glowImage2.color;
+                    col.a = 0;
+                    if (light != null) light.color = col;
+                    glowImage2.color = col;
+                }
             }
             else if ( jump.isCoolingDown())
             {
                 // Cooling down
                 gemRenderer.material = cooldownMaterial;
-                Color col = glowImage2.color;
-                col.g = 0;
-                col.b = 0;
-                col.a = 0.5f;
-                glowImage2.color = col;
-                light.color = Color.red;
+                if (glowImage2 != null)
+                {
+                    Color col = glowImage2.color;
+                    col.g = 0;
+                    col.b = 0;
+                    col.a = 0.5f;
+                    glowImage2.color = col;
+                    if (light != null) light.color = Color.red;
+                }
             }
             else
             {
                 // Glowing 
                 gemRenderer.material = glowMaterial;
-                Color col = glowImage2.color;
-                col.g = 255;
-                col.b = 255;
-                col.a = 0.5f;
-                glowImage2.color = col;
+                if (glowImage2 != null)
+                {
+                    Color col = glowImage2.color;
+                    col.g = 255;
+                    col.b = 255;
+                    col.a = 0.5f;
+                    glowImage2.color = col;
+                }
 
-                light.color = Color.white;
+                // Make the staff glow white
+                if (light != null) light.color = Color.white;
 
                 if (shouldGlow && !hasGlown)
                 {

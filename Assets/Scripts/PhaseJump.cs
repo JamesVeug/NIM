@@ -2,12 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using XInputDotNetPure;
+using UnityEngine.Audio;
 
 public class PhaseJump : MonoBehaviour
 {
 
     private Movement playerMovement;
     private AudioSource audioSource;
+    private AudioSource audioSource2;
     private bool canPhase = true;
     private int phaseDirectionSelected = 0;
     public AnimationCurve scaleCurve;
@@ -56,12 +58,16 @@ public class PhaseJump : MonoBehaviour
     public AudioClip[] phaseForwardSounds;
     public AudioClip[] phaseBackSounds;
     public AudioClip[] cantPhaseSounds;
+    public AudioMixerGroup[] phaseForwardMixer;
+    public AudioMixerGroup[] phaseBackMixer;
+    public AudioMixerGroup[] cantPhaseMixer;
 
     // Use this for initialization
     void Start()
     {
         playerMovement = GetComponent<Movement>();
-        audioSource = GetComponent<AudioSource>();
+        audioSource = GetComponents<AudioSource>()[0];
+        audioSource2 = GetComponents<AudioSource>()[1];
         coolDownRemainingTime = phaseCoolDown;
     }
 
@@ -152,7 +158,7 @@ public class PhaseJump : MonoBehaviour
             // TODO: Needs to be Fixed. Sometimes plays more than once!
             if (curveScale > 0.1 && curveScale < 0.3  && time < 1)
             {
-                SoundMaster.playRandomSound(phaseBackSounds, phaseBackSoundsVolume, getAudioSource());
+                SoundMaster.playRandomSound(phaseBackSounds, phaseBackSoundsVolume, getAudioSource2());
             }
 
             // Finished phasing
@@ -323,9 +329,6 @@ public class PhaseJump : MonoBehaviour
         playerMovement.currentMovementWaypoint = newPhasePoint;
         phaseRemainingTime = 0;
         phasing = true;
-
-        Renderer rend = gameObject.GetComponent<Renderer>();
-        rend.enabled = false;
 
         // If we are inside any phaseCondition volumes. Call the afterPhase method
         callConditions(false, phaseForward);
@@ -748,6 +751,15 @@ public class PhaseJump : MonoBehaviour
             Debug.LogError("Object " + gameObject.name + " does not have an AudioSource Component!");
         }
         return audioSource;
+    }
+
+    public AudioSource getAudioSource2()
+    {
+        if (audioSource2 == null)
+        {
+            Debug.LogError("Object " + gameObject.name + " does not have an AudioSource2 Component!");
+        }
+        return audioSource2;
     }
 
     public bool isPhasing()
