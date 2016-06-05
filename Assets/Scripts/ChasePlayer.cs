@@ -26,7 +26,7 @@ public class ChasePlayer : MonoBehaviour
 	public bool waypointTracking = true;
 
     private ShakeCamera shake;
-	private Vector3 targetPosition;
+    private Vector3 targetPosition;
     private Vector3 lastPosition;
     private Vector3 lastWatchedPosition;
     private float lastChangeInY;
@@ -148,21 +148,7 @@ public class ChasePlayer : MonoBehaviour
         lastWatchedPosition = whatToChase.transform.position;
         lastChangeInY = changeInY;
 
-
-        if (changeInY >= minFallShakeDistance && lastChangeInY > 0.1)
-        {
-            //Debug.Log("=Change " + changeInY);
-            //Debug.Log("=lastChange " + lastChangeInY);
-            //shake.DoShake();
-        }
-        else if (changeInY > 0.1 || changeInY < -0.1 )
-        {
-            //Debug.Log("Change " + changeInY);
-            //Debug.Log("lastChange " + lastChangeInY);
-        }
-
         currentOffset = offset;
-        //shake.DoShake();
     }
 
     public Vector3 getNewPosition()
