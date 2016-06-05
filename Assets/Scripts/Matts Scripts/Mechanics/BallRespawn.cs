@@ -22,6 +22,7 @@ public class BallRespawn : MonoBehaviour {
         rb.AddForce(Physics.gravity*downwardsForce, ForceMode.Acceleration);
         if (this.transform.position.y <= respawnY) {
             this.transform.position = respawnPoint;
+            rb.AddForce(Physics.gravity * 0, ForceMode.Acceleration);
         }
 	}
 }
