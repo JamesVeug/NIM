@@ -53,11 +53,6 @@ public class ShakeCamera : MonoBehaviour
         // Vibrate controller
         float vibrationIntensity = Mathf.Max(0,(CurrentShakeIntensity/ ShakeIntensity) * XboxVibrateIntensity);
         GamePad.SetVibration(PlayerIndex.One, vibrationIntensity, vibrationIntensity);
-        //Debug.Log("vibration " + vibrationIntensity);
-
-        // Use triggers to toggle vibration
-        //GamePadState state = GamePad.GetState(PlayerIndex.One);
-        //GamePad.SetVibration(PlayerIndex.One, state.Triggers.Left, state.Triggers.Right);
     }
 
     public void DoShake()

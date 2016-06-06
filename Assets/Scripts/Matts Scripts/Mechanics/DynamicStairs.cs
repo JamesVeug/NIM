@@ -5,11 +5,11 @@ using System;
 
 public class DynamicStairs : MonoBehaviour {
 
-    public float currentPosition;
+    public position currentPosition;
     public float speed;
     public Boolean consistentMove;
-    public float postion1;
-    public float position2;
+    public position postion1;
+    public position position2;
     public float timer;
 
     private float counter = 0;
@@ -72,32 +72,33 @@ public class DynamicStairs : MonoBehaviour {
             topY = botY + (scaleY * (steps.Count-1));
     }
 
-    public void SetPosition(float givenPosition)
-    {
-        if (givenPosition < 1 || givenPosition > 4) {
-            throw new System.ArgumentException("Only accepts a position between 1 and 4");
-        }
-
-        
-        if (givenPosition == 1) {
+    public void SetPosition(position givenPosition)
+    {  
+        if (givenPosition == position.BotL_TopR) {
             SetPositionHelper(leftX,botY,scaleY, true);
         }
-        else if (givenPosition == 2)
+        else if (givenPosition == position.TopL_BotR)
         {
             SetPositionHelper(leftX, topY, (scaleY * -1), true);
         }
-        else if (givenPosition == 3)
+        else if (givenPosition == position.BotL_BotR)
         {
             SetPositionHelper(leftX, botY, scaleY, false);
         }
-        else
+        else if(givenPosition == position.TopL_TopR)
         {
             SetPositionHelper(leftX, topY, scaleY, false);
         }
+        else if (givenPosition == position.MidL_TopR)
+        {
+            SetPositionHelper(leftX, botY + ((topY - botY)*0.5f), scaleY, true);
+        } 
+        else if (givenPosition == position.MidL_BotR)
+        {
+            SetPositionHelper(leftX, botY + ((topY - botY) * 0.5f), (scaleY *-1), true);
+        }
+        
     }
-
-
-   
 
 
     public void SetPositionHelper(float xPos, float yPos, float scaleY, Boolean diag)
@@ -110,9 +111,7 @@ public class DynamicStairs : MonoBehaviour {
             {
                 yPos = yPos + scaleY;
             }
-
         }
-
     }
 
     /**
@@ -142,7 +141,7 @@ public class DynamicStairs : MonoBehaviour {
 
 
 // Update is called once per frame
-void Update () {
+void FixedUpdate () {
         if (consistentMove == true) {
             
             if (counter >= 100 * timer) {
@@ -175,6 +174,11 @@ void Update () {
         else {
             currentPosition = postion1;
         }
+    }
+
+    public enum position
+    {
+        BotL_TopR,TopL_BotR,BotL_BotR,TopL_TopR,MidL_TopR,MidL_BotR
     }
 }
 

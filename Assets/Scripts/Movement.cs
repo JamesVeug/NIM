@@ -89,14 +89,15 @@ public class Movement : MonoBehaviour {
         {
             return;
         }
-        
+
+        float previewCamera = Input.GetAxis("PreviewPhase");
         float moveHorizontal = Input.GetAxisRaw("Horizontal");
         MovementWaypoint nextPoint = getNextWaypoint(moveHorizontal);
         rotatePlayer(moveHorizontal, nextPoint);
 
         // Start walking to waypoint
         Vector3 movement = moveToPosition;
-        if (moveHorizontal != 0)
+        if (moveHorizontal != 0 && previewCamera == 0)
         {
             // Get the move vector and slowy start moving
             moveToPosition = moveWithWaypoints(nextPoint);
@@ -159,7 +160,7 @@ public class Movement : MonoBehaviour {
 
     void rotatePlayer(float moveLeft, MovementWaypoint nextPoint)
     {
-        if( nextPoint == null)
+        if( nextPoint == null || Input.GetAxis("PreviewPhase") != 0)
         {
             // Can't rotate
             return;
