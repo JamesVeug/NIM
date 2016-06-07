@@ -2,7 +2,8 @@
 using System.Collections;
 
 public class Movement : MonoBehaviour {
-    
+
+    private Animator anim;
     private CharacterController controller;
     private AudioSource audioSource;
     
@@ -51,8 +52,9 @@ public class Movement : MonoBehaviour {
     void Start () {
         controller = GetComponent<CharacterController>();
         audioSource = GetComponent<AudioSource>();
+        anim = GetComponent<Animator>();
 
-		if (currentMovementWaypoint != null) {
+        if (currentMovementWaypoint != null) {
 			transform.position = currentMovementWaypoint.transform.position;
 		}
 
@@ -103,22 +105,28 @@ public class Movement : MonoBehaviour {
             moveToPosition = moveWithWaypoints(nextPoint);
             movement = moveToPosition;
             moveTime = Mathf.Min(1, moveTime+Time.deltaTime* movementIncrement);
+            anim.SetBool("IsWalking", true);
         }
         else  {
             // Slowly stop moving
             moveTime = Mathf.Max(0, moveTime - Time.deltaTime * movementDecay);
+            anim.SetBool("IsWalking", false);
         }
         movement *= moveTime;
 
 
         if (controller.isGrounded)
         {
-			if (Input.GetButtonDown ("Jump")) {
+            anim.SetBool("IsInAir", false);
+            if (Input.GetButtonDown ("Jump")) {
 				SoundMaster.playRandomSound (jumpSounds, jumpSoundsVolume, getAudioSource ());
 				falling = jump;
-			} else {
+
+                anim.SetTrigger("isJumping");
+            } else {
 				falling = -1f; //Reset falling speed to stop massively quick falls
-			}
+                anim.SetBool("isJumping",false);
+            }
 
             if (falling < 0f && !fallSoundPlayed)
             {
@@ -133,6 +141,7 @@ public class Movement : MonoBehaviour {
         }
         else
         {
+            anim.SetBool("IsInAir", true);
             fallSoundPlayed = false;
         }
 
@@ -143,7 +152,10 @@ public class Movement : MonoBehaviour {
         float currentY = transform.position.y;
 
         // Move
-		controller.Move (new Vector3 (movement.x, falling, movement.z) * Time.deltaTime);
+        movement.y = falling;
+
+        Vector3 movementVector = new Vector3(movement.x, movement.y, movement.z) * Time.deltaTime;
+        controller.Move (movementVector);
 
         // Did we hit something moving up?
         if(falling > 0 && transform.position.y == currentY)
@@ -156,6 +168,9 @@ public class Movement : MonoBehaviour {
         {
             playFootStep();
         }
+
+        // Animation
+        updateAnimation(movementVector);
     }
 
     void rotatePlayer(float moveLeft, MovementWaypoint nextPoint)
@@ -270,4 +285,39 @@ public class Movement : MonoBehaviour {
         }
         return audioSource;
     }
+
+
+
+    //
+    // Animations
+    //
+    private int isInAir = Animator.StringToHash("IsInAir");
+    private int isWalking = Animator.StringToHash("IsWalking");
+
+    private bool inAir = false;
+
+    public void updateAnimation(Vector3 movement)
+    {
+
+        /*bool isGrounded = Mathf.Abs(movement.y) < 0.025;
+        if ( !inAir && !isGrounded)
+        {
+            Debug.Log("In Air");
+            anim.SetBool(isInAir,true);
+            inAir = !inAir;
+        }
+        else if( inAir && isGrounded)
+        {
+            Debug.Log("Not In Air");
+            anim.SetBool(isInAir, false);
+            inAir = !inAir;
+        }*/
+        
+    }
+
+
+
+
+
+
 }

@@ -13,11 +13,14 @@ public class PhaseJumpUI : MonoBehaviour
     private GameObject gem;
     private GameObject glowObject;
     public GameObject trail;
+    public GameObject phaseIn;
+    public GameObject phaseOut;
 
     private UnityStandardAssets.ImageEffects.DepthOfField dofScript;
     private ChasePlayer chaseScript;
     public GameObject marker;
     private bool isPreviewing;
+    private bool isPhasing;
 
 
     public Material standaredMaterial;
@@ -48,21 +51,18 @@ public class PhaseJumpUI : MonoBehaviour
         jump = GetComponent<PhaseJump>();
         audioSource = GetComponent<AudioSource>();
 
-        GameObject Model = gameObject.transform.FindChild("Model").gameObject;
-        if (Model != null)
-        {
-            staff = Model.transform.FindChild("Staff_Nim").gameObject;
-            if (staff != null)
-            {
-                effects = staff.transform.FindChild("Effects").gameObject;
-                gem = staff.transform.FindChild("MagTealGem").gameObject;
-                gemRenderer = gem.GetComponent<Renderer>();
 
-                Transform lightO = effects.transform.FindChild("Light");
-                if (lightO != null)
-                {
-                    light = lightO.gameObject.GetComponent<Light>();
-                }
+        staff = transform.FindChild("Staff_Nim").gameObject;
+        if (staff != null)
+        {
+            effects = staff.transform.FindChild("Effects").gameObject;
+            gem = staff.transform.FindChild("MagTealGem").gameObject;
+            gemRenderer = gem.GetComponent<Renderer>();
+
+            Transform lightO = effects.transform.FindChild("Light");
+            if (lightO != null)
+            {
+                light = lightO.gameObject.GetComponent<Light>();
             }
         }
 
@@ -152,6 +152,15 @@ public class PhaseJumpUI : MonoBehaviour
         float phaseJumpDirection = Input.GetAxis("PhaseJump");
         float preview = Input.GetAxis("PreviewPhase");
 
+        if( jump.isPhasing() && !isPhasing)
+        {
+            isPhasing = true;
+        }
+        else if( !jump.isPhasing() && isPhasing)
+        {
+            cloneParticle(phaseOut);
+            isPhasing = false;
+        }
 
         if (Mathf.Abs(preview) != 1 && isPreviewingPhase() && !jump.isPhasing()) {
             Debug.Log("disable");
@@ -173,10 +182,8 @@ public class PhaseJumpUI : MonoBehaviour
         if (phaseJumpDirection == 1 && jump.canPhaseForward())
         {
             // Create trail
-            GameObject cloneParticle = (GameObject)Instantiate(trail);
-            cloneParticle.transform.position = gameObject.transform.position;
-            cloneParticle.transform.parent = gameObject.transform;
-            Destroy(cloneParticle, 2);
+            cloneParticle(trail);
+            cloneParticle(phaseIn);
 
             // Phase
             jump.phaseForward();
@@ -185,10 +192,8 @@ public class PhaseJumpUI : MonoBehaviour
         else if (phaseJumpDirection == -1 && jump.canPhaseBack())
         {
             // Create trail
-            GameObject cloneParticle = (GameObject)Instantiate(trail);
-            cloneParticle.transform.position = gameObject.transform.position;
-            cloneParticle.transform.parent = gameObject.transform;
-            Destroy(cloneParticle, 2);
+            cloneParticle(trail);
+            cloneParticle(phaseIn);
 
             // Phase
             jump.phaseBack();
@@ -411,6 +416,14 @@ public class PhaseJumpUI : MonoBehaviour
         {
             light.color = col;
         }
+    }
+
+    public void cloneParticle(GameObject o)
+    {
+        GameObject cloneParticle = (GameObject)Instantiate(o);
+        cloneParticle.transform.position = gameObject.transform.position;
+        cloneParticle.transform.parent = gameObject.transform;
+        Destroy(cloneParticle, 2);
     }
 
     public AudioSource getAudioSource()
