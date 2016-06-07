@@ -16,7 +16,7 @@ public class CheckpointPlayer : MonoBehaviour {
 
     public void setCheckpoint(Checkpoint checkpoint) {
         currentCheckpoint = checkpoint;
-        Debug.Log("NEW CHECKPOINT: " + checkpoint.name);
+        //Debug.Log("NEW CHECKPOINT: " + checkpoint.name);
     }
 	
 	// Update is called once per frame

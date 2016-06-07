@@ -2,7 +2,8 @@
 using System.Collections;
 
 public class Movement : MonoBehaviour {
-    
+
+    private Animator anim;
     private CharacterController controller;
     private AudioSource audioSource;
     
@@ -51,8 +52,9 @@ public class Movement : MonoBehaviour {
     void Start () {
         controller = GetComponent<CharacterController>();
         audioSource = GetComponent<AudioSource>();
+        anim = GetComponent<Animator>();
 
-		if (currentMovementWaypoint != null) {
+        if (currentMovementWaypoint != null) {
 			transform.position = currentMovementWaypoint.transform.position;
 		}
 
@@ -89,35 +91,42 @@ public class Movement : MonoBehaviour {
         {
             return;
         }
-        
+
+        float previewCamera = Input.GetAxis("PreviewPhase");
         float moveHorizontal = Input.GetAxisRaw("Horizontal");
         MovementWaypoint nextPoint = getNextWaypoint(moveHorizontal);
         rotatePlayer(moveHorizontal, nextPoint);
 
         // Start walking to waypoint
         Vector3 movement = moveToPosition;
-        if (moveHorizontal != 0)
+        if (moveHorizontal != 0 && previewCamera == 0)
         {
             // Get the move vector and slowy start moving
             moveToPosition = moveWithWaypoints(nextPoint);
             movement = moveToPosition;
             moveTime = Mathf.Min(1, moveTime+Time.deltaTime* movementIncrement);
+            setAnimationBool("IsWalking", true);
         }
         else  {
             // Slowly stop moving
             moveTime = Mathf.Max(0, moveTime - Time.deltaTime * movementDecay);
+            setAnimationBool("IsWalking", false);
         }
         movement *= moveTime;
 
 
         if (controller.isGrounded)
         {
-			if (Input.GetButtonDown ("Jump")) {
+            setAnimationBool("IsInAir", false);
+            if (Input.GetButtonDown ("Jump")) {
 				SoundMaster.playRandomSound (jumpSounds, jumpSoundsVolume, getAudioSource ());
 				falling = jump;
-			} else {
+
+                setAnimationBool("isJumping",true);
+            } else {
 				falling = -1f; //Reset falling speed to stop massively quick falls
-			}
+                setAnimationBool("isJumping",false);
+            }
 
             if (falling < 0f && !fallSoundPlayed)
             {
@@ -132,6 +141,7 @@ public class Movement : MonoBehaviour {
         }
         else
         {
+            setAnimationBool("IsInAir", true);
             fallSoundPlayed = false;
         }
 
@@ -142,7 +152,10 @@ public class Movement : MonoBehaviour {
         float currentY = transform.position.y;
 
         // Move
-		controller.Move (new Vector3 (movement.x, falling, movement.z) * Time.deltaTime);
+        movement.y = falling;
+
+        Vector3 movementVector = new Vector3(movement.x, movement.y, movement.z) * Time.deltaTime;
+        controller.Move (movementVector);
 
         // Did we hit something moving up?
         if(falling > 0 && transform.position.y == currentY)
@@ -155,11 +168,14 @@ public class Movement : MonoBehaviour {
         {
             playFootStep();
         }
+
+        // Animation
+        updateAnimation(movementVector);
     }
 
     void rotatePlayer(float moveLeft, MovementWaypoint nextPoint)
     {
-        if( nextPoint == null)
+        if( nextPoint == null || Input.GetAxis("PreviewPhase") != 0)
         {
             // Can't rotate
             return;
@@ -269,4 +285,43 @@ public class Movement : MonoBehaviour {
         }
         return audioSource;
     }
+
+
+
+    //
+    // Animations
+    //
+    private int isInAir = Animator.StringToHash("IsInAir");
+    private int isWalking = Animator.StringToHash("IsWalking");
+
+    private bool inAir = false;
+
+    public void updateAnimation(Vector3 movement)
+    {
+
+        /*bool isGrounded = Mathf.Abs(movement.y) < 0.025;
+        if ( !inAir && !isGrounded)
+        {
+            Debug.Log("In Air");
+            anim.SetBool(isInAir,true);
+            inAir = !inAir;
+        }
+        else if( inAir && isGrounded)
+        {
+            Debug.Log("Not In Air");
+            anim.SetBool(isInAir, false);
+            inAir = !inAir;
+        }*/
+        
+    }
+
+
+    private void setAnimationBool(string variable, bool t)
+    {
+        if (anim != null)
+        {
+            anim.SetBool(variable, t);
+        }
+    }
+
 }

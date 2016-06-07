@@ -2,13 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using XInputDotNetPure;
+using UnityEngine.Audio;
 
 public class PhaseJump : MonoBehaviour
 {
 
     private Movement playerMovement;
     private AudioSource audioSource;
-    private bool canPhase = true;
     private int phaseDirectionSelected = 0;
     public AnimationCurve scaleCurve;
 
@@ -18,8 +18,6 @@ public class PhaseJump : MonoBehaviour
     private float phaseRemainingTime = 0f;
     private Vector3 phaseFromPosition = Vector3.zero;
     private Vector3 phaseToPosition = Vector3.zero;
-    private bool phaseButtonPressed = false;
-    //private MovementWaypoint waypoint = null;
 
     private List<PhaseObjectTravel> phasingObects = new List<PhaseObjectTravel>();
     struct PhaseObjectTravel
@@ -56,12 +54,16 @@ public class PhaseJump : MonoBehaviour
     public AudioClip[] phaseForwardSounds;
     public AudioClip[] phaseBackSounds;
     public AudioClip[] cantPhaseSounds;
+    public AudioMixerGroup[] phaseForwardMixer;
+    public AudioMixerGroup[] phaseBackMixer;
+    public AudioMixerGroup[] cantPhaseMixer;
 
     // Use this for initialization
     void Start()
     {
         playerMovement = GetComponent<Movement>();
-        audioSource = GetComponent<AudioSource>();
+        audioSource = GetComponents<AudioSource>()[0];
+        //audioSource2 = GetComponents<AudioSource>()[1];
         coolDownRemainingTime = phaseCoolDown;
     }
 
@@ -70,12 +72,12 @@ public class PhaseJump : MonoBehaviour
         return phaseDirectionSelected;
     }
 
-    bool phaseForward()
+    public bool phaseForward()
     {
         return phase(true);
     }
 
-    bool phaseBack()
+    public bool phaseBack()
     {
         return phase(false);
     }
@@ -99,12 +101,16 @@ public class PhaseJump : MonoBehaviour
             Debug.LogError("Player does not have a current Waypoint to phase");
             return false;
         }
+        
+        phaseDirectionSelected = phaseForward ? 1 : -1;
 
         // Get the next phase waypoint to end up on
         MovementWaypoint nextPhasePoint = phaseForward ? currentPoint.nextPhasePoint : currentPoint.previousPhasePoint;
         
         // Move to new point
         bool phased = phaseToWayPoint(currentPoint, nextPhasePoint, phaseForward);
+
+        phasing = phased;
 
         // Return if we phased or not
         return phased;
@@ -130,10 +136,9 @@ public class PhaseJump : MonoBehaviour
             phaseRemainingTime += Time.deltaTime;
 
             // Scale character
-            GameObject c = gameObject.transform.FindChild("Model").gameObject;
             float curveScale = scaleCurve.Evaluate(time);
             Vector3 scale = savedScale * curveScale;
-            c.transform.localScale = c.transform.lossyScale*curveScale;
+            transform.localScale = transform.lossyScale*curveScale;
 
             foreach (PhaseObjectTravel p in phasingObects)
             {
@@ -158,10 +163,9 @@ public class PhaseJump : MonoBehaviour
             // Finished phasing
             else if (time >= 1)
             {
-                c.transform.localScale = savedScale;
+                transform.localScale = savedScale;
                 transform.position = phaseToPosition;
                 phasing = false;
-                canPhase = true;
                 phaseDirectionSelected = 0;
                 ShakeCamera();
 
@@ -204,51 +208,6 @@ public class PhaseJump : MonoBehaviour
             phaseBack();
             return;
         }
-
-        // phaseMenuOpen = true;
-        float phaseJumpDirection = Input.GetAxis("PhaseJump");
-        if (Mathf.Abs(phaseJumpDirection) == 1 && canPhase)
-        {
-            //Debug.Log("Rotation2 " + Camera.main.transform.localEulerAngles);
-            //Debug.Log("Position2 " + Camera.main.transform.position);
-            //pauseGame();
-
-            // Phase forward
-            if (phaseJumpDirection == 1 )
-            {
-                if (canPhaseForward())
-                {
-                    phaseDirectionSelected = 1;
-                    canPhase = false;
-                }
-                else if (!phaseButtonPressed)
-                {
-                    SoundMaster.playRandomSound(cantPhaseSounds,cantPhaseSoundsVolume, getAudioSource());
-                }
-            }
-
-            // Phase Backward
-            if (phaseJumpDirection == -1 )
-            {
-                if (canPhaseBack())
-                {
-                    phaseDirectionSelected = -1;
-                    canPhase = false;
-                }
-                else if ( !phaseButtonPressed )
-                {
-                    SoundMaster.playRandomSound(cantPhaseSounds, cantPhaseSoundsVolume, getAudioSource());
-                }
-            }
-        }
-        else if (phaseJumpDirection == 0 && !canPhase)
-        {
-            // We released the phase button.
-            // Allow us to phase again
-            phaseDirectionSelected = 0;
-            canPhase = true;
-        }
-        phaseButtonPressed = phaseJumpDirection != 0;
     }
 
     private void pushObjects()
@@ -315,17 +274,12 @@ public class PhaseJump : MonoBehaviour
         
 
         // Start phase
-
-        GameObject c = gameObject.transform.FindChild("Model").gameObject;
-        savedScale = c.transform.localScale;
+        savedScale = transform.localScale;
         phaseToPosition = spawnPosition;
         phaseFromPosition = transform.position;
         playerMovement.currentMovementWaypoint = newPhasePoint;
         phaseRemainingTime = 0;
         phasing = true;
-
-        Renderer rend = gameObject.GetComponent<Renderer>();
-        rend.enabled = false;
 
         // If we are inside any phaseCondition volumes. Call the afterPhase method
         callConditions(false, phaseForward);
@@ -356,6 +310,12 @@ public class PhaseJump : MonoBehaviour
 
     private bool canPhaseJump(MovementWaypoint current, bool phaseForward)
     {
+
+        if( phasing)
+        {
+            return false;
+        }
+
         // Check cooldown
         if(coolDownRemainingTime < phaseCoolDown)
         {
@@ -741,6 +701,11 @@ public class PhaseJump : MonoBehaviour
         return currentPhaseVolume;
     }
 
+    public void playCantPhaseSound()
+    {
+        SoundMaster.playRandomSound(cantPhaseSounds, cantPhaseSoundsVolume, getAudioSource());
+    }
+
     public AudioSource getAudioSource()
     {
         if (audioSource == null)
@@ -758,5 +723,10 @@ public class PhaseJump : MonoBehaviour
     public bool isCoolingDown()
     {
         return coolDownRemainingTime < phaseCoolDown;
+    }
+
+    public bool isPhasingForward()
+    {
+        return phasing && getJumpDirection() == 1;
     }
 }
