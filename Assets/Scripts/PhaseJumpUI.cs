@@ -52,9 +52,10 @@ public class PhaseJumpUI : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
 
 
-        staff = transform.FindChild("Staff_Nim").gameObject;
-        if (staff != null)
+        Transform staffTransform = transform.FindChild("Staff_Nim");
+        if(staffTransform != null)
         {
+            staff = staffTransform.gameObject;
             effects = staff.transform.FindChild("Effects").gameObject;
             gem = staff.transform.FindChild("MagTealGem").gameObject;
             gemRenderer = gem.GetComponent<Renderer>();

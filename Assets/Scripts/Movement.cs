@@ -105,27 +105,27 @@ public class Movement : MonoBehaviour {
             moveToPosition = moveWithWaypoints(nextPoint);
             movement = moveToPosition;
             moveTime = Mathf.Min(1, moveTime+Time.deltaTime* movementIncrement);
-            anim.SetBool("IsWalking", true);
+            setAnimationBool("IsWalking", true);
         }
         else  {
             // Slowly stop moving
             moveTime = Mathf.Max(0, moveTime - Time.deltaTime * movementDecay);
-            anim.SetBool("IsWalking", false);
+            setAnimationBool("IsWalking", false);
         }
         movement *= moveTime;
 
 
         if (controller.isGrounded)
         {
-            anim.SetBool("IsInAir", false);
+            setAnimationBool("IsInAir", false);
             if (Input.GetButtonDown ("Jump")) {
 				SoundMaster.playRandomSound (jumpSounds, jumpSoundsVolume, getAudioSource ());
 				falling = jump;
 
-                anim.SetTrigger("isJumping");
+                setAnimationBool("isJumping",true);
             } else {
 				falling = -1f; //Reset falling speed to stop massively quick falls
-                anim.SetBool("isJumping",false);
+                setAnimationBool("isJumping",false);
             }
 
             if (falling < 0f && !fallSoundPlayed)
@@ -141,7 +141,7 @@ public class Movement : MonoBehaviour {
         }
         else
         {
-            anim.SetBool("IsInAir", true);
+            setAnimationBool("IsInAir", true);
             fallSoundPlayed = false;
         }
 
@@ -316,8 +316,12 @@ public class Movement : MonoBehaviour {
     }
 
 
-
-
-
+    private void setAnimationBool(string variable, bool t)
+    {
+        if (anim != null)
+        {
+            anim.SetBool(variable, t);
+        }
+    }
 
 }
