@@ -231,7 +231,7 @@ ModelImporter:
       name: envDoorPuzzleAnimPause
       takeName: Take 001
       firstFrame: 1
-      lastFrame: 30
+      lastFrame: 2
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
