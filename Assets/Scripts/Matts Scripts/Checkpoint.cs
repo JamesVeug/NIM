@@ -9,6 +9,7 @@ public class Checkpoint : MonoBehaviour {
 
     void Start()
     {
+		playerScript = FindObjectOfType<CheckpointPlayer> ();
         waypoint = this.GetComponent<MovementWaypoint>();
         Debug.Log("WAYPOINT: " + waypoint.ToString());
 
