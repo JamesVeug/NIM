@@ -12,11 +12,12 @@ public class PhaseJumpUI : MonoBehaviour
     private GameObject effects;
     private GameObject gem;
     private GameObject glowObject;
-
+    public GameObject trail;
 
     private UnityStandardAssets.ImageEffects.DepthOfField dofScript;
     private ChasePlayer chaseScript;
-    private GameObject marker;
+    public GameObject marker;
+    private bool isPreviewing;
 
 
     public Material standaredMaterial;
@@ -68,12 +69,6 @@ public class PhaseJumpUI : MonoBehaviour
         
         dofScript = Camera.main.GetComponent<UnityStandardAssets.ImageEffects.DepthOfField>();
         chaseScript = Camera.main.GetComponent<ChasePlayer>();
-
-        Transform mark = transform.FindChild("Marker");
-        if( mark != null)
-        {
-            marker = mark.gameObject;
-        }
 
         // Get the text off the canvas
         Transform forwardText = FindObjectOfType<Canvas>().transform.FindChild("PhaseForwardText");
@@ -136,8 +131,6 @@ public class PhaseJumpUI : MonoBehaviour
         // Start chasing the player again
         if (chaseScript.whatToChase != gameObject)
         {
-            //Debug.Log("phasing " + jump.isPhasing());
-            //Debug.Log("direction " + jump.getJumpDirection());
             SoundMaster.playRandomSound(PreviewSounds, PreviewSoundsVolume, getAudioSource());
             chaseScript.whatToChase = gameObject;
         }
@@ -150,6 +143,7 @@ public class PhaseJumpUI : MonoBehaviour
         {
             dofScript.focalLength = (chaseScript.whatToChase.transform.position - Camera.main.transform.position).magnitude;
         }
+        isPreviewing = false;
     }
 
 
@@ -159,63 +153,52 @@ public class PhaseJumpUI : MonoBehaviour
         float preview = Input.GetAxis("PreviewPhase");
 
 
-        if (Mathf.Abs(preview) != 1 || Mathf.Abs(phaseJumpDirection) != 1) { 
+        if (Mathf.Abs(preview) != 1 && isPreviewingPhase() && !jump.isPhasing()) {
+            Debug.Log("disable");
             disablePreviewCamera();
         }
-
-
-        if (Mathf.Abs(phaseJumpDirection) == 1)
+        
+        // Preview
+        if( preview == 1 && jump.canPhaseForward() && !isPreviewingPhase())
         {
-
-            // Phase forward
-            if (phaseJumpDirection == 1)
-            {
-                if (jump.canPhaseForward())
-                {
-                    if( preview != 0)
-                    {
-                        previewPhase(true);
-                    }
-                    else
-                    {
-                        jump.phaseForward();
-                    }
-                }
-                else if (!phaseButtonPressed)
-                {
-                    jump.playCantPhaseSound();
-                }
-            }
-
-            // Phase Backward
-            if (phaseJumpDirection == -1)
-            {
-                if (jump.canPhaseBack())
-                {
-
-                    if (preview != 0)
-                    {
-                        previewPhase(false);
-                    }
-                    else
-                    {
-                        jump.phaseBack();
-                    }
-                }
-                else if (!phaseButtonPressed)
-                {
-                    jump.playCantPhaseSound();
-                }
-            }
+            previewPhase(true);
         }
-        else if (phaseJumpDirection == 0)
+        else if (preview == -1 && jump.canPhaseBack() && !isPreviewingPhase())
         {
-            // We released the phase button.
-            // Allow us to phase again
-            //phaseDirectionSelected = 0;
-            //canPhase = true;
+            previewPhase(false);
         }
-        phaseButtonPressed = phaseJumpDirection != 0;
+
+
+        // Phase
+        if (phaseJumpDirection == 1 && jump.canPhaseForward())
+        {
+            // Create trail
+            GameObject cloneParticle = (GameObject)Instantiate(trail);
+            cloneParticle.transform.position = gameObject.transform.position;
+            cloneParticle.transform.parent = gameObject.transform;
+            Destroy(cloneParticle, 2);
+
+            // Phase
+            jump.phaseForward();
+            setMarkerVisibility(marker, false);
+        }
+        else if (phaseJumpDirection == -1 && jump.canPhaseBack())
+        {
+            // Create trail
+            GameObject cloneParticle = (GameObject)Instantiate(trail);
+            cloneParticle.transform.position = gameObject.transform.position;
+            cloneParticle.transform.parent = gameObject.transform;
+            Destroy(cloneParticle, 2);
+
+            // Phase
+            jump.phaseBack();
+            setMarkerVisibility(marker, false);
+        }
+    }
+
+    private bool isPreviewingPhase()
+    {
+        return isPreviewing;
     }
 
     private void previewPhase(bool previewForward)
@@ -225,28 +208,21 @@ public class PhaseJumpUI : MonoBehaviour
             Debug.LogWarning("No Marker object assigned to NIM!");
             return;
         }
-
+        
 
         MovementWaypoint newWaypoint;
         Vector3 newPos = marker.transform.position;
         jump.getPhasePoint(previewForward, out newPos, out newWaypoint);
         marker.transform.position = newPos;
-        if (previewForward)
-        {
-            // Preview forward position
-            chaseScript.whatToChase = gameObject;
-            dofScript.focalLength = (marker.transform.position - Camera.main.transform.position).magnitude;
-        }
-        else if (!previewForward && chaseScript.whatToChase != marker)
-        {
-            // Preview back position
-            chaseScript.whatToChase = marker;
-            dofScript.focalLength = (marker.transform.position - chaseScript.getNewPosition()).magnitude;
+        marker.transform.rotation = transform.rotation;
 
-            SoundMaster.playRandomSound(PreviewSounds, PreviewSoundsVolume, getAudioSource());
+        // Preview back position
+        chaseScript.whatToChase = marker;
+        dofScript.focalLength = (marker.transform.position - chaseScript.getNewPosition()).magnitude;
 
-        }
+        SoundMaster.playRandomSound(PreviewSounds, PreviewSoundsVolume, getAudioSource());
         setMarkerVisibility(marker, true);
+        isPreviewing = true;
     }
 
     private void updateGlow()
