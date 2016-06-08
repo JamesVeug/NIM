@@ -19,6 +19,7 @@ public class PhaseJumpUI : MonoBehaviour
     private UnityStandardAssets.ImageEffects.DepthOfField dofScript;
     private ChasePlayer chaseScript;
     public GameObject marker;
+    public GameObject PhaseLight;
     private bool isPreviewing;
     private bool isPhasing;
 
@@ -67,10 +68,10 @@ public class PhaseJumpUI : MonoBehaviour
             }
         }
 
-        
         dofScript = Camera.main.GetComponent<UnityStandardAssets.ImageEffects.DepthOfField>();
         chaseScript = Camera.main.GetComponent<ChasePlayer>();
 
+        PhaseLight.SetActive(false);
         // Get the text off the canvas
         Transform forwardText = FindObjectOfType<Canvas>().transform.FindChild("PhaseForwardText");
         if (forwardText != null) { phaseForwardText = forwardText.gameObject.GetComponent<Text>(); }
@@ -99,7 +100,6 @@ public class PhaseJumpUI : MonoBehaviour
 
         // Update Nims preview Camera
         updatePhaseJump();
-        
     }
 
     private void setMarkerVisibility(GameObject o, bool visible)
@@ -112,7 +112,6 @@ public class PhaseJumpUI : MonoBehaviour
         Renderer rend = o.GetComponent<Renderer>();
         if (rend != null)
         {
-            //Debug.Log("chanegd " + o.name);
             rend.enabled = visible;
         }
         Light light = o.GetComponent<Light>();
@@ -138,12 +137,6 @@ public class PhaseJumpUI : MonoBehaviour
 
         // Hide the marker
         setMarkerVisibility(marker, false);
-
-        // Focus on the player again
-        if (dofScript != null)
-        {
-            dofScript.focalLength = (chaseScript.whatToChase.transform.position - Camera.main.transform.position).magnitude;
-        }
         isPreviewing = false;
     }
 
@@ -153,14 +146,20 @@ public class PhaseJumpUI : MonoBehaviour
         float phaseJumpDirection = Input.GetAxis("PhaseJump");
         float preview = Input.GetAxis("PreviewPhase");
 
+        // Effects for when we phase
         if( jump.isPhasing() && !isPhasing)
         {
+            // Starting phasing
             isPhasing = true;
+            PhaseLight.SetActive(isPhasing);
         }
         else if( !jump.isPhasing() && isPhasing)
         {
+            // Finished phasing
             cloneParticle(phaseOut);
             isPhasing = false;
+            PhaseLight.SetActive(isPhasing);
+            disablePreviewCamera();
         }
 
         if (Mathf.Abs(preview) != 1 && isPreviewingPhase() && !jump.isPhasing()) {
@@ -200,6 +199,13 @@ public class PhaseJumpUI : MonoBehaviour
             jump.phaseBack();
             setMarkerVisibility(marker, false);
         }
+
+
+        // Focus on the player again
+        if (dofScript != null)
+        {
+            dofScript.focalLength = (chaseScript.whatToChase.transform.position - Camera.main.transform.position).magnitude;
+        }
     }
 
     private bool isPreviewingPhase()
@@ -224,7 +230,7 @@ public class PhaseJumpUI : MonoBehaviour
 
         // Preview back position
         chaseScript.whatToChase = marker;
-        dofScript.focalLength = (marker.transform.position - chaseScript.getNewPosition()).magnitude;
+        //dofScript.focalLength = (marker.transform.position - chaseScript.getNewPosition()).magnitude;
 
         SoundMaster.playRandomSound(PreviewSounds, PreviewSoundsVolume, getAudioSource());
         setMarkerVisibility(marker, true);
@@ -323,11 +329,16 @@ public class PhaseJumpUI : MonoBehaviour
         // Change the color
         // HACK HACK HACK HACK HACK HACK
         Vector3 screenPos = Camera.main.WorldToScreenPoint(gem.transform.position)+new Vector3(0,1,0);
-        if (glowImage != null) glowImage.transform.position = screenPos;
-        if (glowImage2 != null) glowImage2.transform.position = screenPos;
+        if (glowImage2 != null)
+        {
+            glowImage2.GetComponent<Image>().enabled = Camera.main.transform.position.x > Camera.main.ScreenToWorldPoint(glowImage2.transform.position).x;
+            glowImage2.transform.position = screenPos;
+        }
         if (glowImage != null)
         {
+            glowImage.GetComponent<Image>().enabled = Camera.main.transform.position.x > Camera.main.ScreenToWorldPoint(glowImage.transform.position).x;
             Color c = glowImage.color;
+            glowImage.transform.position = screenPos;
             c.a = glowTime / 2;
             glowImage.color = c;
         }

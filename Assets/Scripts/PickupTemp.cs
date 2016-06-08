@@ -3,11 +3,6 @@ using System.Collections;
 using UnityEngine.UI;
 
 public class PickupTemp : MonoBehaviour {
-    private static int totalPickups = 0;
-    private static int pickups = 0;
-    private bool addedThisPickup = false; // TEMP. Checks if we have added this crystal to the total pickups
-
-    private Text pickupCounterText;
 
     private float y0;
     private float amplitude = 1;
@@ -24,8 +19,6 @@ public class PickupTemp : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         y0 = transform.position.y;
-        pickups = 0;
-        totalPickups = 0;
         //transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
 
         amplitude = Random.Range(0.15f, 0.25f);
@@ -46,37 +39,11 @@ public class PickupTemp : MonoBehaviour {
             renderer.material = materials[materialsI];
         }
 
-        GameObject counter = GameObject.Find("PickupCounter");
-        if (counter != null)
-        {
-            pickupCounterText = counter.GetComponent<Text>();
-            if (pickupCounterText != null)
-            {
-                pickupCounterText.text = pickups.ToString() + "/" + totalPickups.ToString();
-            }
-        }
-
         
-    }
-
-    void updatePickupCounter()
-    {
-        if (pickupCounterText != null)
-        {
-            pickupCounterText.text = pickups.ToString() + "/" + totalPickups.ToString();
-        }
     }
 	
 	// Update is called once per frame
 	void Update () {
-        // Save the y position prior to start floating (maybe in the Start function):
-        if (!addedThisPickup)
-        {
-            addedThisPickup = true;
-            totalPickups++;
-            updatePickupCounter();
-        }
-
         // Put the floating movement in the Update function:
         Vector3 p = transform.position;
         p.y = y0 + amplitude * Mathf.Sin(speed * Time.time);
@@ -93,14 +60,16 @@ public class PickupTemp : MonoBehaviour {
             return;
         }
 
-        pickups++;
+        // Change UI
+        ShardUI.pickupShard();
 
-        updatePickupCounter();
-
+        // Play sound
         AudioSource source = other.gameObject.GetComponent<AudioSource>();
         if (source != null) { 
             SoundMaster.playRandomSound(pickupSounds, picksupSoundsVolumes, source);
         }
+
+        // Destroy this
         Destroy(gameObject);
     }
 }
