@@ -1,13 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
-
-public class Door : MonoBehaviour {
+public class Hatch : MonoBehaviour {
 
     public Boolean open;
     public GameObject top;
     public GameObject bottom;
-    public Animator anim;
     public float speed;
 
     private Vector3 topClosed;
@@ -17,23 +15,19 @@ public class Door : MonoBehaviour {
 
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         topClosed = top.transform.localPosition;
         botClosed = bottom.transform.localPosition;
-        topOpen = new Vector3(topClosed.x,topClosed.y + top.transform.localScale.y, topClosed.z);
-        botOpen= new Vector3(botClosed.x, botClosed.y - bottom.transform.localScale.y, topClosed.z);
-        if (open)
-        {
-            anim.SetBool("Open", true);
-        }
-        else {
-            anim.SetBool("Open", false);
-        }
-       
+        topOpen = new Vector3(topClosed.x, topClosed.y + top.transform.localScale.y, topClosed.z);
+        botOpen = new Vector3(botClosed.x, botClosed.y - bottom.transform.localScale.y, topClosed.z);
+      
+
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update()
+    {
         if (open)
         {
 
@@ -44,10 +38,10 @@ public class Door : MonoBehaviour {
             slowMove(topClosed, top);
             slowMove(botClosed, bottom);
         }
-        
-	}
 
-   
+    }
+
+
 
     private void slowMove(Vector3 desiredPos, GameObject doorBlock)
     {
@@ -69,17 +63,9 @@ public class Door : MonoBehaviour {
 
         }
     }
-    public void triggerDoor() {
-        
-        open = !open;
-        if (open)
-        {
-            anim.SetBool("Open", true);
-        }
-        else {
-            anim.SetBool("Open", false);
-        }
-    }
+    public void triggerDoor()
+    {
 
-   
+        open = !open;
+    }
 }

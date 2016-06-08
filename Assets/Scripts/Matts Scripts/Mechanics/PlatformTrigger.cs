@@ -23,7 +23,6 @@ public class PlatformTrigger : MonoBehaviour {
 
     public void OnTriggerEnter(Collider other)
     {
-        Debug.Log("treasdgjak");
         other.transform.parent = transform;
 
     }
