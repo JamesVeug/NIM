@@ -71,7 +71,7 @@ public class PhaseJumpUI : MonoBehaviour
         dofScript = Camera.main.GetComponent<UnityStandardAssets.ImageEffects.DepthOfField>();
         chaseScript = Camera.main.GetComponent<ChasePlayer>();
 
-        PhaseLight.SetActive(false);
+        setPhaseLight(false);
         // Get the text off the canvas
         Transform forwardText = FindObjectOfType<Canvas>().transform.FindChild("PhaseForwardText");
         if (forwardText != null) { phaseForwardText = forwardText.gameObject.GetComponent<Text>(); }
@@ -128,10 +128,15 @@ public class PhaseJumpUI : MonoBehaviour
 
     private void disablePreviewCamera()
     {
+        // Play sound if we have to move the camera a far distance
+        if( (chaseScript.whatToChase.transform.position-gameObject.transform.position).magnitude > 1)
+        {
+            SoundMaster.playRandomSound(PreviewSounds, PreviewSoundsVolume, getAudioSource());
+        }
+
         // Start chasing the player again
         if (chaseScript.whatToChase != gameObject)
         {
-            SoundMaster.playRandomSound(PreviewSounds, PreviewSoundsVolume, getAudioSource());
             chaseScript.whatToChase = gameObject;
         }
 
@@ -151,19 +156,19 @@ public class PhaseJumpUI : MonoBehaviour
         {
             // Starting phasing
             isPhasing = true;
-            PhaseLight.SetActive(isPhasing);
+            setPhaseLight(isPhasing);
         }
         else if( !jump.isPhasing() && isPhasing)
         {
             // Finished phasing
             cloneParticle(phaseOut);
             isPhasing = false;
-            PhaseLight.SetActive(isPhasing);
+            setPhaseLight(isPhasing);
             disablePreviewCamera();
         }
 
+        // Disable the camera if we release all buttons and are not phasing
         if (Mathf.Abs(preview) != 1 && isPreviewingPhase() && !jump.isPhasing()) {
-            Debug.Log("disable");
             disablePreviewCamera();
         }
         
@@ -314,7 +319,7 @@ public class PhaseJumpUI : MonoBehaviour
 
         if (effects == null)
         {
-            Debug.Log("can not find child Effects in Model!");
+            Debug.Log("can not find child 'Effects' in Model!");
             return;
         }
 
@@ -432,10 +437,21 @@ public class PhaseJumpUI : MonoBehaviour
 
     public void cloneParticle(GameObject o)
     {
-        GameObject cloneParticle = (GameObject)Instantiate(o);
-        cloneParticle.transform.position = gameObject.transform.position;
-        cloneParticle.transform.parent = gameObject.transform;
-        Destroy(cloneParticle, 2);
+        if (o != null)
+        {
+            GameObject cloneParticle = (GameObject)Instantiate(o);
+            cloneParticle.transform.position = gameObject.transform.position;
+            cloneParticle.transform.parent = gameObject.transform;
+            Destroy(cloneParticle, 2);
+        }
+    }
+
+    public void setPhaseLight(bool active)
+    {
+        if( PhaseLight != null)
+        {
+            PhaseLight.SetActive(active);
+        }
     }
 
     public AudioSource getAudioSource()
