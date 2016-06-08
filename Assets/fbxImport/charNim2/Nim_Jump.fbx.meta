@@ -105,8 +105,8 @@ ModelImporter:
     - serializedVersion: 16
       name: charNIMJump
       takeName: Take 001
-      firstFrame: 39
-      lastFrame: 101
+      firstFrame: 50
+      lastFrame: 85
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
