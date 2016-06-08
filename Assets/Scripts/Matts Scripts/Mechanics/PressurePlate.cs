@@ -86,6 +86,10 @@ public class PressurePlate : MonoBehaviour
             {
                 Door partnerScript = partners[i].GetComponent<Door>();
                 partnerScript.triggerDoor();
+            } else if (partners[i].GetComponent<Hatch>() != null)
+            {
+                Hatch partnerScript = partners[i].GetComponent<Hatch>();
+                partnerScript.triggerDoor();
             }
             else if (partners[i].GetComponent<DynamicStairs>() != null)
             {
