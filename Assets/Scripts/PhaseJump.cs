@@ -136,10 +136,9 @@ public class PhaseJump : MonoBehaviour
             phaseRemainingTime += Time.deltaTime;
 
             // Scale character
-            GameObject c = gameObject.transform.FindChild("Model").gameObject;
             float curveScale = scaleCurve.Evaluate(time);
             Vector3 scale = savedScale * curveScale;
-            c.transform.localScale = c.transform.lossyScale*curveScale;
+            transform.localScale = transform.lossyScale*curveScale;
 
             foreach (PhaseObjectTravel p in phasingObects)
             {
@@ -164,7 +163,7 @@ public class PhaseJump : MonoBehaviour
             // Finished phasing
             else if (time >= 1)
             {
-                c.transform.localScale = savedScale;
+                transform.localScale = savedScale;
                 transform.position = phaseToPosition;
                 phasing = false;
                 phaseDirectionSelected = 0;
@@ -275,9 +274,7 @@ public class PhaseJump : MonoBehaviour
         
 
         // Start phase
-
-        GameObject c = gameObject.transform.FindChild("Model").gameObject;
-        savedScale = c.transform.localScale;
+        savedScale = transform.localScale;
         phaseToPosition = spawnPosition;
         phaseFromPosition = transform.position;
         playerMovement.currentMovementWaypoint = newPhasePoint;
