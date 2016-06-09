@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using XInputDotNetPure;
+//using XInputDotNetPure;
 
 public class ShakeCamera : MonoBehaviour
 {
@@ -52,7 +52,7 @@ public class ShakeCamera : MonoBehaviour
 
         // Vibrate controller
         float vibrationIntensity = Mathf.Max(0,(CurrentShakeIntensity/ ShakeIntensity) * XboxVibrateIntensity);
-        GamePad.SetVibration(PlayerIndex.One, vibrationIntensity, vibrationIntensity);
+        //GamePad.SetVibration(PlayerIndex.One, vibrationIntensity, vibrationIntensity);
     }
 
     public void DoShake()
