@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class AIBuzzer : MonoBehaviour {
-    private GameObject origin;
+    public GameObject origin;
     bool incX = true;
     bool incY = false;
     bool incZ = true;
@@ -27,7 +27,6 @@ public class AIBuzzer : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        origin = transform.parent.gameObject;
         xInc = randomRange();
         yInc = randomRange();
         zInc = randomRange();

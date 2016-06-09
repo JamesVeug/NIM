@@ -12,7 +12,11 @@ public class ShardUI : MonoBehaviour
     public GameObject masterShard;
     public GameObject player;
 
+    // Navigation Path
     private MovementWaypoint lastPlayerPoint;
+    public float maxNavNodes = 10;
+    public float navTimeDelay = 2;
+    private static float nextTime = 0f;
 
     //private static float newScale = 0f; // Change size to this
     public static float maxScaleSpeed = 0.25f;
@@ -101,10 +105,22 @@ public class ShardUI : MonoBehaviour
     public void continuePath()
     {
         MovementWaypoint current = player.GetComponent<Movement>().currentMovementWaypoint;
-        if( current != lastPlayerPoint)
+        lastPlayerPoint = current;
+        startPath();
+
+        // Conditions:
+        // It's time to create new one after a delay
+        // We have not already exceeded the amount of nodes
+        // The path has more than 2 nodes in it
+        // The last navigator is further than x distance from the player
+        if( Time.time > nextTime && 
+            FollowPath.FollowPathCount() < maxNavNodes && 
+            FollowPath.getPath().Count > 2 &&
+            (FollowPath.getLastNavigator().transform.position-player.transform.position).magnitude > 4)
         {
-            lastPlayerPoint = current;
-            startPath();
+            // Create an AI to follow the path
+            GameObject o = (GameObject)Instantiate(navigatorPrefab);
+            nextTime = Time.time + navTimeDelay;
         }
     }
 
@@ -119,25 +135,28 @@ public class ShardUI : MonoBehaviour
             return;
         }
 
-        List<Vector3> path = getPath();
+        List<GameObject> path = getPath();
         for( int i = 0; i < path.Count-1; i++)
         {
-            Vector3 current = path[i];
-            Vector3 next = path[i+1];
-            Debug.DrawLine(current, next, Color.blue, 10);
+            Vector3 current = path[i].transform.position;
+            Vector3 next = path[i+1].transform.position;
+            Debug.DrawLine(current, next, Color.blue, 5);
         }
 
-        GameObject o = (GameObject)Instantiate(navigatorPrefab);
-        o.transform.position = player.transform.position;
-        FollowPath followPath = o.AddComponent<FollowPath>();
         FollowPath.setPath(path);
+        if (FollowPath.FollowPathCount() <= 0 )
+        {
+            // Create an AI to follow the path
+            GameObject o = (GameObject)Instantiate(navigatorPrefab);
+            nextTime = Time.time + navTimeDelay;
+        }
 
         /*GameObject o2 = (GameObject)Instantiate(navigatorPrefab);
         o2.transform.position = player.transform.position;
         FollowPath followPath2 = o2.AddComponent<FollowPath>();*/
     }
 
-    public List<Vector3> getPath()
+    public List<GameObject> getPath()
     {
         MovementWaypoint start = closestShardToMaster;
         MovementWaypoint end = player.GetComponent<Movement>().currentMovementWaypoint;
@@ -145,7 +164,7 @@ public class ShardUI : MonoBehaviour
 
         HashSet<MovementWaypoint> visited = new HashSet<MovementWaypoint>();
         List<AStarNode> fringe = new List<AStarNode>();
-        addNode(fringe, null, start);
+        addNode(fringe, null, start,false);
         //Debug.Log("Added " + fringe.Count);
 
         AStarNode star = null;
@@ -169,10 +188,10 @@ public class ShardUI : MonoBehaviour
             visited.Add(node);
 
             // Add all the children to the fringe
-            if (node.previous != null) addNode(fringe, star, node.previous);
-            if (node.next != null) addNode(fringe, star, node.next);
-            if (node.previousPhasePoint != null) addNode(fringe, star, node.previousPhasePoint);
-            if (node.nextPhasePoint != null) addNode(fringe, star, node.nextPhasePoint);
+            if (node.previous != null) addNode(fringe, star, node.previous, false);
+            if (node.next != null) addNode(fringe, star, node.next, false);
+            if (node.previousPhasePoint != null) addNode(fringe, star, node.previousPhasePoint, true);
+            if (node.nextPhasePoint != null) addNode(fringe, star, node.nextPhasePoint, true);
         }
 
 
@@ -182,30 +201,30 @@ public class ShardUI : MonoBehaviour
             return null;
         }
 
-        List<Vector3> nodes = new List<Vector3>();
+        List<GameObject> nodes = new List<GameObject>();
 
         AStarNode it = star;
         while(it != null)
         {
-            nodes.Add(it.current.transform.position);
+            nodes.Add(it.current.gameObject);
             it = it.last;
         }
 
-        //Debug.Log("FOUND path");
-
         // First position is nim
-        nodes[0] = player.transform.position;
+        nodes[0] = player.gameObject;
 
         // Last position should be the position of the master shard
-        nodes[nodes.Count - 1] = masterShard.transform.position;
+        nodes[nodes.Count - 1] = masterShard.gameObject;
         return nodes;
     }
 
-    private void addNode(List<AStarNode> list, AStarNode last, MovementWaypoint toAdd)
+    private void addNode(List<AStarNode> list, AStarNode last, MovementWaypoint toAdd, bool isPhasePoint)
     {
         // Distance from this node to the master shard
         float heuristic = toAdd.distance(masterShard.transform.position);
-        float distance = last != null ? last.distance + last.current.distance(toAdd) : 0;
+
+        float distanceToNextPoint = last == null ? 0 : isPhasePoint ? 0.5f : last.current.distance(toAdd);
+        float distance = last != null ? last.distance + distanceToNextPoint : 0;
         AStarNode path = new AStarNode(distance, heuristic, last, toAdd);
         
         for(int i = 0; i < list.Count;  i++)
