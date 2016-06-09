@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using XInputDotNetPure;
+//using XInputDotNetPure;
 using UnityEngine.Audio;
 
 public class PhaseJump : MonoBehaviour
@@ -136,10 +136,9 @@ public class PhaseJump : MonoBehaviour
             phaseRemainingTime += Time.deltaTime;
 
             // Scale character
-            GameObject c = gameObject.transform.FindChild("Model").gameObject;
             float curveScale = scaleCurve.Evaluate(time);
             Vector3 scale = savedScale * curveScale;
-            c.transform.localScale = c.transform.lossyScale*curveScale;
+            transform.localScale = transform.lossyScale*curveScale;
 
             foreach (PhaseObjectTravel p in phasingObects)
             {
@@ -153,7 +152,7 @@ public class PhaseJump : MonoBehaviour
 
             // Vibration
             float vibration = (1 - curveScale)*vibrationScale;
-            GamePad.SetVibration(PlayerIndex.One, vibration, vibration);
+            //GamePad.SetVibration(PlayerIndex.One, vibration, vibration);
 
             // TODO: Needs to be Fixed. Sometimes plays more than once!
             if (curveScale > 0.1 && curveScale < 0.3  && time < 1)
@@ -164,7 +163,7 @@ public class PhaseJump : MonoBehaviour
             // Finished phasing
             else if (time >= 1)
             {
-                c.transform.localScale = savedScale;
+                transform.localScale = savedScale;
                 transform.position = phaseToPosition;
                 phasing = false;
                 phaseDirectionSelected = 0;
@@ -186,7 +185,7 @@ public class PhaseJump : MonoBehaviour
                 coolDownRemainingTime = 0f;
 
                 // Stop vibration
-                GamePad.SetVibration(PlayerIndex.One, 0, 0);
+                //GamePad.SetVibration(PlayerIndex.One, 0, 0);
 
                 // Push objects away
                 pushObjects();
@@ -275,9 +274,7 @@ public class PhaseJump : MonoBehaviour
         
 
         // Start phase
-
-        GameObject c = gameObject.transform.FindChild("Model").gameObject;
-        savedScale = c.transform.localScale;
+        savedScale = transform.localScale;
         phaseToPosition = spawnPosition;
         phaseFromPosition = transform.position;
         playerMovement.currentMovementWaypoint = newPhasePoint;
