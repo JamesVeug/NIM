@@ -70,7 +70,10 @@ public class PressurePlate : MonoBehaviour
     public void setTriggerReact(bool trig)
     {
         triggered = trig;
-        triggerReact();
+		if (trig) {
+			triggerReact();
+		}
+        
     }
 
     public void setTriggerNoReact(bool trig)

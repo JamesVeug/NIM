@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using XInputDotNetPure;
+//using XInputDotNetPure;
 using UnityEngine.Audio;
 
 public class PhaseJump : MonoBehaviour
@@ -152,7 +152,7 @@ public class PhaseJump : MonoBehaviour
 
             // Vibration
             float vibration = (1 - curveScale)*vibrationScale;
-            GamePad.SetVibration(PlayerIndex.One, vibration, vibration);
+            //GamePad.SetVibration(PlayerIndex.One, vibration, vibration);
 
             // TODO: Needs to be Fixed. Sometimes plays more than once!
             if (curveScale > 0.1 && curveScale < 0.3  && time < 1)
@@ -185,7 +185,7 @@ public class PhaseJump : MonoBehaviour
                 coolDownRemainingTime = 0f;
 
                 // Stop vibration
-                GamePad.SetVibration(PlayerIndex.One, 0, 0);
+                //GamePad.SetVibration(PlayerIndex.One, 0, 0);
 
                 // Push objects away
                 pushObjects();
