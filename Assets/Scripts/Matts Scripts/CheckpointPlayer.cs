@@ -16,13 +16,19 @@ public class CheckpointPlayer : MonoBehaviour {
 
     public void setCheckpoint(Checkpoint checkpoint) {
         currentCheckpoint = checkpoint;
-        Debug.Log("NEW CHECKPOINT: " + checkpoint.name);
+        //Debug.Log("NEW CHECKPOINT: " + checkpoint.name);
     }
 	
 	// Update is called once per frame
 	void FixedUpdate () {
+		
        // Debug.Log("TRANSFORM Y: " + this.transform.position.y );
         if (this.transform.position.y < levelBottom) {
+			if (currentCheckpoint == null) {
+				Debug.LogError ("Player has no checkpoint!");
+				return;
+			}
+
             transform.position = currentCheckpoint.transform.position;
             movementScript.currentMovementWaypoint = currentCheckpoint.getWaypoint();
 
