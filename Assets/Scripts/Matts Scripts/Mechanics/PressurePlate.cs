@@ -9,6 +9,7 @@ public class PressurePlate : MonoBehaviour
     private Vector3 PositionOn;
 
     public GameObject[] partners;
+    public float downwardsMoveDist;
     public bool triggerTester = false;
     private bool triggered;
 
@@ -17,7 +18,7 @@ public class PressurePlate : MonoBehaviour
     {
         PositionOff = this.transform.localPosition;
         //moved half the trigger plate down
-        PositionOn = new Vector3(this.transform.localPosition.x, this.transform.localPosition.y - (this.transform.localScale.y / 2), this.transform.localPosition.z);
+        PositionOn = new Vector3(this.transform.localPosition.x, this.transform.localPosition.y - downwardsMoveDist, this.transform.localPosition.z);
 
     }
 
@@ -87,6 +88,10 @@ public class PressurePlate : MonoBehaviour
             if (partners[i].GetComponent<Door>() != null)
             {
                 Door partnerScript = partners[i].GetComponent<Door>();
+                partnerScript.triggerDoor();
+            } else if (partners[i].GetComponent<Hatch>() != null)
+            {
+                Hatch partnerScript = partners[i].GetComponent<Hatch>();
                 partnerScript.triggerDoor();
             }
             else if (partners[i].GetComponent<DynamicStairs>() != null)

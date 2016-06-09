@@ -7,6 +7,7 @@ public class Door : MonoBehaviour {
     public Boolean open;
     public GameObject top;
     public GameObject bottom;
+    public Animator anim;
     public float speed;
 
     private Vector3 topClosed;
@@ -21,6 +22,13 @@ public class Door : MonoBehaviour {
         botClosed = bottom.transform.localPosition;
         topOpen = new Vector3(topClosed.x,topClosed.y + top.transform.localScale.y, topClosed.z);
         botOpen= new Vector3(botClosed.x, botClosed.y - bottom.transform.localScale.y, topClosed.z);
+        if (open)
+        {
+            anim.SetBool("Open", true);
+        }
+        else {
+            anim.SetBool("Open", false);
+        }
        
     }
 	
@@ -28,6 +36,7 @@ public class Door : MonoBehaviour {
 	void Update () {
         if (open)
         {
+
             slowMove(topOpen, top);
             slowMove(botOpen, bottom);
         }
@@ -63,6 +72,13 @@ public class Door : MonoBehaviour {
     public void triggerDoor() {
         
         open = !open;
+        if (open)
+        {
+            anim.SetBool("Open", true);
+        }
+        else {
+            anim.SetBool("Open", false);
+        }
     }
 
    
