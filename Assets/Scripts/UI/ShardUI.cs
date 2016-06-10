@@ -18,11 +18,10 @@ public class ShardUI : MonoBehaviour
     public float navTimeDelay = 2;
     private static float nextTime = 0f;
 
-    //private static float newScale = 0f; // Change size to this
-    public static float maxScaleSpeed = 0.25f;
-    public static float scaleSpeed = 0.1f;
-    public static float speedDecay = 0.002f;
+    // Current time for the scaling of the bar
+    private static float currentTime = 1f;
 
+    // Scroll bar to represent how mcuh we have collected
     private Scrollbar bar;
     private bool alertedCompletion = false;
     private static float currentSpeed = 0;
@@ -32,14 +31,16 @@ public class ShardUI : MonoBehaviour
     public static void pickupShard()
     {
         pickups++;
-        currentSpeed = Mathf.Min(maxScaleSpeed, currentSpeed + scaleSpeed);
+        if (currentTime >= 1)
+        {
+            currentTime = 0f;
+        }
     }
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         bar = GetComponent<Scrollbar>();
         bar.size = 0;
-        currentSpeed = scaleSpeed;
     }
 
     void Update()
@@ -51,15 +52,13 @@ public class ShardUI : MonoBehaviour
         }
 
         // Change the scroll bar
-        float pickupRatio = ((float)pickups / (float)totalPickups);
-        if (pickupRatio > bar.size)
-        {
-            bar.size = Mathf.Min(bar.size + currentSpeed * Time.deltaTime, pickupRatio);
-        }
-        else
-        {
-            bar.size = Mathf.Max(bar.size - currentSpeed * Time.deltaTime, pickupRatio);
-        }
+        float expectedPickup = ((float)pickups / (float)totalPickups);
+        float currentPickup = bar.size;
+
+        float newPickup = currentPickup += (expectedPickup - currentPickup) * currentTime;
+        bar.size = newPickup;
+        currentTime = Mathf.Min(1, currentTime += Time.deltaTime);
+
 
         // Update pickup Counter
         if (pickupCounterText != null)
@@ -70,20 +69,7 @@ public class ShardUI : MonoBehaviour
         {
             Debug.LogWarning("Missing PickupCounter from ShardUI in " + gameObject.name);
         }
-
-        // Decay the speed so it doesn't stay so fast
-        if ( bar.size == pickupRatio)
-        {
-            //Debug.Log("Fast");
-            // Decay faster if we have reached our target
-            currentSpeed = Mathf.Max(currentSpeed - speedDecay*2, scaleSpeed);
-        }
-        else
-        {
-            // Slow down the update rate
-            currentSpeed = Mathf.Max(currentSpeed - speedDecay, scaleSpeed);
-        }
-        //Debug.Log("Speed " + currentSpeed);
+        
 
         // Check if we have completed the bar
         if (bar.size >= 1)
