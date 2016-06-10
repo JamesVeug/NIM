@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/LightFlicker.cs.meta
+guid: 90c6d13a0003f4a4386a20a03b0f1757
+timeCreated: 1465592471
+=======
 guid: 4691e628542c57c42a09cb3194571cb8
 timeCreated: 1465441686
+>>>>>>> JamesBranch:Assets/Scripts/AStarNode.cs.meta
 licenseType: Free
 MonoImporter:
   serializedVersion: 2

@@ -1,0 +1,179 @@
+fileFormatVersion: 2
+guid: c39518da364c50141a319c52762ae24d
+timeCreated: 1461452046
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: crystalBaseRock
+    100002: crystalPoint
+    100004: crystalPoint0
+    100006: crystalPoint1
+    100008: crystalPoint2
+    100010: crystalPoint3
+    100012: crystalPoint4
+    100014: crystalPoint5
+    100016: crystalPoint6
+    100018: crystalPoint7
+    100020: crystalPoint8
+    100022: crystalSquare
+    100024: crystalSquare0
+    100026: crystalSquare1
+    100028: crystalSquare2
+    100030: crystalSquare3
+    100032: crystalSquare4
+    100034: crystalSquare5
+    100036: crystalSquare6
+    100038: crystalSquare7
+    100040: //RootNode
+    100042: feature
+    100044: feature0
+    100046: feature1
+    400000: crystalBaseRock
+    400002: crystalPoint
+    400004: crystalPoint0
+    400006: crystalPoint1
+    400008: crystalPoint2
+    400010: crystalPoint3
+    400012: crystalPoint4
+    400014: crystalPoint5
+    400016: crystalPoint6
+    400018: crystalPoint7
+    400020: crystalPoint8
+    400022: crystalSquare
+    400024: crystalSquare0
+    400026: crystalSquare1
+    400028: crystalSquare2
+    400030: crystalSquare3
+    400032: crystalSquare4
+    400034: crystalSquare5
+    400036: crystalSquare6
+    400038: crystalSquare7
+    400040: //RootNode
+    400042: feature
+    400044: feature0
+    400046: feature1
+    2300000: crystalBaseRock
+    2300002: crystalPoint0
+    2300004: crystalPoint1
+    2300006: crystalPoint2
+    2300008: crystalPoint3
+    2300010: crystalPoint4
+    2300012: crystalPoint5
+    2300014: crystalPoint6
+    2300016: crystalPoint7
+    2300018: crystalPoint8
+    2300020: crystalSquare0
+    2300022: crystalSquare1
+    2300024: crystalSquare2
+    2300026: crystalSquare3
+    2300028: crystalSquare4
+    2300030: crystalSquare5
+    2300032: crystalSquare6
+    2300034: crystalSquare7
+    2300036: feature0
+    2300038: feature1
+    3300000: crystalBaseRock
+    3300002: crystalPoint0
+    3300004: crystalPoint1
+    3300006: crystalPoint2
+    3300008: crystalPoint3
+    3300010: crystalPoint4
+    3300012: crystalPoint5
+    3300014: crystalPoint6
+    3300016: crystalPoint7
+    3300018: crystalPoint8
+    3300020: crystalSquare0
+    3300022: crystalSquare1
+    3300024: crystalSquare2
+    3300026: crystalSquare3
+    3300028: crystalSquare4
+    3300030: crystalSquare5
+    3300032: crystalSquare6
+    3300034: crystalSquare7
+    3300036: feature0
+    3300038: feature1
+    4300000: crystalBaseRock
+    4300002: feature0
+    4300004: feature1
+    4300006: crystalPoint0
+    4300008: crystalPoint1
+    4300010: crystalPoint2
+    4300012: crystalPoint3
+    4300014: crystalPoint4
+    4300016: crystalPoint5
+    4300018: crystalPoint6
+    4300020: crystalPoint8
+    4300022: crystalPoint7
+    4300024: crystalSquare0
+    4300026: crystalSquare1
+    4300028: crystalSquare2
+    4300030: crystalSquare3
+    4300032: crystalSquare4
+    4300034: crystalSquare5
+    4300036: crystalSquare6
+    4300038: crystalSquare7
+  materials:
+    importMaterials: 1
+    materialName: 1
+    materialSearch: 2
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 0.2
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 1
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 15
+    normalImportMode: 1
+    tangentImportMode: 3
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

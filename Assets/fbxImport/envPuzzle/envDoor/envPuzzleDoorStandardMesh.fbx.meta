@@ -1,0 +1,667 @@
+fileFormatVersion: 2
+guid: b10e958f306bdc94ca7ff8d6534e0aa8
+timeCreated: 1465355352
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: doorInner
+    100002: doorInnerL
+    100004: doorInnerR
+    100006: doorPlankL
+    100008: doorPlankR
+    100010: doorPlankR0
+    100012: doorPlankR0 1
+    100014: doorPlankR1
+    100016: doorPlankR1 1
+    100018: doorPlankR2
+    100020: doorPlankR2 1
+    100022: doorPlankR3
+    100024: doorPlankR3 1
+    100026: //RootNode
+    100028: outerDoorFrame
+    400000: doorInner
+    400002: doorInnerL
+    400004: doorInnerR
+    400006: doorPlankL
+    400008: doorPlankR
+    400010: doorPlankR0
+    400012: doorPlankR0 1
+    400014: doorPlankR1
+    400016: doorPlankR1 1
+    400018: doorPlankR2
+    400020: doorPlankR2 1
+    400022: doorPlankR3
+    400024: doorPlankR3 1
+    400026: //RootNode
+    400028: outerDoorFrame
+    2300000: doorInnerL
+    2300002: doorInnerR
+    2300004: doorPlankR0
+    2300006: doorPlankR0 1
+    2300008: doorPlankR1
+    2300010: doorPlankR1 1
+    2300012: doorPlankR2
+    2300014: doorPlankR2 1
+    2300016: doorPlankR3
+    2300018: doorPlankR3 1
+    2300020: outerDoorFrame
+    3300000: doorInnerL
+    3300002: doorInnerR
+    3300004: doorPlankR0
+    3300006: doorPlankR0 1
+    3300008: doorPlankR1
+    3300010: doorPlankR1 1
+    3300012: doorPlankR2
+    3300014: doorPlankR2 1
+    3300016: doorPlankR3
+    3300018: doorPlankR3 1
+    3300020: outerDoorFrame
+    4300000: doorInnerR
+    4300002: doorPlankR0
+    4300004: doorPlankR1
+    4300006: doorPlankR2
+    4300008: doorPlankR3
+    4300010: doorInnerL
+    4300012: doorPlankR0
+    4300014: doorPlankR1
+    4300016: doorPlankR2
+    4300018: doorPlankR3
+    4300020: outerDoorFrame
+    7400000: envPuzzleDoorOpen
+    7400002: envPuzzleDoorPause
+    7400004: envPuzzleDoorClose
+    7400006: envPuzzleDoorDown
+    7400008: envPuzzleDoorDownPause
+    7400010: envPuzzleDoorDownUp
+    7400012: envPuzzleDoorFallDown
+    7400014: envPuzzleDoorFallDownPause
+    7400016: envPuzzleDoorFallUp
+    9500000: //RootNode
+    11100000: //RootNode
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: envPuzzleDoorOpen
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 25
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: doorInner
+        weight: 1
+      - path: doorInner/doorInnerL
+        weight: 1
+      - path: doorInner/doorInnerL/doorPlankL
+        weight: 1
+      - path: doorInner/doorInnerL/doorPlankL/doorPlankR0
+        weight: 1
+      - path: doorInner/doorInnerL/doorPlankL/doorPlankR1
+        weight: 1
+      - path: doorInner/doorInnerL/doorPlankL/doorPlankR2
+        weight: 1
+      - path: doorInner/doorInnerL/doorPlankL/doorPlankR3
+        weight: 1
+      - path: doorInner/doorInnerR
+        weight: 1
+      - path: doorInner/doorInnerR/doorPlankR
+        weight: 1
+      - path: doorInner/doorInnerR/doorPlankR/doorPlankR0 1
+        weight: 1
+      - path: doorInner/doorInnerR/doorPlankR/doorPlankR1 1
+        weight: 1
+      - path: doorInner/doorInnerR/doorPlankR/doorPlankR2 1
+        weight: 1
+      - path: doorInner/doorInnerR/doorPlankR/doorPlankR3 1
+        weight: 1
+      - path: outerDoorFrame
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: envPuzzleDoorPause
+      takeName: Take 001
+      firstFrame: 25
+      lastFrame: 30
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: doorInner
+        weight: 1
+      - path: doorInner/doorInnerL
+        weight: 1
+      - path: doorInner/doorInnerL/doorPlankL
+        weight: 1
+      - path: doorInner/doorInnerL/doorPlankL/doorPlankR0
+        weight: 1
+      - path: doorInner/doorInnerL/doorPlankL/doorPlankR1
+        weight: 1
+      - path: doorInner/doorInnerL/doorPlankL/doorPlankR2
+        weight: 1
+      - path: doorInner/doorInnerL/doorPlankL/doorPlankR3
+        weight: 1
+      - path: doorInner/doorInnerR
+        weight: 1
+      - path: doorInner/doorInnerR/doorPlankR
+        weight: 1
+      - path: doorInner/doorInnerR/doorPlankR/doorPlankR0 1
+        weight: 1
+      - path: doorInner/doorInnerR/doorPlankR/doorPlankR1 1
+        weight: 1
+      - path: doorInner/doorInnerR/doorPlankR/doorPlankR2 1
+        weight: 1
+      - path: doorInner/doorInnerR/doorPlankR/doorPlankR3 1
+        weight: 1
+      - path: outerDoorFrame
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: envPuzzleDoorClose
+      takeName: Take 001
+      firstFrame: 30
+      lastFrame: 45
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: doorInner
+        weight: 1
+      - path: doorInner/doorInnerL
+        weight: 1
+      - path: doorInner/doorInnerL/doorPlankL
+        weight: 1
+      - path: doorInner/doorInnerL/doorPlankL/doorPlankR0
+        weight: 1
+      - path: doorInner/doorInnerL/doorPlankL/doorPlankR1
+        weight: 1
+      - path: doorInner/doorInnerL/doorPlankL/doorPlankR2
+        weight: 1
+      - path: doorInner/doorInnerL/doorPlankL/doorPlankR3
+        weight: 1
+      - path: doorInner/doorInnerR
+        weight: 1
+      - path: doorInner/doorInnerR/doorPlankR
+        weight: 1
+      - path: doorInner/doorInnerR/doorPlankR/doorPlankR0 1
+        weight: 1
+      - path: doorInner/doorInnerR/doorPlankR/doorPlankR1 1
+        weight: 1
+      - path: doorInner/doorInnerR/doorPlankR/doorPlankR2 1
+        weight: 1
+      - path: doorInner/doorInnerR/doorPlankR/doorPlankR3 1
+        weight: 1
+      - path: outerDoorFrame
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: envPuzzleDoorDown
+      takeName: Take 001
+      firstFrame: 55
+      lastFrame: 85
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: doorInner
+        weight: 1
+      - path: doorInner/doorInnerL
+        weight: 1
+      - path: doorInner/doorInnerL/doorPlankL
+        weight: 1
+      - path: doorInner/doorInnerL/doorPlankL/doorPlankR0
+        weight: 1
+      - path: doorInner/doorInnerL/doorPlankL/doorPlankR1
+        weight: 1
+      - path: doorInner/doorInnerL/doorPlankL/doorPlankR2
+        weight: 1
+      - path: doorInner/doorInnerL/doorPlankL/doorPlankR3
+        weight: 1
+      - path: doorInner/doorInnerR
+        weight: 1
+      - path: doorInner/doorInnerR/doorPlankR
+        weight: 1
+      - path: doorInner/doorInnerR/doorPlankR/doorPlankR0 1
+        weight: 1
+      - path: doorInner/doorInnerR/doorPlankR/doorPlankR1 1
+        weight: 1
+      - path: doorInner/doorInnerR/doorPlankR/doorPlankR2 1
+        weight: 1
+      - path: doorInner/doorInnerR/doorPlankR/doorPlankR3 1
+        weight: 1
+      - path: outerDoorFrame
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0.96
+    - serializedVersion: 16
+      name: envPuzzleDoorDownPause
+      takeName: Take 001
+      firstFrame: 85
+      lastFrame: 105
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: doorInner
+        weight: 1
+      - path: doorInner/doorInnerL
+        weight: 1
+      - path: doorInner/doorInnerL/doorPlankL
+        weight: 1
+      - path: doorInner/doorInnerL/doorPlankL/doorPlankR0
+        weight: 1
+      - path: doorInner/doorInnerL/doorPlankL/doorPlankR1
+        weight: 1
+      - path: doorInner/doorInnerL/doorPlankL/doorPlankR2
+        weight: 1
+      - path: doorInner/doorInnerL/doorPlankL/doorPlankR3
+        weight: 1
+      - path: doorInner/doorInnerR
+        weight: 1
+      - path: doorInner/doorInnerR/doorPlankR
+        weight: 1
+      - path: doorInner/doorInnerR/doorPlankR/doorPlankR0 1
+        weight: 1
+      - path: doorInner/doorInnerR/doorPlankR/doorPlankR1 1
+        weight: 1
+      - path: doorInner/doorInnerR/doorPlankR/doorPlankR2 1
+        weight: 1
+      - path: doorInner/doorInnerR/doorPlankR/doorPlankR3 1
+        weight: 1
+      - path: outerDoorFrame
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0.96
+    - serializedVersion: 16
+      name: envPuzzleDoorDownUp
+      takeName: Take 001
+      firstFrame: 85
+      lastFrame: 135
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: doorInner
+        weight: 1
+      - path: doorInner/doorInnerL
+        weight: 1
+      - path: doorInner/doorInnerL/doorPlankL
+        weight: 1
+      - path: doorInner/doorInnerL/doorPlankL/doorPlankR0
+        weight: 1
+      - path: doorInner/doorInnerL/doorPlankL/doorPlankR1
+        weight: 1
+      - path: doorInner/doorInnerL/doorPlankL/doorPlankR2
+        weight: 1
+      - path: doorInner/doorInnerL/doorPlankL/doorPlankR3
+        weight: 1
+      - path: doorInner/doorInnerR
+        weight: 1
+      - path: doorInner/doorInnerR/doorPlankR
+        weight: 1
+      - path: doorInner/doorInnerR/doorPlankR/doorPlankR0 1
+        weight: 1
+      - path: doorInner/doorInnerR/doorPlankR/doorPlankR1 1
+        weight: 1
+      - path: doorInner/doorInnerR/doorPlankR/doorPlankR2 1
+        weight: 1
+      - path: doorInner/doorInnerR/doorPlankR/doorPlankR3 1
+        weight: 1
+      - path: outerDoorFrame
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0.96
+    - serializedVersion: 16
+      name: envPuzzleDoorFallDown
+      takeName: Take 001
+      firstFrame: 145
+      lastFrame: 186
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: doorInner
+        weight: 1
+      - path: doorInner/doorInnerL
+        weight: 1
+      - path: doorInner/doorInnerL/doorPlankL
+        weight: 1
+      - path: doorInner/doorInnerL/doorPlankL/doorPlankR0
+        weight: 1
+      - path: doorInner/doorInnerL/doorPlankL/doorPlankR1
+        weight: 1
+      - path: doorInner/doorInnerL/doorPlankL/doorPlankR2
+        weight: 1
+      - path: doorInner/doorInnerL/doorPlankL/doorPlankR3
+        weight: 1
+      - path: doorInner/doorInnerR
+        weight: 1
+      - path: doorInner/doorInnerR/doorPlankR
+        weight: 1
+      - path: doorInner/doorInnerR/doorPlankR/doorPlankR0 1
+        weight: 1
+      - path: doorInner/doorInnerR/doorPlankR/doorPlankR1 1
+        weight: 1
+      - path: doorInner/doorInnerR/doorPlankR/doorPlankR2 1
+        weight: 1
+      - path: doorInner/doorInnerR/doorPlankR/doorPlankR3 1
+        weight: 1
+      - path: outerDoorFrame
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0.96
+    - serializedVersion: 16
+      name: envPuzzleDoorFallDownPause
+      takeName: Take 001
+      firstFrame: 186
+      lastFrame: 192
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: doorInner
+        weight: 1
+      - path: doorInner/doorInnerL
+        weight: 1
+      - path: doorInner/doorInnerL/doorPlankL
+        weight: 1
+      - path: doorInner/doorInnerL/doorPlankL/doorPlankR0
+        weight: 1
+      - path: doorInner/doorInnerL/doorPlankL/doorPlankR1
+        weight: 1
+      - path: doorInner/doorInnerL/doorPlankL/doorPlankR2
+        weight: 1
+      - path: doorInner/doorInnerL/doorPlankL/doorPlankR3
+        weight: 1
+      - path: doorInner/doorInnerR
+        weight: 1
+      - path: doorInner/doorInnerR/doorPlankR
+        weight: 1
+      - path: doorInner/doorInnerR/doorPlankR/doorPlankR0 1
+        weight: 1
+      - path: doorInner/doorInnerR/doorPlankR/doorPlankR1 1
+        weight: 1
+      - path: doorInner/doorInnerR/doorPlankR/doorPlankR2 1
+        weight: 1
+      - path: doorInner/doorInnerR/doorPlankR/doorPlankR3 1
+        weight: 1
+      - path: outerDoorFrame
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0.96
+    - serializedVersion: 16
+      name: envPuzzleDoorFallUp
+      takeName: Take 001
+      firstFrame: 192
+      lastFrame: 250
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: doorInner
+        weight: 1
+      - path: doorInner/doorInnerL
+        weight: 1
+      - path: doorInner/doorInnerL/doorPlankL
+        weight: 1
+      - path: doorInner/doorInnerL/doorPlankL/doorPlankR0
+        weight: 1
+      - path: doorInner/doorInnerL/doorPlankL/doorPlankR1
+        weight: 1
+      - path: doorInner/doorInnerL/doorPlankL/doorPlankR2
+        weight: 1
+      - path: doorInner/doorInnerL/doorPlankL/doorPlankR3
+        weight: 1
+      - path: doorInner/doorInnerR
+        weight: 1
+      - path: doorInner/doorInnerR/doorPlankR
+        weight: 1
+      - path: doorInner/doorInnerR/doorPlankR/doorPlankR0 1
+        weight: 1
+      - path: doorInner/doorInnerR/doorPlankR/doorPlankR1 1
+        weight: 1
+      - path: doorInner/doorInnerR/doorPlankR/doorPlankR2 1
+        weight: 1
+      - path: doorInner/doorInnerR/doorPlankR/doorPlankR3 1
+        weight: 1
+      - path: outerDoorFrame
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0.96
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 100
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 1
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 90
+    normalImportMode: 1
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
