@@ -7,7 +7,8 @@ public static class SoundMaster
     public static float Master_Volume = 500;
 
     // Make the sound louder
-    private const float Master_Volume_SCALAR = 0.3f;
+    public static float Game_Volume = 0.5f;
+    private const float Master_Volume_SCALAR = 0.6f;
 
     // Play a random sound from a given array of sound files
     public static void playRandomSound(AudioClip[] clips, float[] volumes, AudioSource s)
@@ -28,7 +29,7 @@ public static class SoundMaster
         }
 
         float volume = volumes.Length <= index ? 100 : volumes[index];
-        s.PlayOneShot(clip,(volume/100)*(Master_Volume/100)* Master_Volume_SCALAR);
+        s.PlayOneShot(clip,(volume/100)*(Master_Volume/100)* (Master_Volume_SCALAR* Game_Volume));
     }
 
     public static void setMasterVolume(float v)
