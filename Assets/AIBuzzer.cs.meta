@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+<<<<<<< HEAD:Assets/FadeLightOnStart.cs.meta
+guid: 06caf1134cedc0f48aa397e755bfa82d
+timeCreated: 1465592470
+=======
+guid: 291e70ce05a143848be2098a8f57c6be
+timeCreated: 1465394135
+>>>>>>> JamesBranch:Assets/AIBuzzer.cs.meta
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
