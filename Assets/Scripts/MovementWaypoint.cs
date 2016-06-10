@@ -4,7 +4,7 @@ using System.Collections;
 public class MovementWaypoint : MonoBehaviour {
 
     // ONLY FOR DEBUGGING
-    public static bool drawLinks = true; // Draw a link to all the points we are connected to
+    public static bool drawLinks = false; // Draw a link to all the points we are connected to
     public static bool drawText = true; // Draw the name of the waypoint on it to help with level design 
 
     public int phaseLayer = 0;
@@ -76,7 +76,15 @@ public class MovementWaypoint : MonoBehaviour {
         Gizmos.DrawLine(start.transform.position - offset, end.transform.position - offset);
     }
 	
-	// Update is called once per frame
-	void Update () {
+    // Gets the distance from this point to another waypoint
+	public float distance(MovementWaypoint other)
+    {
+        return (other.transform.position-transform.position).magnitude;
+    }
+
+    // Gets the distance from this point to another position
+    public float distance(Vector3 other)
+    {
+        return (other - transform.position).magnitude;
     }
 }
