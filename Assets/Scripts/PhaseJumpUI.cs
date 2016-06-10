@@ -12,11 +12,16 @@ public class PhaseJumpUI : MonoBehaviour
     private GameObject effects;
     private GameObject gem;
     private GameObject glowObject;
-
+    public GameObject trail;
+    public GameObject phaseIn;
+    public GameObject phaseOut;
 
     private UnityStandardAssets.ImageEffects.DepthOfField dofScript;
     private ChasePlayer chaseScript;
-    private GameObject marker;
+    public GameObject marker;
+    public GameObject PhaseLight;
+    private bool isPreviewing;
+    private bool isPhasing;
 
 
     public Material standaredMaterial;
@@ -47,34 +52,26 @@ public class PhaseJumpUI : MonoBehaviour
         jump = GetComponent<PhaseJump>();
         audioSource = GetComponent<AudioSource>();
 
-        GameObject Model = gameObject.transform.FindChild("Model").gameObject;
-        if (Model != null)
-        {
-            staff = Model.transform.FindChild("Staff_Nim").gameObject;
-            if (staff != null)
-            {
-                effects = staff.transform.FindChild("Effects").gameObject;
-                gem = staff.transform.FindChild("MagTealGem").gameObject;
-                gemRenderer = gem.GetComponent<Renderer>();
 
-                Transform lightO = effects.transform.FindChild("Light");
-                if (lightO != null)
-                {
-                    light = lightO.gameObject.GetComponent<Light>();
-                }
+        Transform staffTransform = transform.FindChild("Staff_Nim");
+        if(staffTransform != null)
+        {
+            staff = staffTransform.gameObject;
+            effects = staff.transform.FindChild("Effects").gameObject;
+            gem = staff.transform.FindChild("MagTealGem").gameObject;
+            gemRenderer = gem.GetComponent<Renderer>();
+
+            Transform lightO = effects.transform.FindChild("Light");
+            if (lightO != null)
+            {
+                light = lightO.gameObject.GetComponent<Light>();
             }
         }
 
-        
         dofScript = Camera.main.GetComponent<UnityStandardAssets.ImageEffects.DepthOfField>();
         chaseScript = Camera.main.GetComponent<ChasePlayer>();
 
-        Transform mark = transform.FindChild("Marker");
-        if( mark != null)
-        {
-            marker = mark.gameObject;
-        }
-
+        setPhaseLight(false);
         // Get the text off the canvas
         Transform forwardText = FindObjectOfType<Canvas>().transform.FindChild("PhaseForwardText");
         if (forwardText != null) { phaseForwardText = forwardText.gameObject.GetComponent<Text>(); }
@@ -103,7 +100,6 @@ public class PhaseJumpUI : MonoBehaviour
 
         // Update Nims preview Camera
         updatePhaseJump();
-        
     }
 
     private void setMarkerVisibility(GameObject o, bool visible)
@@ -116,7 +112,6 @@ public class PhaseJumpUI : MonoBehaviour
         Renderer rend = o.GetComponent<Renderer>();
         if (rend != null)
         {
-            //Debug.Log("chanegd " + o.name);
             rend.enabled = visible;
         }
         Light light = o.GetComponent<Light>();
@@ -133,23 +128,21 @@ public class PhaseJumpUI : MonoBehaviour
 
     private void disablePreviewCamera()
     {
+        // Play sound if we have to move the camera a far distance
+        if( (chaseScript.whatToChase.transform.position-gameObject.transform.position).magnitude > 1)
+        {
+            SoundMaster.playRandomSound(PreviewSounds, PreviewSoundsVolume, getAudioSource());
+        }
+
         // Start chasing the player again
         if (chaseScript.whatToChase != gameObject)
         {
-            //Debug.Log("phasing " + jump.isPhasing());
-            //Debug.Log("direction " + jump.getJumpDirection());
-            SoundMaster.playRandomSound(PreviewSounds, PreviewSoundsVolume, getAudioSource());
             chaseScript.whatToChase = gameObject;
         }
 
         // Hide the marker
         setMarkerVisibility(marker, false);
-
-        // Focus on the player again
-        if (dofScript != null)
-        {
-            dofScript.focalLength = (chaseScript.whatToChase.transform.position - Camera.main.transform.position).magnitude;
-        }
+        isPreviewing = false;
     }
 
 
@@ -158,64 +151,71 @@ public class PhaseJumpUI : MonoBehaviour
         float phaseJumpDirection = Input.GetAxis("PhaseJump");
         float preview = Input.GetAxis("PreviewPhase");
 
-
-        if (Mathf.Abs(preview) != 1 || Mathf.Abs(phaseJumpDirection) != 1) { 
+        // Effects for when we phase
+        if( jump.isPhasing() && !isPhasing)
+        {
+            // Starting phasing
+            isPhasing = true;
+            setPhaseLight(isPhasing);
+        }
+        else if( !jump.isPhasing() && isPhasing)
+        {
+            // Finished phasing
+            cloneParticle(phaseOut);
+            isPhasing = false;
+            setPhaseLight(isPhasing);
             disablePreviewCamera();
         }
 
-
-        if (Mathf.Abs(phaseJumpDirection) == 1)
-        {
-
-            // Phase forward
-            if (phaseJumpDirection == 1)
-            {
-                if (jump.canPhaseForward())
-                {
-                    if( preview != 0)
-                    {
-                        previewPhase(true);
-                    }
-                    else
-                    {
-                        jump.phaseForward();
-                    }
-                }
-                else if (!phaseButtonPressed)
-                {
-                    jump.playCantPhaseSound();
-                }
-            }
-
-            // Phase Backward
-            if (phaseJumpDirection == -1)
-            {
-                if (jump.canPhaseBack())
-                {
-
-                    if (preview != 0)
-                    {
-                        previewPhase(false);
-                    }
-                    else
-                    {
-                        jump.phaseBack();
-                    }
-                }
-                else if (!phaseButtonPressed)
-                {
-                    jump.playCantPhaseSound();
-                }
-            }
+        // Disable the camera if we release all buttons and are not phasing
+        if (Mathf.Abs(preview) != 1 && isPreviewingPhase() && !jump.isPhasing()) {
+            disablePreviewCamera();
         }
-        else if (phaseJumpDirection == 0)
+        
+        // Preview
+        if( preview == 1 && jump.canPhaseForward() && !isPreviewingPhase())
         {
-            // We released the phase button.
-            // Allow us to phase again
-            //phaseDirectionSelected = 0;
-            //canPhase = true;
+            previewPhase(true);
         }
-        phaseButtonPressed = phaseJumpDirection != 0;
+        else if (preview == -1 && jump.canPhaseBack() && !isPreviewingPhase())
+        {
+            previewPhase(false);
+        }
+
+
+        // Phase
+        if (phaseJumpDirection == 1 && jump.canPhaseForward())
+        {
+            // Create trail
+            cloneParticle(trail);
+            cloneParticle(phaseIn);
+
+            // Phase
+            jump.phaseForward();
+            setMarkerVisibility(marker, false);
+        }
+        else if (phaseJumpDirection == -1 && jump.canPhaseBack())
+        {
+            // Create trail
+            cloneParticle(trail);
+            cloneParticle(phaseIn);
+
+            // Phase
+            jump.phaseBack();
+            setMarkerVisibility(marker, false);
+        }
+
+
+        // Focus on the player again
+        if (dofScript != null)
+        {
+            dofScript.focalLength = (chaseScript.whatToChase.transform.position - Camera.main.transform.position).magnitude;
+        }
+    }
+
+    private bool isPreviewingPhase()
+    {
+        return isPreviewing;
     }
 
     private void previewPhase(bool previewForward)
@@ -225,28 +225,21 @@ public class PhaseJumpUI : MonoBehaviour
             Debug.LogWarning("No Marker object assigned to NIM!");
             return;
         }
-
+        
 
         MovementWaypoint newWaypoint;
         Vector3 newPos = marker.transform.position;
         jump.getPhasePoint(previewForward, out newPos, out newWaypoint);
         marker.transform.position = newPos;
-        if (previewForward)
-        {
-            // Preview forward position
-            chaseScript.whatToChase = gameObject;
-            dofScript.focalLength = (marker.transform.position - Camera.main.transform.position).magnitude;
-        }
-        else if (!previewForward && chaseScript.whatToChase != marker)
-        {
-            // Preview back position
-            chaseScript.whatToChase = marker;
-            dofScript.focalLength = (marker.transform.position - chaseScript.getNewPosition()).magnitude;
+        marker.transform.rotation = transform.rotation;
 
-            SoundMaster.playRandomSound(PreviewSounds, PreviewSoundsVolume, getAudioSource());
+        // Preview back position
+        chaseScript.whatToChase = marker;
+        //dofScript.focalLength = (marker.transform.position - chaseScript.getNewPosition()).magnitude;
 
-        }
+        SoundMaster.playRandomSound(PreviewSounds, PreviewSoundsVolume, getAudioSource());
         setMarkerVisibility(marker, true);
+        isPreviewing = true;
     }
 
     private void updateGlow()
@@ -326,7 +319,7 @@ public class PhaseJumpUI : MonoBehaviour
 
         if (effects == null)
         {
-            Debug.Log("can not find child Effects in Model!");
+            Debug.Log("can not find child 'Effects' in Model!");
             return;
         }
 
@@ -341,11 +334,16 @@ public class PhaseJumpUI : MonoBehaviour
         // Change the color
         // HACK HACK HACK HACK HACK HACK
         Vector3 screenPos = Camera.main.WorldToScreenPoint(gem.transform.position)+new Vector3(0,1,0);
-        if (glowImage != null) glowImage.transform.position = screenPos;
-        if (glowImage2 != null) glowImage2.transform.position = screenPos;
+        if (glowImage2 != null)
+        {
+            glowImage2.GetComponent<Image>().enabled = Camera.main.transform.position.x > Camera.main.ScreenToWorldPoint(glowImage2.transform.position).x;
+            glowImage2.transform.position = screenPos;
+        }
         if (glowImage != null)
         {
+            glowImage.GetComponent<Image>().enabled = Camera.main.transform.position.x > Camera.main.ScreenToWorldPoint(glowImage.transform.position).x;
             Color c = glowImage.color;
+            glowImage.transform.position = screenPos;
             c.a = glowTime / 2;
             glowImage.color = c;
         }
@@ -434,6 +432,25 @@ public class PhaseJumpUI : MonoBehaviour
         if( light != null)
         {
             light.color = col;
+        }
+    }
+
+    public void cloneParticle(GameObject o)
+    {
+        if (o != null)
+        {
+            GameObject cloneParticle = (GameObject)Instantiate(o);
+            cloneParticle.transform.position = gameObject.transform.position;
+            cloneParticle.transform.parent = gameObject.transform;
+            Destroy(cloneParticle, 2);
+        }
+    }
+
+    public void setPhaseLight(bool active)
+    {
+        if( PhaseLight != null)
+        {
+            PhaseLight.SetActive(active);
         }
     }
 

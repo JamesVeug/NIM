@@ -32,7 +32,6 @@ public class AIScenicPatrol : MonoBehaviour {
             agent.SetDestination(currentTarget.position);
             if (agent.remainingDistance <= agent.stoppingDistance)
             {
-                Debug.Log("TEETTET");
                // agent.SetDestination(new Vector3(1000,1000,1000));//disable destination?
                 switchTarget();
                 counter = 0;
