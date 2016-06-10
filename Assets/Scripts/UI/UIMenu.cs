@@ -3,7 +3,7 @@ using System.Collections;
 
 public class UIMenu : MonoBehaviour {
 
-	private bool menuOpen = false;
+	private static bool menuOpen = false;
 
 	//Set the menu state
 	public void SetMenuOpen(bool open){
@@ -31,7 +31,7 @@ public class UIMenu : MonoBehaviour {
 		SetMenuOpen (true);
 	}
 
-	public bool isOpen(){
+	public static bool isOpen(){
 		return menuOpen;
 	}
 }

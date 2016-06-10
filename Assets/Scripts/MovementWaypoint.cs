@@ -76,7 +76,15 @@ public class MovementWaypoint : MonoBehaviour {
         Gizmos.DrawLine(start.transform.position - offset, end.transform.position - offset);
     }
 	
-	// Update is called once per frame
-	void Update () {
+    // Gets the distance from this point to another waypoint
+	public float distance(MovementWaypoint other)
+    {
+        return (other.transform.position-transform.position).magnitude;
+    }
+
+    // Gets the distance from this point to another position
+    public float distance(Vector3 other)
+    {
+        return (other - transform.position).magnitude;
     }
 }
