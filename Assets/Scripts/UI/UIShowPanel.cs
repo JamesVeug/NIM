@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEditor;
 
 public class UIShowPanel : MonoBehaviour {
 
@@ -13,5 +14,5 @@ public class UIShowPanel : MonoBehaviour {
 
 	public void quit(){
 		Application.Quit ();
-	}
+    }
 }

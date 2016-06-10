@@ -15,10 +15,13 @@ public class UIMenuController : MonoBehaviour {
 			return;
 		}
 
-		bool input = Input.GetButton ("Cancel");
-
-		if (input && !menu.isOpen()) {
+		bool buttonDown = Input.GetButtonDown ("Cancel");
+        if (buttonDown && !menu.isOpen()) {
 			menu.OpenMenu ();
 		}
+        else if(buttonDown && menu.isOpen())
+        {
+            menu.CloseMenu();
+        }
 	}
 }
