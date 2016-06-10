@@ -68,6 +68,7 @@ public class PhaseJumpUI : MonoBehaviour
             }
         }
 
+        
         dofScript = Camera.main.GetComponent<UnityStandardAssets.ImageEffects.DepthOfField>();
         chaseScript = Camera.main.GetComponent<ChasePlayer>();
 
