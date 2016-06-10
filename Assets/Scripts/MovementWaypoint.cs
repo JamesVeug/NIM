@@ -4,7 +4,7 @@ using System.Collections;
 public class MovementWaypoint : MonoBehaviour {
 
     // ONLY FOR DEBUGGING
-    public static bool drawLinks = false; // Draw a link to all the points we are connected to
+    public static bool drawLinks = true; // Draw a link to all the points we are connected to
     public static bool drawText = true; // Draw the name of the waypoint on it to help with level design 
 
     public int phaseLayer = 0;
