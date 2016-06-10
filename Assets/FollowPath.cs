@@ -1,13 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 public class FollowPath : MonoBehaviour {
     private static List<FollowPath> navigators = new List<FollowPath>();
     private static List<GameObject> path;
     private List<GameObject> currentPath;
 
-    private int index = 0;
+    private int pathIndex = 0;
     public float speed = 10f;
 
     public void Start()
@@ -20,7 +21,7 @@ public class FollowPath : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if ( index == currentPath.Count-1)
+        if ( pathIndex == currentPath.Count-1)
         {
             AIBuzzer buzz = GetComponent<AIBuzzer>();
             if (buzz != null && (currentPath.Count <= 2 || buzz.enabled == true) )
@@ -35,20 +36,52 @@ public class FollowPath : MonoBehaviour {
             }
 
             // Reached the end. Kill ourselves
-            navigators.Remove(this);
-            Destroy(gameObject);
+            removeThisNavigator();
             return;
         }
-
-        Vector3 next = currentPath[index + 1].transform.position;
-        if ((next - transform.position).magnitude < 1)
+        else if( navigators.Capacity > 1)
         {
-            index++;
+            // See if we are too close to another navigator
+            int navigatorIndex = getIndexInFollowers();
+            if(navigatorIndex > 0 )
+            {
+                // We are not the last one in the list
+                float distance = (navigators[navigatorIndex - 1].transform.position-transform.position).magnitude;
+                //Debug.Log("Distance " + distance);
+                if ( distance < 3)
+                {
+                    //Debug.Log("Die");
+                    // We are too close to one that is ahead of us. Destroy ourselves
+                    removeThisNavigator();
+                    return;
+                }
+            }
         }
 
+        // Move to the next point if we need to
+        Vector3 next = currentPath[pathIndex + 1].transform.position;
+        if ((next - transform.position).magnitude < 1)
+        {
+            pathIndex++;
+        }
 
+        // Move towards the point
         float step = speed * Time.deltaTime;
         transform.position = Vector3.MoveTowards(transform.position, next, step);
+    }
+
+    private int getIndexInFollowers()
+    {
+        for(int i = 0; i < navigators.Count; i++)
+        {
+            FollowPath p = navigators[i];
+            if( p == this)
+            {
+                return i;
+            }
+        }
+
+        return -1;
     }
 
     public static void setPath(List<GameObject> p)
@@ -68,5 +101,11 @@ public class FollowPath : MonoBehaviour {
     public static GameObject getLastNavigator()
     {
         return navigators[navigators.Count - 1].gameObject;
+    }
+
+    public void removeThisNavigator()
+    {
+        navigators.Remove(this);
+        Destroy(gameObject);
     }
 }

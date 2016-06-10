@@ -62,7 +62,14 @@ public class ShardUI : MonoBehaviour
         }
 
         // Update pickup Counter
-        pickupCounterText.text = pickups.ToString() + "/" + totalPickups.ToString();
+        if (pickupCounterText != null)
+        {
+            pickupCounterText.text = pickups.ToString() + "/" + totalPickups.ToString();
+        }
+        else
+        {
+            Debug.LogWarning("Missing PickupCounter from ShardUI in " + gameObject.name);
+        }
 
         // Decay the speed so it doesn't stay so fast
         if ( bar.size == pickupRatio)
@@ -81,7 +88,16 @@ public class ShardUI : MonoBehaviour
         // Check if we have completed the bar
         if (bar.size >= 1)
         {
-            if (!alertedCompletion)
+
+            if (player == null)
+            {
+                Debug.Log("Missing Player reference in ShardUI script! " + gameObject.name);
+            }
+            else if (masterShard == null)
+            {
+                Debug.Log("Missing MasterShard reference in ShardUI script! " + gameObject.name);
+            }
+            else if (!alertedCompletion)
             {
                 completedBar();
             }
@@ -104,6 +120,7 @@ public class ShardUI : MonoBehaviour
 
     public void continuePath()
     {
+
         MovementWaypoint current = player.GetComponent<Movement>().currentMovementWaypoint;
         lastPlayerPoint = current;
         startPath();
@@ -119,7 +136,14 @@ public class ShardUI : MonoBehaviour
             (FollowPath.getLastNavigator().transform.position-player.transform.position).magnitude > 4)
         {
             // Create an AI to follow the path
-            GameObject o = (GameObject)Instantiate(navigatorPrefab);
+            if (navigatorPrefab != null)
+            {
+                GameObject o = (GameObject)Instantiate(navigatorPrefab);
+            }
+            else
+            {
+                Debug.LogWarning("Missing Navigator Prefab. Can not draw path!");
+            }
             nextTime = Time.time + navTimeDelay;
         }
     }
@@ -129,11 +153,6 @@ public class ShardUI : MonoBehaviour
     //
     public void startPath()
     {
-        if (player == null || masterShard == null)
-        {
-            Debug.LogError("Missing Player or MasterShard reference in ShardUI script!");
-            return;
-        }
 
         List<GameObject> path = getPath();
         for( int i = 0; i < path.Count-1; i++)
@@ -150,10 +169,6 @@ public class ShardUI : MonoBehaviour
             GameObject o = (GameObject)Instantiate(navigatorPrefab);
             nextTime = Time.time + navTimeDelay;
         }
-
-        /*GameObject o2 = (GameObject)Instantiate(navigatorPrefab);
-        o2.transform.position = player.transform.position;
-        FollowPath followPath2 = o2.AddComponent<FollowPath>();*/
     }
 
     public List<GameObject> getPath()
