@@ -1,12 +1,5 @@
 fileFormatVersion: 2
-<<<<<<< HEAD:Assets/Hatch.cs.meta
-guid: 46b2b74d1ed99ab439a4617ce21359c8
-timeCreated: 1465592471
-=======
 guid: ca16a16240e479d4da2ab680c6d254cf
-timeCreated: 1465396668
->>>>>>> JamesBranch:Assets/ScatterBuzzers.cs.meta
-licenseType: Free
 MonoImporter:
   serializedVersion: 2
   defaultReferences: []
