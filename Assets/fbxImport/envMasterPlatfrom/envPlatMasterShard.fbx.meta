@@ -1,0 +1,149 @@
+fileFormatVersion: 2
+guid: 1f3042db6ee836747bf016a84c2af1db
+timeCreated: 1465542053
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: envCheckPoint
+    100002: envCryCluserSmall
+    100004: envCryClusterBig
+    100006: envCryMasterShard
+    100008: envCryMasterShardBase
+    100010: envEndPortal
+    100012: envGeyser
+    100014: envMasterShardContain
+    100016: envPlatMaster
+    100018: //RootNode
+    100020: envSmallRock
+    100022: masterShardPlatPreMerge
+    100024: envGeyser0
+    100026: envGeyser1
+    100028: envGeyser2
+    100030: envGeyserBase
+    100032: masterShardPlat
+    100034: rockSmall
+    400000: envCheckPoint
+    400002: envCryCluserSmall
+    400004: envCryClusterBig
+    400006: envCryMasterShard
+    400008: envCryMasterShardBase
+    400010: envEndPortal
+    400012: envGeyser
+    400014: envMasterShardContain
+    400016: envPlatMaster
+    400018: //RootNode
+    400020: envSmallRock
+    400022: masterShardPlatPreMerge
+    400024: envGeyser0
+    400026: envGeyser1
+    400028: envGeyser2
+    400030: envGeyserBase
+    400032: masterShardPlat
+    400034: rockSmall
+    2300000: envCheckPoint
+    2300002: envCryCluserSmall
+    2300004: envCryClusterBig
+    2300006: envCryMasterShard
+    2300008: envCryMasterShardBase
+    2300010: envEndPortal
+    2300012: envGeyser
+    2300014: envPlatMaster
+    2300016: envSmallRock
+    2300018: envGeyser0
+    2300020: envGeyser1
+    2300022: envGeyser2
+    2300024: envGeyserBase
+    2300026: rockSmall
+    3300000: envCheckPoint
+    3300002: envCryCluserSmall
+    3300004: envCryClusterBig
+    3300006: envCryMasterShard
+    3300008: envCryMasterShardBase
+    3300010: envEndPortal
+    3300012: envGeyser
+    3300014: envPlatMaster
+    3300016: envSmallRock
+    3300018: envGeyser0
+    3300020: envGeyser1
+    3300022: envGeyser2
+    3300024: envGeyserBase
+    3300026: rockSmall
+    4300000: envEndPortal
+    4300002: envSmallRock
+    4300004: envCheckPoint
+    4300006: envPlatMaster
+    4300008: envCryClusterBig
+    4300010: envCryCluserSmall
+    4300012: envGeyser
+    4300014: envCryMasterShardBase
+    4300016: envCryMasterShard
+    4300018: envGeyser0
+    4300020: envGeyser1
+    4300022: envGeyser2
+    4300024: envGeyserBase
+    4300026: rockSmall
+  materials:
+    importMaterials: 1
+    materialName: 1
+    materialSearch: 2
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 0.002
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 1
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
