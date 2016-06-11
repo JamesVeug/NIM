@@ -53,7 +53,7 @@ ModelImporter:
     400042: spine1
     400044: spineMiddle
     400046: spineTop
-    7400000: Take 001
+    7400000: charEleWalk
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -75,7 +75,83 @@ ModelImporter:
     animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: charEleWalk
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 80
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: controls
+        weight: 1
+      - path: controls/LeftLegControl
+        weight: 1
+      - path: controls/mainHipControl
+        weight: 1
+      - path: controls/mainUpperControl
+        weight: 1
+      - path: controls/RighttLegControl
+        weight: 1
+      - path: crystalElemental
+        weight: 1
+      - path: crystalElemental/hipMain
+        weight: 1
+      - path: crystalElemental/hipMain/leftUpperLeg
+        weight: 1
+      - path: crystalElemental/hipMain/leftUpperLeg/leftKnee
+        weight: 1
+      - path: crystalElemental/hipMain/leftUpperLeg/leftKnee/leftFoot
+        weight: 1
+      - path: crystalElemental/hipMain/rightUpperLeg
+        weight: 1
+      - path: crystalElemental/hipMain/rightUpperLeg/rightKnee
+        weight: 1
+      - path: crystalElemental/hipMain/rightUpperLeg/rightKnee/rightFoot
+        weight: 1
+      - path: crystalElemental/hipMain/spine1
+        weight: 1
+      - path: crystalElemental/hipMain/spine1/spineMiddle
+        weight: 1
+      - path: crystalElemental/hipMain/spine1/spineMiddle/spineTop
+        weight: 1
+      - path: IK
+        weight: 1
+      - path: IK/hipControlIK
+        weight: 1
+      - path: IK/leftHipsIK
+        weight: 1
+      - path: IK/leftKneeIK
+        weight: 1
+      - path: IK/mainBodyLowerIK
+        weight: 1
+      - path: IK/rightHipsIK
+        weight: 1
+      - path: IK/rightKneeIK
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 1
   meshes:
     lODScreenPercentages: []
