@@ -6,8 +6,8 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: ParticleSmokeWhite
-  m_Shader: {fileID: 200, guid: 0000000000000000f000000000000000, type: 0}
+  m_Name: ParticleFlames
+  m_Shader: {fileID: 10720, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: []
   m_CustomRenderQueue: -1
   m_SavedProperties:
@@ -17,14 +17,18 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 2800000, guid: 5b303ff28ad9368468a2edd759cf458d, type: 3}
+          m_Texture: {fileID: 2800000, guid: 4e505ad81f5b19c4cb6f445d36463955, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
     m_Floats:
       data:
         first:
           name: _InvFade
-        second: .827499986
+        second: 3
+      data:
+        first:
+          name: _Emisivity
+        second: 1.07462692
     m_Colors:
       data:
         first:
@@ -33,7 +37,4 @@ Material:
       data:
         first:
           name: _TintColor
-        second: {r: .358208954, g: .358208954, b: .358208954, a: .75686276}
---- !u!1002 &2100001
-EditorExtensionImpl:
-  serializedVersion: 6
+        second: {r: .544776082, g: .544776082, b: .544776082, a: 1}
