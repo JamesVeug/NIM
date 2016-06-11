@@ -106,8 +106,8 @@ ModelImporter:
     13700000: pCylinder4
   materials:
     importMaterials: 1
-    materialName: 0
-    materialSearch: 1
+    materialName: 1
+    materialSearch: 2
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
