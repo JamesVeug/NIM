@@ -53,11 +53,9 @@ public class AIScenicPatrol : MonoBehaviour {
         if (currentTarget.Equals(target1))
         {
             currentTarget = target2;
-            Debug.Log("TEST1");
         }
         else {
             currentTarget = target1;
-            Debug.Log("TEST2");
         }
     }
 }
