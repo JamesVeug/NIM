@@ -22,6 +22,8 @@ public class AIScenicPatrol : MonoBehaviour {
 
     void FixedUpdate()
     {
+		if (agent == null)
+			return;
       //  Debug.Log("COUNTER: " + counter);
         
         if (counter >= 300)

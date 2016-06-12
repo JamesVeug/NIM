@@ -4,11 +4,13 @@ using System.Collections;
 public class UIMenu : MonoBehaviour {
 
     public bool pauseGameOnOpen = false;
+	public bool disableClose = false;
 	private static bool menuOpen = false;
 
     public void Start()
     {
         menuOpen = true;
+		SetMenuOpen (disableClose);
     }
 
 	//Set the menu state
@@ -30,7 +32,7 @@ public class UIMenu : MonoBehaviour {
 
 	//Functions for use with buttons
 	public void CloseMenu(){
-		SetMenuOpen (false);
+		SetMenuOpen (false || disableClose);
 	}
 
 	public void OpenMenu(){
