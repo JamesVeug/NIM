@@ -20,6 +20,11 @@ public class UIMenuController : MonoBehaviour {
 	//Work around for timeScale = 0 problems with
 	//multiple presses
 	private bool toggled = false;
+
+	void Awake()
+	{
+		menu = FindObjectOfType<UIMenu> ();
+	}
     
     void Start()
     {
