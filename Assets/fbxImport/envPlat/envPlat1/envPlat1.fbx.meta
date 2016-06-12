@@ -1,0 +1,123 @@
+fileFormatVersion: 2
+guid: 5c5312f531dceca47a6811074f0a0ca4
+timeCreated: 1464080354
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: curve1
+    100002: //RootNode
+    100004: platform1
+    100006: platform1 1
+    100008: platfromRef
+    100010: runesContain
+    100012: runesStripe1
+    100014: runesStripe2
+    100016: runSwril
+    100018: envPlat1 1
+    100020: runeSwirl
+    100022: runeSwirl0
+    100024: runeSwirl1
+    100026: runeSwirl2
+    400000: curve1
+    400002: //RootNode
+    400004: platform1
+    400006: platform1 1
+    400008: platfromRef
+    400010: runesContain
+    400012: runesStripe1
+    400014: runesStripe2
+    400016: runSwril
+    400018: envPlat1 1
+    400020: runeSwirl
+    400022: runeSwirl0
+    400024: runeSwirl1
+    400026: runeSwirl2
+    2300000: platform1 1
+    2300002: runesStripe1
+    2300004: runesStripe2
+    2300006: runSwril
+    2300008: envPlat1 1
+    2300010: runeSwirl0
+    2300012: runeSwirl1
+    2300014: runeSwirl2
+    3300000: platform1 1
+    3300002: runesStripe1
+    3300004: runesStripe2
+    3300006: runSwril
+    3300008: envPlat1 1
+    3300010: runeSwirl0
+    3300012: runeSwirl1
+    3300014: runeSwirl2
+    4300000: platform1
+    4300002: runesStripe1
+    4300004: runesStripe2
+    4300006: runSwril
+    4300008: envPlat1
+    4300010: runeSwirl0
+    4300012: runeSwirl1
+    4300014: runeSwirl2
+  materials:
+    importMaterials: 0
+    materialName: 1
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 50
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 1
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 12
+    normalImportMode: 1
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

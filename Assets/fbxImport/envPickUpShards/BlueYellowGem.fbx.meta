@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 4cd4049f455ce4446908d9a6d2597461
-timeCreated: 1463215630
+timeCreated: 1465609559
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -13,7 +13,7 @@ ModelImporter:
     7400000: BlueYellowGem_Anim
     9500000: //RootNode
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 0
     materialSearch: 1
   animations:
@@ -83,7 +83,7 @@ ModelImporter:
     useFileScale: 1
   tangentSpace:
     normalSmoothAngle: 60
-    normalImportMode: 0
+    normalImportMode: 1
     tangentImportMode: 3
   importAnimation: 1
   copyAvatar: 0

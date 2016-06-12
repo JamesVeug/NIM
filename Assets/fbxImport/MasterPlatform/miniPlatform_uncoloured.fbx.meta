@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 6e2115e5c917db144bc6189f422ac3c9
-timeCreated: 1465256677
+timeCreated: 1465609559
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -11,7 +11,7 @@ ModelImporter:
     3300000: //RootNode
     4300000: miniPlatform
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 0
     materialSearch: 1
   animations:

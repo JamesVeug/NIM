@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 5d29132e84a78cf438797e3dbb4a3820
-timeCreated: 1465256629
+timeCreated: 1465609559
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -11,7 +11,7 @@ ModelImporter:
     3300000: //RootNode
     4300000: MasterPlatform2
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 0
     materialSearch: 1
   animations:

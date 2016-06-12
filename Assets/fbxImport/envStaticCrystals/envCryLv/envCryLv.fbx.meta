@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: d8d7243d26c10504398296dc729b4386
-timeCreated: 1461452046
+timeCreated: 1465609565
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -642,8 +642,8 @@ ModelImporter:
     4300232: crystalSquare7
   materials:
     importMaterials: 1
-    materialName: 0
-    materialSearch: 1
+    materialName: 1
+    materialSearch: 2
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
@@ -669,7 +669,7 @@ ModelImporter:
     addColliders: 0
     importBlendShapes: 1
     swapUVChannels: 0
-    generateSecondaryUV: 1
+    generateSecondaryUV: 0
     useFileUnits: 1
     optimizeMeshForGPU: 1
     keepQuads: 0
@@ -680,8 +680,8 @@ ModelImporter:
     secondaryUVPackMargin: 4
     useFileScale: 1
   tangentSpace:
-    normalSmoothAngle: 15
-    normalImportMode: 1
+    normalSmoothAngle: 60
+    normalImportMode: 0
     tangentImportMode: 3
   importAnimation: 1
   copyAvatar: 0
