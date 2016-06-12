@@ -1,18 +1,65 @@
 fileFormatVersion: 2
-guid: 4275fe480adeb6941931b2b2fb391281
-timeCreated: 1465609558
+guid: 2ce19d86336027140a7d3cf129b9b7c7
+timeCreated: 1465684818
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: bigPlatform1
+    100000: crysta_4
+    100002: crystal_1
+    100004: crystal_2
+    100006: crystal_3
+    100008: crystal_5
+    100010: crystal_6
+    100012: crystal_7
+    100014: crystal_8
+    100016: crystal_9
+    100018: //RootNode
+    100020: land
+    400000: crysta_4
+    400002: crystal_1
+    400004: crystal_2
+    400006: crystal_3
+    400008: crystal_5
+    400010: crystal_6
+    400012: crystal_7
+    400014: crystal_8
+    400016: crystal_9
+    400018: //RootNode
+    400020: land
+    2300000: crysta_4
+    2300002: crystal_1
+    2300004: crystal_2
+    2300006: crystal_3
+    2300008: crystal_5
+    2300010: crystal_6
+    2300012: crystal_7
+    2300014: crystal_8
+    2300016: crystal_9
+    2300018: land
+    3300000: crysta_4
+    3300002: crystal_1
+    3300004: crystal_2
+    3300006: crystal_3
+    3300008: crystal_5
+    3300010: crystal_6
+    3300012: crystal_7
+    3300014: crystal_8
+    3300016: crystal_9
+    3300018: land
+    4300000: land
+    4300002: crystal_1
+    4300004: crystal_2
+    4300006: crystal_3
+    4300008: crysta_4
+    4300010: crystal_5
+    4300012: crystal_6
+    4300014: crystal_7
+    4300016: crystal_8
+    4300018: crystal_9
   materials:
-    importMaterials: 1
-    materialName: 0
+    importMaterials: 0
+    materialName: 1
     materialSearch: 1
   animations:
     legacyGenerateAnimations: 4
@@ -51,7 +98,7 @@ ModelImporter:
     useFileScale: 1
   tangentSpace:
     normalSmoothAngle: 60
-    normalImportMode: 0
+    normalImportMode: 1
     tangentImportMode: 3
   importAnimation: 1
   copyAvatar: 0

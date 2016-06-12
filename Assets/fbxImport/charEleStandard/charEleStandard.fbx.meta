@@ -209,6 +209,15 @@ ModelImporter:
     100402: spine1
     100404: spineMiddle
     100406: spineTop
+    100408: cryBlue4
+    100410: cryBlue5
+    100412: cryBlue6
+    100414: cryBlue7
+    100416: cryBlue8
+    100418: cryPurple4
+    100420: cryPurple5
+    100422: cryPurple6
+    100424: cryPurple7
     400000: //RootNode
     400002: controls
     400004: cryBlue
@@ -413,6 +422,15 @@ ModelImporter:
     400402: spine1
     400404: spineMiddle
     400406: spineTop
+    400408: cryBlue4
+    400410: cryBlue5
+    400412: cryBlue6
+    400414: cryBlue7
+    400416: cryBlue8
+    400418: cryPurple4
+    400420: cryPurple5
+    400422: cryPurple6
+    400424: cryPurple7
     2300000: cryHLBlue
     2300002: cryHLBlue1
     2300004: cryHLBlue10
@@ -576,6 +594,16 @@ ModelImporter:
     2300320: mainBody
     2300322: rightLowerLeg
     2300324: rightUpperLeg 1
+    2300326: cryBlue4
+    2300328: cryBlue5
+    2300330: cryBlue6
+    2300332: cryBlue7
+    2300334: cryBlue8
+    2300336: cryPurple0
+    2300338: cryPurple4
+    2300340: cryPurple5
+    2300342: cryPurple6
+    2300344: cryPurple7
     3300000: cryHLBlue
     3300002: cryHLBlue1
     3300004: cryHLBlue10
@@ -739,6 +767,16 @@ ModelImporter:
     3300320: mainBody
     3300322: rightLowerLeg
     3300324: rightUpperLeg 1
+    3300326: cryBlue4
+    3300328: cryBlue5
+    3300330: cryBlue6
+    3300332: cryBlue7
+    3300334: cryBlue8
+    3300336: cryPurple0
+    3300338: cryPurple4
+    3300340: cryPurple5
+    3300342: cryPurple6
+    3300344: cryPurple7
     4300000: hipsL
     4300002: cryHLPurple0
     4300004: cryHLPurple1
@@ -902,10 +940,20 @@ ModelImporter:
     4300320: cryMBBlue14
     4300322: cryMBBlue15
     4300324: cryMBBlue16
+    4300326: cryBlue4
+    4300328: cryPurple4
+    4300330: cryPurple0
+    4300332: cryBlue5
+    4300334: cryPurple5
+    4300336: cryBlue6
+    4300338: cryPurple6
+    4300340: cryBlue7
+    4300342: cryPurple7
+    4300344: cryBlue8
     7400000: Take 001
     9500000: //RootNode
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 1
     materialSearch: 2
   animations:
@@ -945,9 +993,9 @@ ModelImporter:
     useFileScale: 1
   tangentSpace:
     normalSmoothAngle: 60
-    normalImportMode: 0
+    normalImportMode: 1
     tangentImportMode: 3
-  importAnimation: 1
+  importAnimation: 0
   copyAvatar: 0
   humanDescription:
     human: []
