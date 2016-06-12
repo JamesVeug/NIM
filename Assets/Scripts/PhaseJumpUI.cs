@@ -30,7 +30,7 @@ public class PhaseJumpUI : MonoBehaviour
 
     private Light light;
     private Text phaseForwardText;
-    private Text phasebackwardText;
+	private Text phaseBackwardText;
     private Image glowImage2;
     private Image glowImage;
     private float glowTime = 0f;
@@ -45,6 +45,25 @@ public class PhaseJumpUI : MonoBehaviour
     // Clips
     public AudioClip[] PreviewSounds;
 
+	void Awake () {
+		// Get the text off the canvas
+		phaseForwardText = GameObject.Find("PhaseForwardText").GetComponent<Text>();
+		phaseBackwardText = GameObject.Find("PhaseBackText").GetComponent<Text>();
+		glowImage = GameObject.Find ("NimGlow").GetComponent<Image> ();
+		glowImage2 = GameObject.Find ("NimGlow2").GetComponent<Image> ();
+
+		//Transform forwardText = FindObjectOfType<Canvas>().transform.FindChild("PhaseForwardText");
+		//if (forwardText != null) { phaseForwardText = forwardText.gameObject.GetComponent<Text>(); }
+
+		//Transform backText = FindObjectOfType<Canvas>().transform.FindChild("PhaseBackText");
+		//if (backText != null) { phaseBackwardText = backText.gameObject.GetComponent<Text>(); }
+
+		//Transform glowText = FindObjectOfType<Canvas>().transform.FindChild("NimGlow");
+		//if (glowText != null) { glowImage = glowText.gameObject.GetComponent<Image>(); glowImage.enabled = false; }
+
+		//Transform glowText2 = FindObjectOfType<Canvas>().transform.FindChild("NimGlow2");
+		//if (glowText2 != null) { glowImage2 = glowText2.gameObject.GetComponent<Image>(); }
+	}
 
     // Use this for initialization
     void Start()
@@ -73,18 +92,6 @@ public class PhaseJumpUI : MonoBehaviour
         chaseScript = Camera.main.GetComponent<ChasePlayer>();
 
         setPhaseLight(false);
-        // Get the text off the canvas
-        Transform forwardText = FindObjectOfType<Canvas>().transform.FindChild("PhaseForwardText");
-        if (forwardText != null) { phaseForwardText = forwardText.gameObject.GetComponent<Text>(); }
-
-        Transform backText = FindObjectOfType<Canvas>().transform.FindChild("PhaseBackText");
-        if (backText != null) { phasebackwardText = backText.gameObject.GetComponent<Text>(); }
-
-        Transform glowText = FindObjectOfType<Canvas>().transform.FindChild("NimGlow");
-        if (glowText != null) { glowImage = glowText.gameObject.GetComponent<Image>(); glowImage.enabled = false; }
-
-        Transform glowText2 = FindObjectOfType<Canvas>().transform.FindChild("NimGlow2");
-        if (glowText2 != null) { glowImage2 = glowText2.gameObject.GetComponent<Image>(); }
     }
 
     // Update is called once per frame
@@ -306,11 +313,11 @@ public class PhaseJumpUI : MonoBehaviour
             bool canPhaseBackward = jump.canPhaseBack();
             if (!jump.isPhasing() && canPhaseBackward)
             {
-                phasebackwardText.enabled = true;
+                phaseBackwardText.enabled = true;
             }
             else
             {
-                phasebackwardText.enabled = false;
+                phaseBackwardText.enabled = false;
             }
         }
     }
