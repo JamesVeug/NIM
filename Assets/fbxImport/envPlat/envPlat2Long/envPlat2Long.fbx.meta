@@ -1,0 +1,113 @@
+fileFormatVersion: 2
+guid: 18f54a35a7829314687c8ae86fd7c26f
+timeCreated: 1465521409
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: envPlatLng2
+    100004: envCryCluserMid
+    100006: envCryCluserSmall
+    100008: envCryCluserTiny
+    100010: envCryFlower
+    100012: envGeyser
+    100014: envPlatLng2Base
+    100016: envRock
+    400000: //RootNode
+    400002: envPlatLng2
+    400004: envCryCluserMid
+    400006: envCryCluserSmall
+    400008: envCryCluserTiny
+    400010: envCryFlower
+    400012: envGeyser
+    400014: envPlatLng2Base
+    400016: envRock
+    2300000: envPlatLng2
+    2300002: envCryCluserMid
+    2300004: envCryCluserSmall
+    2300006: envCryCluserTiny
+    2300008: envCryFlower
+    2300010: envGeyser
+    2300012: envPlatLng2Base
+    2300014: envRock
+    3300000: envPlatLng2
+    3300002: envCryCluserMid
+    3300004: envCryCluserSmall
+    3300006: envCryCluserTiny
+    3300008: envCryFlower
+    3300010: envGeyser
+    3300012: envPlatLng2Base
+    3300014: envRock
+    4300000: envPlatLng2
+    4300002: envCryCluserSmall
+    4300004: envCryCluserMid
+    4300006: envCryFlower
+    4300008: envRock
+    4300010: envCryCluserTiny
+    4300012: envGeyser
+    4300014: envPlatLng2Base
+  materials:
+    importMaterials: 0
+    materialName: 1
+    materialSearch: 2
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 0.004
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 1
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 1
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
