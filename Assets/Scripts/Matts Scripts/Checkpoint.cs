@@ -11,13 +11,11 @@ public class Checkpoint : MonoBehaviour {
     {
 		playerScript = FindObjectOfType<CheckpointPlayer> ();
         waypoint = this.GetComponent<MovementWaypoint>();
-        Debug.Log("WAYPOINT: " + waypoint.ToString());
 
     }
 
     public void OnTriggerEnter(Collider other)
     {
-        Debug.Log("TEST1");
         if (other.gameObject.tag == "Player")
         {
             playerScript.setCheckpoint(this);
