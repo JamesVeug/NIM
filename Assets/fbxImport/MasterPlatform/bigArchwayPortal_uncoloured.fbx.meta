@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: f1eb261ee10500846965b3be345a9e92
-timeCreated: 1465256585
+timeCreated: 1465609565
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -11,7 +11,7 @@ ModelImporter:
     3300000: //RootNode
     4300000: pTorus1
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 0
     materialSearch: 1
   animations:

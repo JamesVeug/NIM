@@ -1,20 +1,20 @@
 fileFormatVersion: 2
 guid: c7711ccb76d66a549b5941325a9abb1e
-timeCreated: 1463201635
+timeCreated: 1465609564
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
     100000: Body1
-    100002: Coat
-    100004: Hat
-    100006: Mask1
-    100008: //RootNode
+    100002: //RootNode
+    100004: Coat
+    100006: Hat
+    100008: Mask1
     400000: Body1
-    400002: Coat
-    400004: Hat
-    400006: Mask1
-    400008: //RootNode
+    400002: //RootNode
+    400004: Coat
+    400006: Hat
+    400008: Mask1
     2300000: Body1
     2300002: Coat
     2300004: Hat
@@ -30,7 +30,7 @@ ModelImporter:
   materials:
     importMaterials: 1
     materialName: 0
-    materialSearch: 0
+    materialSearch: 1
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0

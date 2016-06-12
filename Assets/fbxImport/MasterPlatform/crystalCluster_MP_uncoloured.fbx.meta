@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: f1544f940e63504418b5187664c5bd8a
-timeCreated: 1465256603
+timeCreated: 1465609565
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -11,7 +11,7 @@ ModelImporter:
     3300000: //RootNode
     4300000: crystalCluster_MP
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 0
     materialSearch: 1
   animations:

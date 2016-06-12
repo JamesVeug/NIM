@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: b087c56a4d882d8498c4de8df840c612
-timeCreated: 1462081979
+timeCreated: 1465609561
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -185,9 +185,9 @@ ModelImporter:
     100354: IK
     100356: kneeL
     100358: kneeR
-    100360: leftHipsIK
-    100362: leftKnee
-    100364: leftKnee1
+    100360: leftFoot
+    100362: leftHipsIK
+    100364: leftKnee
     100366: leftKneeIK
     100368: LeftLegControl
     100370: leftLowerLeg
@@ -199,8 +199,8 @@ ModelImporter:
     100382: mainHipControl
     100384: mainUpperControl
     100386: rightFoot
-    100388: rightFoot1
-    100390: rightHipsIK
+    100388: rightHipsIK
+    100390: rightKnee
     100392: rightKneeIK
     100394: rightLowerLeg
     100396: RighttLegControl
@@ -209,8 +209,15 @@ ModelImporter:
     100402: spine1
     100404: spineMiddle
     100406: spineTop
-    100408: leftFoot
-    100410: rightKnee
+    100408: cryBlue4
+    100410: cryBlue5
+    100412: cryBlue6
+    100414: cryBlue7
+    100416: cryBlue8
+    100418: cryPurple4
+    100420: cryPurple5
+    100422: cryPurple6
+    100424: cryPurple7
     400000: //RootNode
     400002: controls
     400004: cryBlue
@@ -391,9 +398,9 @@ ModelImporter:
     400354: IK
     400356: kneeL
     400358: kneeR
-    400360: leftHipsIK
-    400362: leftKnee
-    400364: leftKnee1
+    400360: leftFoot
+    400362: leftHipsIK
+    400364: leftKnee
     400366: leftKneeIK
     400368: LeftLegControl
     400370: leftLowerLeg
@@ -405,8 +412,8 @@ ModelImporter:
     400382: mainHipControl
     400384: mainUpperControl
     400386: rightFoot
-    400388: rightFoot1
-    400390: rightHipsIK
+    400388: rightHipsIK
+    400390: rightKnee
     400392: rightKneeIK
     400394: rightLowerLeg
     400396: RighttLegControl
@@ -415,8 +422,15 @@ ModelImporter:
     400402: spine1
     400404: spineMiddle
     400406: spineTop
-    400408: leftFoot
-    400410: rightKnee
+    400408: cryBlue4
+    400410: cryBlue5
+    400412: cryBlue6
+    400414: cryBlue7
+    400416: cryBlue8
+    400418: cryPurple4
+    400420: cryPurple5
+    400422: cryPurple6
+    400424: cryPurple7
     2300000: cryHLBlue
     2300002: cryHLBlue1
     2300004: cryHLBlue10
@@ -580,6 +594,16 @@ ModelImporter:
     2300320: mainBody
     2300322: rightLowerLeg
     2300324: rightUpperLeg 1
+    2300326: cryBlue4
+    2300328: cryBlue5
+    2300330: cryBlue6
+    2300332: cryBlue7
+    2300334: cryBlue8
+    2300336: cryPurple0
+    2300338: cryPurple4
+    2300340: cryPurple5
+    2300342: cryPurple6
+    2300344: cryPurple7
     3300000: cryHLBlue
     3300002: cryHLBlue1
     3300004: cryHLBlue10
@@ -743,70 +767,80 @@ ModelImporter:
     3300320: mainBody
     3300322: rightLowerLeg
     3300324: rightUpperLeg 1
-    4300000: kneeL
-    4300002: cryKRPurple
-    4300004: cryKRPurple0
-    4300006: cryKRPurple1
-    4300008: cryKRPurple2
-    4300010: cryKRPurple3
-    4300012: cryKRPurple4
-    4300014: cryKRPurple5
-    4300016: cryKRPurple6
-    4300018: cryKRPurple7
-    4300020: cryKRPurple8
-    4300022: cryKRPurple9
-    4300024: cryKRPurple10
-    4300026: cryKRPurple11
-    4300028: cryKRBlue0
-    4300030: cryKRBlue1
-    4300032: cryKRBlue2
-    4300034: cryKRBlue3
-    4300036: cryKRBlue4
-    4300038: cryKRBlue5
-    4300040: cryKRBlue6
-    4300042: cryKRBlue7
-    4300044: cryKRBlue8
-    4300046: cryKRBlue9
-    4300048: cryKRBlue10
-    4300050: cryKRBlue11
-    4300052: cryKRBlue12
-    4300054: cryKRBlue13
-    4300056: cryKRBlue14
-    4300058: cryKRBlue15
-    4300060: cryKRBlue16
-    4300062: cryKRBlue17
-    4300064: hipsL
-    4300066: cryHLPurple0
-    4300068: cryHLPurple1
-    4300070: cryHLPurple2
-    4300072: cryHLPurple3
-    4300074: cryHLPurple4
-    4300076: cryHLPurple5
-    4300078: cryHLPurple6
-    4300080: cryHLPurple7
-    4300082: cryHLPurple8
-    4300084: cryHLPurple9
-    4300086: cryHLPurple10
-    4300088: cryHLPurple11
-    4300090: cryHLPurple12
-    4300092: cryHLBlue
-    4300094: cryHLBlue1
-    4300096: cryHLBlue2
-    4300098: cryHLBlue3
-    4300100: cryHLBlue4
-    4300102: cryHLBlue5
-    4300104: cryHLBlue6
-    4300106: cryHLBlue7
-    4300108: cryHLBlue8
-    4300110: cryHLBlue9
-    4300112: cryHLBlue10
-    4300114: cryHLBlue11
-    4300116: cryHLBlue12
-    4300118: cryHLBlue13
-    4300120: cryHLBlue14
-    4300122: cryHLBlue15
-    4300124: cryHLBlue16
-    4300126: cryHLBlue17
+    3300326: cryBlue4
+    3300328: cryBlue5
+    3300330: cryBlue6
+    3300332: cryBlue7
+    3300334: cryBlue8
+    3300336: cryPurple0
+    3300338: cryPurple4
+    3300340: cryPurple5
+    3300342: cryPurple6
+    3300344: cryPurple7
+    4300000: hipsL
+    4300002: cryHLPurple0
+    4300004: cryHLPurple1
+    4300006: cryHLPurple2
+    4300008: cryHLPurple3
+    4300010: cryHLPurple4
+    4300012: cryHLPurple5
+    4300014: cryHLPurple6
+    4300016: cryHLPurple7
+    4300018: cryHLPurple8
+    4300020: cryHLPurple9
+    4300022: cryHLPurple10
+    4300024: cryHLPurple11
+    4300026: cryHLPurple12
+    4300028: cryHLBlue
+    4300030: cryHLBlue1
+    4300032: cryHLBlue2
+    4300034: cryHLBlue3
+    4300036: cryHLBlue4
+    4300038: cryHLBlue5
+    4300040: cryHLBlue6
+    4300042: cryHLBlue7
+    4300044: cryHLBlue8
+    4300046: cryHLBlue9
+    4300048: cryHLBlue10
+    4300050: cryHLBlue11
+    4300052: cryHLBlue12
+    4300054: cryHLBlue13
+    4300056: cryHLBlue14
+    4300058: cryHLBlue15
+    4300060: cryHLBlue16
+    4300062: cryHLBlue17
+    4300064: kneeL
+    4300066: cryKRPurple
+    4300068: cryKRPurple0
+    4300070: cryKRPurple1
+    4300072: cryKRPurple2
+    4300074: cryKRPurple3
+    4300076: cryKRPurple4
+    4300078: cryKRPurple5
+    4300080: cryKRPurple6
+    4300082: cryKRPurple7
+    4300084: cryKRPurple8
+    4300086: cryKRPurple9
+    4300088: cryKRPurple10
+    4300090: cryKRPurple11
+    4300092: cryKRBlue0
+    4300094: cryKRBlue1
+    4300096: cryKRBlue2
+    4300098: cryKRBlue3
+    4300100: cryKRBlue4
+    4300102: cryKRBlue5
+    4300104: cryKRBlue6
+    4300106: cryKRBlue7
+    4300108: cryKRBlue8
+    4300110: cryKRBlue9
+    4300112: cryKRBlue10
+    4300114: cryKRBlue11
+    4300116: cryKRBlue12
+    4300118: cryKRBlue13
+    4300120: cryKRBlue14
+    4300122: cryKRBlue15
+    4300124: cryKRBlue16
+    4300126: cryKRBlue17
     4300128: leftLowerLeg
     4300130: LeftupperLeg
     4300132: hipsR
@@ -906,12 +940,22 @@ ModelImporter:
     4300320: cryMBBlue14
     4300322: cryMBBlue15
     4300324: cryMBBlue16
-    7400000: charEleStandard
+    4300326: cryBlue4
+    4300328: cryPurple4
+    4300330: cryPurple0
+    4300332: cryBlue5
+    4300334: cryPurple5
+    4300336: cryBlue6
+    4300338: cryPurple6
+    4300340: cryBlue7
+    4300342: cryPurple7
+    4300344: cryBlue8
+    7400000: Take 001
     9500000: //RootNode
   materials:
-    importMaterials: 1
-    materialName: 0
-    materialSearch: 1
+    importMaterials: 0
+    materialName: 1
+    materialSearch: 2
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
@@ -928,472 +972,7 @@ ModelImporter:
     animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    clipAnimations:
-    - serializedVersion: 16
-      name: charEleStandard
-      takeName: Take 001
-      firstFrame: 1
-      lastFrame: 120
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask:
-      - path: 
-        weight: 1
-      - path: controls
-        weight: 1
-      - path: controls/LeftLegControl
-        weight: 1
-      - path: controls/mainHipControl
-        weight: 1
-      - path: controls/mainUpperControl
-        weight: 1
-      - path: controls/RighttLegControl
-        weight: 1
-      - path: crystalElemental
-        weight: 1
-      - path: crystalElemental/hipMain
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/hipsL
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/hipsL/crystalsL
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/hipsL/crystalsL/cryBlue1
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/hipsL/crystalsL/cryBlue1/cryHLBlue
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/hipsL/crystalsL/cryBlue1/cryHLBlue1
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/hipsL/crystalsL/cryBlue1/cryHLBlue2
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/hipsL/crystalsL/cryBlue1/cryHLBlue3
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/hipsL/crystalsL/cryBlue1/cryHLBlue4
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/hipsL/crystalsL/cryBlue1/cryHLBlue5
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/hipsL/crystalsL/cryBlue1/cryHLBlue6
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/hipsL/crystalsL/cryBlue1/cryHLBlue7
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/hipsL/crystalsL/cryBlue1/cryHLBlue8
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/hipsL/crystalsL/cryBlue1/cryHLBlue9
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/hipsL/crystalsL/cryBlue1/cryHLBlue10
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/hipsL/crystalsL/cryBlue1/cryHLBlue11
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/hipsL/crystalsL/cryBlue1/cryHLBlue12
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/hipsL/crystalsL/cryBlue1/cryHLBlue13
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/hipsL/crystalsL/cryBlue1/cryHLBlue14
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/hipsL/crystalsL/cryBlue1/cryHLBlue15
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/hipsL/crystalsL/cryBlue1/cryHLBlue16
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/hipsL/crystalsL/cryBlue1/cryHLBlue17
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/hipsL/crystalsL/cryPurple1
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/hipsL/crystalsL/cryPurple1/cryHLPurple0
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/hipsL/crystalsL/cryPurple1/cryHLPurple1
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/hipsL/crystalsL/cryPurple1/cryHLPurple2
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/hipsL/crystalsL/cryPurple1/cryHLPurple3
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/hipsL/crystalsL/cryPurple1/cryHLPurple4
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/hipsL/crystalsL/cryPurple1/cryHLPurple5
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/hipsL/crystalsL/cryPurple1/cryHLPurple6
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/hipsL/crystalsL/cryPurple1/cryHLPurple7
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/hipsL/crystalsL/cryPurple1/cryHLPurple8
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/hipsL/crystalsL/cryPurple1/cryHLPurple9
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/hipsL/crystalsL/cryPurple1/cryHLPurple10
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/hipsL/crystalsL/cryPurple1/cryHLPurple11
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/hipsL/crystalsL/cryPurple1/cryHLPurple12
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/kneeL
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/kneeL/crystaKneeR
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/kneeL/crystaKneeR/cryBlue0
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/kneeL/crystaKneeR/cryBlue0/cryKRBlue0
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/kneeL/crystaKneeR/cryBlue0/cryKRBlue1
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/kneeL/crystaKneeR/cryBlue0/cryKRBlue2
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/kneeL/crystaKneeR/cryBlue0/cryKRBlue3
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/kneeL/crystaKneeR/cryBlue0/cryKRBlue4
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/kneeL/crystaKneeR/cryBlue0/cryKRBlue5
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/kneeL/crystaKneeR/cryBlue0/cryKRBlue6
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/kneeL/crystaKneeR/cryBlue0/cryKRBlue7
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/kneeL/crystaKneeR/cryBlue0/cryKRBlue8
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/kneeL/crystaKneeR/cryBlue0/cryKRBlue9
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/kneeL/crystaKneeR/cryBlue0/cryKRBlue10
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/kneeL/crystaKneeR/cryBlue0/cryKRBlue11
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/kneeL/crystaKneeR/cryBlue0/cryKRBlue12
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/kneeL/crystaKneeR/cryBlue0/cryKRBlue13
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/kneeL/crystaKneeR/cryBlue0/cryKRBlue14
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/kneeL/crystaKneeR/cryBlue0/cryKRBlue15
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/kneeL/crystaKneeR/cryBlue0/cryKRBlue16
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/kneeL/crystaKneeR/cryBlue0/cryKRBlue17
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/kneeL/crystaKneeR/cryPurple0
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/kneeL/crystaKneeR/cryPurple0/cryKRPurple
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/kneeL/crystaKneeR/cryPurple0/cryKRPurple0
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/kneeL/crystaKneeR/cryPurple0/cryKRPurple1
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/kneeL/crystaKneeR/cryPurple0/cryKRPurple2
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/kneeL/crystaKneeR/cryPurple0/cryKRPurple3
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/kneeL/crystaKneeR/cryPurple0/cryKRPurple4
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/kneeL/crystaKneeR/cryPurple0/cryKRPurple5
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/kneeL/crystaKneeR/cryPurple0/cryKRPurple6
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/kneeL/crystaKneeR/cryPurple0/cryKRPurple7
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/kneeL/crystaKneeR/cryPurple0/cryKRPurple8
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/kneeL/crystaKneeR/cryPurple0/cryKRPurple9
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/kneeL/crystaKneeR/cryPurple0/cryKRPurple10
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/kneeL/crystaKneeR/cryPurple0/cryKRPurple11
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/leftKnee
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/leftKnee/leftFoot
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/leftKnee/leftFoot/leftLowerLeg
-        weight: 1
-      - path: crystalElemental/hipMain/leftUpperLeg/LeftupperLeg
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/hipsR
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/hipsR/crystalsR
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/hipsR/crystalsR/cryBlue2
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/hipsR/crystalsR/cryBlue2/cryHRBlue
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/hipsR/crystalsR/cryBlue2/cryHRBlue1
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/hipsR/crystalsR/cryBlue2/cryHRBlue2
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/hipsR/crystalsR/cryBlue2/cryHRBlue3
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/hipsR/crystalsR/cryBlue2/cryHRBlue4
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/hipsR/crystalsR/cryBlue2/cryHRBlue5
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/hipsR/crystalsR/cryBlue2/cryHRBlue6
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/hipsR/crystalsR/cryBlue2/cryHRBlue7
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/hipsR/crystalsR/cryBlue2/cryHRBlue8
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/hipsR/crystalsR/cryBlue2/cryHRBlue9
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/hipsR/crystalsR/cryBlue2/cryHRBlue10
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/hipsR/crystalsR/cryBlue2/cryHRBlue11
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/hipsR/crystalsR/cryBlue2/cryHRBlue12
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/hipsR/crystalsR/cryBlue2/cryHRBlue13
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/hipsR/crystalsR/cryBlue2/cryHRBlue14
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/hipsR/crystalsR/cryBlue2/cryHRBlue15
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/hipsR/crystalsR/cryBlue2/cryHRBlue16
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/hipsR/crystalsR/cryBlue2/cryHRBlue17
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/hipsR/crystalsR/cryPurple2
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/hipsR/crystalsR/cryPurple2/cryHRPurple0
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/hipsR/crystalsR/cryPurple2/cryHRPurple1
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/hipsR/crystalsR/cryPurple2/cryHRPurple2
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/hipsR/crystalsR/cryPurple2/cryHRPurple3
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/hipsR/crystalsR/cryPurple2/cryHRPurple4
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/hipsR/crystalsR/cryPurple2/cryHRPurple5
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/hipsR/crystalsR/cryPurple2/cryHRPurple6
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/hipsR/crystalsR/cryPurple2/cryHRPurple7
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/hipsR/crystalsR/cryPurple2/cryHRPurple8
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/hipsR/crystalsR/cryPurple2/cryHRPurple9
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/hipsR/crystalsR/cryPurple2/cryHRPurple10
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/hipsR/crystalsR/cryPurple2/cryHRPurple11
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/hipsR/crystalsR/cryPurple2/cryHRPurple12
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/kneeR
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/kneeR/crystalsR 1
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/kneeR/crystalsR 1/cryBlue3
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/kneeR/crystalsR 1/cryBlue3/cryKRBlue
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/kneeR/crystalsR 1/cryBlue3/cryKRBlue1
-          1
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/kneeR/crystalsR 1/cryBlue3/cryKRBlue2
-          1
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/kneeR/crystalsR 1/cryBlue3/cryKRBlue3
-          1
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/kneeR/crystalsR 1/cryBlue3/cryKRBlue4
-          1
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/kneeR/crystalsR 1/cryBlue3/cryKRBlue5
-          1
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/kneeR/crystalsR 1/cryBlue3/cryKRBlue6
-          1
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/kneeR/crystalsR 1/cryBlue3/cryKRBlue7
-          1
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/kneeR/crystalsR 1/cryBlue3/cryKRBlue8
-          1
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/kneeR/crystalsR 1/cryBlue3/cryKRBlue9
-          1
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/kneeR/crystalsR 1/cryBlue3/cryKRBlue10
-          1
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/kneeR/crystalsR 1/cryBlue3/cryKRBlue11
-          1
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/kneeR/crystalsR 1/cryBlue3/cryKRBlue12
-          1
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/kneeR/crystalsR 1/cryBlue3/cryKRBlue13
-          1
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/kneeR/crystalsR 1/cryBlue3/cryKRBlue14
-          1
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/kneeR/crystalsR 1/cryBlue3/cryKRBlue15
-          1
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/kneeR/crystalsR 1/cryBlue3/cryKRBlue16
-          1
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/kneeR/crystalsR 1/cryBlue3/cryKRBlue17
-          1
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/kneeR/crystalsR 1/cryPurple3
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/kneeR/crystalsR 1/cryPurple3/cryKRPurple
-          1
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/kneeR/crystalsR 1/cryPurple3/cryKRPurple1
-          1
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/kneeR/crystalsR 1/cryPurple3/cryKRPurple2
-          1
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/kneeR/crystalsR 1/cryPurple3/cryKRPurple3
-          1
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/kneeR/crystalsR 1/cryPurple3/cryKRPurple4
-          1
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/kneeR/crystalsR 1/cryPurple3/cryKRPurple5
-          1
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/kneeR/crystalsR 1/cryPurple3/cryKRPurple6
-          1
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/kneeR/crystalsR 1/cryPurple3/cryKRPurple7
-          1
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/kneeR/crystalsR 1/cryPurple3/cryKRPurple8
-          1
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/kneeR/crystalsR 1/cryPurple3/cryKRPurple9
-          1
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/kneeR/crystalsR 1/cryPurple3/cryKRPurple10
-          1
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/kneeR/crystalsR 1/cryPurple3/cryKRPurple11
-          1
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/kneeR/crystalsR 1/cryPurple3/cryKRPurple12
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/rightKnee
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/rightKnee/rightFoot
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/rightKnee/rightFoot/rightLowerLeg
-        weight: 1
-      - path: crystalElemental/hipMain/rightUpperLeg/rightUpperLeg 1
-        weight: 1
-      - path: crystalElemental/hipMain/spine1
-        weight: 1
-      - path: crystalElemental/hipMain/spine1/mainBodyContain
-        weight: 1
-      - path: crystalElemental/hipMain/spine1/mainBodyContain/crystal
-        weight: 1
-      - path: crystalElemental/hipMain/spine1/mainBodyContain/crystal/crystalDetails
-        weight: 1
-      - path: crystalElemental/hipMain/spine1/mainBodyContain/crystal/crystalDetails/cryBlue
-        weight: 1
-      - path: crystalElemental/hipMain/spine1/mainBodyContain/crystal/crystalDetails/cryBlue/cryMBBlue
-        weight: 1
-      - path: crystalElemental/hipMain/spine1/mainBodyContain/crystal/crystalDetails/cryBlue/cryMBBlue1
-        weight: 1
-      - path: crystalElemental/hipMain/spine1/mainBodyContain/crystal/crystalDetails/cryBlue/cryMBBlue2
-        weight: 1
-      - path: crystalElemental/hipMain/spine1/mainBodyContain/crystal/crystalDetails/cryBlue/cryMBBlue3
-        weight: 1
-      - path: crystalElemental/hipMain/spine1/mainBodyContain/crystal/crystalDetails/cryBlue/cryMBBlue4
-        weight: 1
-      - path: crystalElemental/hipMain/spine1/mainBodyContain/crystal/crystalDetails/cryBlue/cryMBBlue5
-        weight: 1
-      - path: crystalElemental/hipMain/spine1/mainBodyContain/crystal/crystalDetails/cryBlue/cryMBBlue6
-        weight: 1
-      - path: crystalElemental/hipMain/spine1/mainBodyContain/crystal/crystalDetails/cryBlue/cryMBBlue7
-        weight: 1
-      - path: crystalElemental/hipMain/spine1/mainBodyContain/crystal/crystalDetails/cryBlue/cryMBBlue8
-        weight: 1
-      - path: crystalElemental/hipMain/spine1/mainBodyContain/crystal/crystalDetails/cryBlue/cryMBBlue9
-        weight: 1
-      - path: crystalElemental/hipMain/spine1/mainBodyContain/crystal/crystalDetails/cryBlue/cryMBBlue10
-        weight: 1
-      - path: crystalElemental/hipMain/spine1/mainBodyContain/crystal/crystalDetails/cryBlue/cryMBBlue11
-        weight: 1
-      - path: crystalElemental/hipMain/spine1/mainBodyContain/crystal/crystalDetails/cryBlue/cryMBBlue12
-        weight: 1
-      - path: crystalElemental/hipMain/spine1/mainBodyContain/crystal/crystalDetails/cryBlue/cryMBBlue13
-        weight: 1
-      - path: crystalElemental/hipMain/spine1/mainBodyContain/crystal/crystalDetails/cryBlue/cryMBBlue14
-        weight: 1
-      - path: crystalElemental/hipMain/spine1/mainBodyContain/crystal/crystalDetails/cryBlue/cryMBBlue15
-        weight: 1
-      - path: crystalElemental/hipMain/spine1/mainBodyContain/crystal/crystalDetails/cryBlue/cryMBBlue16
-        weight: 1
-      - path: crystalElemental/hipMain/spine1/mainBodyContain/crystal/crystalDetails/cryPurple
-        weight: 1
-      - path: crystalElemental/hipMain/spine1/mainBodyContain/crystal/crystalDetails/cryPurple/cryMBPurple0
-        weight: 1
-      - path: crystalElemental/hipMain/spine1/mainBodyContain/crystal/crystalDetails/cryPurple/cryMBPurple1
-        weight: 1
-      - path: crystalElemental/hipMain/spine1/mainBodyContain/crystal/crystalDetails/cryPurple/cryMBPurple2
-        weight: 1
-      - path: crystalElemental/hipMain/spine1/mainBodyContain/crystal/crystalDetails/cryPurple/cryMBPurple3
-        weight: 1
-      - path: crystalElemental/hipMain/spine1/mainBodyContain/crystal/crystalDetails/cryPurple/cryMBPurple4
-        weight: 1
-      - path: crystalElemental/hipMain/spine1/mainBodyContain/crystal/crystalDetails/cryPurple/cryMBPurple5
-        weight: 1
-      - path: crystalElemental/hipMain/spine1/mainBodyContain/crystal/crystalDetails/cryPurple/cryMBPurple6
-        weight: 1
-      - path: crystalElemental/hipMain/spine1/mainBodyContain/crystal/crystalDetails/cryPurple/cryMBPurple7
-        weight: 1
-      - path: crystalElemental/hipMain/spine1/mainBodyContain/crystal/crystalDetails/cryPurple/cryMBPurple8
-        weight: 1
-      - path: crystalElemental/hipMain/spine1/mainBodyContain/crystal/crystalDetails/cryPurple/cryMBPurple9
-        weight: 1
-      - path: crystalElemental/hipMain/spine1/mainBodyContain/crystal/crystalDetails/cryPurple/cryMBPurple10
-        weight: 1
-      - path: crystalElemental/hipMain/spine1/mainBodyContain/crystal/crystalDetails/cryPurple/cryMBPurple11
-        weight: 1
-      - path: crystalElemental/hipMain/spine1/mainBodyContain/crystal/crystalDetails/cryPurple/cryMBPurple12
-        weight: 1
-      - path: crystalElemental/hipMain/spine1/mainBodyContain/mainBody
-        weight: 1
-      - path: crystalElemental/hipMain/spine1/spineMiddle
-        weight: 1
-      - path: crystalElemental/hipMain/spine1/spineMiddle/spineTop
-        weight: 1
-      - path: IK
-        weight: 1
-      - path: IK/hipControlIK
-        weight: 1
-      - path: IK/leftHipsIK
-        weight: 1
-      - path: IK/leftKneeIK
-        weight: 1
-      - path: IK/mainBodyLowerIK
-        weight: 1
-      - path: IK/rightHipsIK
-        weight: 1
-      - path: IK/rightKneeIK
-        weight: 1
-      maskType: 0
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
+    clipAnimations: []
     isReadable: 1
   meshes:
     lODScreenPercentages: []
@@ -1402,7 +981,7 @@ ModelImporter:
     addColliders: 0
     importBlendShapes: 1
     swapUVChannels: 0
-    generateSecondaryUV: 1
+    generateSecondaryUV: 0
     useFileUnits: 1
     optimizeMeshForGPU: 1
     keepQuads: 0
@@ -1413,10 +992,10 @@ ModelImporter:
     secondaryUVPackMargin: 4
     useFileScale: 1
   tangentSpace:
-    normalSmoothAngle: 15
+    normalSmoothAngle: 60
     normalImportMode: 1
     tangentImportMode: 3
-  importAnimation: 1
+  importAnimation: 0
   copyAvatar: 0
   humanDescription:
     human: []

@@ -3,7 +3,13 @@ using System.Collections;
 
 public class UIMenu : MonoBehaviour {
 
-	private bool menuOpen = false;
+    public bool pauseGameOnOpen = false;
+	private static bool menuOpen = false;
+
+    public void Start()
+    {
+        menuOpen = true;
+    }
 
 	//Set the menu state
 	public void SetMenuOpen(bool open){
@@ -12,9 +18,9 @@ public class UIMenu : MonoBehaviour {
 		}
 
 		//Pause/unpause the gam
-		if (open) {
+		if (open && pauseGameOnOpen) {
 			Time.timeScale = 0;
-		} else {
+		} else if( !open && pauseGameOnOpen){
 			Time.timeScale = 1;
 		}
 			
@@ -31,7 +37,7 @@ public class UIMenu : MonoBehaviour {
 		SetMenuOpen (true);
 	}
 
-	public bool isOpen(){
+	public static bool isOpen(){
 		return menuOpen;
 	}
 }

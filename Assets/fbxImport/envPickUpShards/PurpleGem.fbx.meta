@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 93cb3a776e0dd7843871610d38be2776
-timeCreated: 1463215630
+timeCreated: 1465609560
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -10,10 +10,10 @@ ModelImporter:
     2300000: //RootNode
     3300000: //RootNode
     4300000: PurpleGem
-    7400000: PurpleGem_Anim
+    7400000: Take 001
     9500000: //RootNode
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 0
     materialSearch: 1
   animations:
@@ -32,37 +32,7 @@ ModelImporter:
     animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    clipAnimations:
-    - serializedVersion: 16
-      name: PurpleGem_Anim
-      takeName: Take 001
-      firstFrame: 1
-      lastFrame: 240
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 1
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask:
-      - path: 
-        weight: 1
-      maskType: 0
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 1
+    clipAnimations: []
     isReadable: 1
   meshes:
     lODScreenPercentages: []
@@ -83,7 +53,7 @@ ModelImporter:
     useFileScale: 1
   tangentSpace:
     normalSmoothAngle: 60
-    normalImportMode: 0
+    normalImportMode: 1
     tangentImportMode: 3
   importAnimation: 1
   copyAvatar: 0

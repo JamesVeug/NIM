@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 4432a22f329840d45954b0097d658f2b
-timeCreated: 1463215433
+timeCreated: 1465609558
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -13,7 +13,7 @@ ModelImporter:
     7400000: GreenGem_Anim
     9500000: //RootNode
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 0
     materialSearch: 1
   animations:
@@ -83,7 +83,7 @@ ModelImporter:
     useFileScale: 1
   tangentSpace:
     normalSmoothAngle: 60
-    normalImportMode: 0
+    normalImportMode: 1
     tangentImportMode: 3
   importAnimation: 1
   copyAvatar: 0
