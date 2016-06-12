@@ -7,8 +7,10 @@ using System;
 public class UIMenuController : MonoBehaviour {
 
 	public UIMenu menu = null;
-    public GameObject subMenu;
+    public bool menuStartsOpen = false;
+    public GameObject subMenuForKeyboard;
 
+    private bool openedMenuOnStart = false;
     private bool keyboardSubmitCurrentlyPressed = false;
     private bool VerticalArrowCurrentlyPressed = false;
     private int xboxButtonIndex = 0;
@@ -21,14 +23,22 @@ public class UIMenuController : MonoBehaviour {
     
     void Start()
     {
-        startSubMenu = subMenu;
+        startSubMenu = subMenuForKeyboard;
+
+        // Open menu
+        if (menuStartsOpen)
+        {
+            menu.OpenMenu();
+            setInteractable(false);
+        }
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         if (menu == null)
         {
+            Debug.Log("UIMenuController: No menu assigned");
             return;
         }
 
@@ -38,11 +48,13 @@ public class UIMenuController : MonoBehaviour {
         bool MainMenuToggleButtonXbox = Input.GetButtonDown("MainMenuToggleXbox");
         if ((MainMenuToggleButton|| MainMenuToggleButtonXbox) && !UIMenu.isOpen())
         {
+            // Open the menu
             menu.OpenMenu();
             setInteractable(false);
         }
         else if (cancelbutton && UIMenu.isOpen())
         {
+            // Close the menu
             menu.CloseMenu();
             return;
         }
@@ -119,7 +131,7 @@ public class UIMenuController : MonoBehaviour {
             return;
         }
 
-        Debug.LogError("Could not find selected child " + subMenu.transform.GetChild(xboxButtonIndex).gameObject.name);
+        Debug.LogError("Could not find selected child " + subMenuForKeyboard.transform.GetChild(xboxButtonIndex).gameObject.name);
     }
 
     private void invokeButton()
@@ -130,18 +142,18 @@ public class UIMenuController : MonoBehaviour {
 
         List<GameObject> panels = UIShowPanel.getActivePanels();
         if (panels.Count > 0) {
-            subMenu = panels[0];
+            subMenuForKeyboard = panels[0];
         }
         else
         {
-            subMenu = startSubMenu;
+            subMenuForKeyboard = startSubMenu;
         }
     }
 
     private void moveDown()
     {
         xboxButtonIndex++;
-        if( xboxButtonIndex >= subMenu.transform.childCount)
+        if( xboxButtonIndex >= subMenuForKeyboard.transform.childCount)
         {
             xboxButtonIndex = 0;
         }
@@ -152,17 +164,17 @@ public class UIMenuController : MonoBehaviour {
         xboxButtonIndex--;
         if (xboxButtonIndex < 0)
         {
-            xboxButtonIndex = subMenu.transform.childCount-1;
+            xboxButtonIndex = subMenuForKeyboard.transform.childCount-1;
         }
     }
 
     private Button getButton(int xboxButtonIndex)
     {
-        return subMenu.transform.GetChild(xboxButtonIndex).gameObject.GetComponent<Button>();
+        return subMenuForKeyboard.transform.GetChild(xboxButtonIndex).gameObject.GetComponent<Button>();
     }
 
     private Slider getSlider(int xboxButtonIndex)
     {
-        return subMenu.transform.GetChild(xboxButtonIndex).gameObject.GetComponent<Slider>();
+        return subMenuForKeyboard.transform.GetChild(xboxButtonIndex).gameObject.GetComponent<Slider>();
     }
 }
