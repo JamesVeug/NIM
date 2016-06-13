@@ -48,10 +48,17 @@ public class PhaseJumpUI : MonoBehaviour
 
 	void Awake () {
 		// Get the text off the canvas
-		phaseForwardText = GameObject.Find("PhaseForwardText").GetComponent<Text>();
-		phaseBackwardText = GameObject.Find("PhaseBackText").GetComponent<Text>();
-		glowImage = GameObject.Find ("NimGlow").GetComponent<Image> ();
-		glowImage2 = GameObject.Find ("NimGlow2").GetComponent<Image> ();
+		GameObject forwardTextT = GameObject.Find("PhaseForwardText");
+        phaseForwardText = forwardTextT != null ? forwardTextT.GetComponent<Text>() : null;
+
+        GameObject backTextT = GameObject.Find("PhaseBackText");
+        phaseBackwardText = backTextT != null ? backTextT.GetComponent<Text>() : null;
+
+        GameObject glowImageT = GameObject.Find("NimGlow");
+        glowImage = glowImageT != null ? glowImageT.GetComponent<Image>() : null;
+
+        GameObject glowImage2T = GameObject.Find("NimGlow2");
+        glowImage2 = glowImage2T != null ? glowImage2T.GetComponent<Image>() : null;
 
 		//Transform forwardText = FindObjectOfType<Canvas>().transform.FindChild("PhaseForwardText");
 		//if (forwardText != null) { phaseForwardText = forwardText.gameObject.GetComponent<Text>(); }
@@ -250,7 +257,6 @@ public class PhaseJumpUI : MonoBehaviour
 
         glowTime = Mathf.Max(0, glowTime - Time.deltaTime);
         if (glowImage != null) glowImage.enabled = glowTime > 0;
-        Debug.Log("Glow " + glowTime);
         if (jump.isPhasing())
         {
             if (glowImage != null)

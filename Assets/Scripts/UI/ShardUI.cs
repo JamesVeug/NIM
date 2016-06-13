@@ -24,8 +24,8 @@ public class ShardUI : MonoBehaviour
     // Current time for the scaling of the bar
     private float currentTime = 1f;
 
-    // Scroll bar to represent how mcuh we have collected
-    private Scrollbar bar;
+    // Scroll bar to represent how much we have collected
+    public Image shardImage;
     private bool alertedCompletion = false;
     private float currentSpeed = 0;
     private int pickups = 0;
@@ -43,19 +43,18 @@ public class ShardUI : MonoBehaviour
 	void Awake(){
 		masterShard = FindObjectOfType<MasterCrystal> ().gameObject;
 		totalPickups = FindObjectsOfType<PickupTemp> ().Length;
-		bar = GetComponent<Scrollbar>();
 
 		instance = this;
 	}
 
     // Use this for initialization
     void Start () {
-        bar.size = 0;
+        shardImage.fillAmount = 0;
     }
 
     void Update()
     {
-        if( bar == null)
+        if( shardImage == null)
         {
             Debug.LogError("No scroll bar has been added to GameObject '" + gameObject.name + "'");
             return;
@@ -63,10 +62,10 @@ public class ShardUI : MonoBehaviour
 
         // Change the scroll bar
         float expectedPickup = ((float)pickups / (float)totalPickups);
-        float currentPickup = bar.size;
+        float currentPickup = shardImage.fillAmount;
 
         float newPickup = currentPickup += (expectedPickup - currentPickup) * currentTime;
-        bar.size = newPickup;
+        shardImage.fillAmount = newPickup;
         currentTime = Mathf.Min(1, currentTime += Time.deltaTime);
 
 
@@ -82,7 +81,7 @@ public class ShardUI : MonoBehaviour
         
 
         // Check if we have completed the bar
-        if (bar.size >= 1)
+        if (shardImage.fillAmount >= 1)
         {
 
             if (player == null)
