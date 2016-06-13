@@ -7,6 +7,15 @@ public class PressureTrigger : MonoBehaviour {
     public bool triggerOnExit = true;
     int count = 0;
 
+    [Range(min: 0, max: 100)]
+    public float[] stepOffSoundsVolume;
+    // Clips
+    public AudioClip[] stepOffSounds;
+
+    [Range(min: 0, max: 100)]
+    public float[] pressSoundsVolume;
+    public AudioClip[] pressSounds;
+
 	// Use this for initialization
 	void Start () {
 	
@@ -23,6 +32,7 @@ public class PressureTrigger : MonoBehaviour {
         count++;
         if (count == 1) {
             plate.setTriggerReact(true);
+            SoundMaster.playRandomSound(pressSounds, pressSoundsVolume, GetComponent<AudioSource>());
         }
         
     }
