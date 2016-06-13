@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class UIShowPanel : MonoBehaviour {
 	private static UIShowPanel instance;
-    private List<GameObject> activePanels = new List<GameObject>();
+    private GameObject activePanel = null;
 
 	void Awake(){
 		instance = this;
@@ -12,17 +12,17 @@ public class UIShowPanel : MonoBehaviour {
 
 	public void showPanel(GameObject panel){
 		panel.SetActive (true);
-        activePanels.Add(panel);
+        activePanel = panel;
 	}
 
 	public void hidePanel(GameObject panel){
 		panel.SetActive (false);
-        activePanels.Remove(panel);
+		activePanel = null;
     }
     
-    public List<GameObject> getActivePanels()
+    public GameObject getActivePanel()
     {
-        return activePanels;
+        return activePanel;
     }
 
 	public void quit(){
