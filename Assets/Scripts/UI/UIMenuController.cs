@@ -6,20 +6,20 @@ using System;
 
 public class UIMenuController : MonoBehaviour {
 
-	public UIMenu menu = null;
+	private UIMenu menu = null;
     public bool menuStartsOpen = false;
     public GameObject subMenuForKeyboard;
 
-    private bool openedMenuOnStart = false;
     private bool keyboardSubmitCurrentlyPressed = false;
     private bool VerticalArrowCurrentlyPressed = false;
     private int xboxButtonIndex = 0;
 
     private GameObject startSubMenu;
 
-	//Work around for timeScale = 0 problems with
-	//multiple presses
-	private bool toggled = false;
+	void Awake()
+	{
+		menu = FindObjectOfType<UIMenu> ();
+	}
     
     void Start()
     {
@@ -29,13 +29,17 @@ public class UIMenuController : MonoBehaviour {
         if (menuStartsOpen)
         {
             menu.OpenMenu();
-            setInteractable(false);
+            setInteractable();
         }
     }
+
+	void onEnable(){
+	}
 
     // Update is called once per frame
     void LateUpdate()
     {
+
         if (menu == null)
         {
             Debug.Log("UIMenuController: No menu assigned");
@@ -46,13 +50,13 @@ public class UIMenuController : MonoBehaviour {
         bool cancelbutton = Input.GetButtonDown("Cancel");
         bool MainMenuToggleButton = Input.GetButtonDown("MainMenuToggle");
         bool MainMenuToggleButtonXbox = Input.GetButtonDown("MainMenuToggleXbox");
-        if ((MainMenuToggleButton|| MainMenuToggleButtonXbox) && !UIMenu.isOpen())
+        if ((MainMenuToggleButton|| MainMenuToggleButtonXbox) && !menu.isOpen())
         {
             // Open the menu
             menu.OpenMenu();
-            setInteractable(false);
+            setInteractable();
         }
-        else if (cancelbutton && UIMenu.isOpen())
+        else if (cancelbutton && menu.isOpen())
         {
             // Close the menu
             menu.CloseMenu();
@@ -60,7 +64,7 @@ public class UIMenuController : MonoBehaviour {
         }
 
         // Menu not open
-        if( !UIMenu.isOpen())
+        if( !menu.isOpen())
         {
             return;
         }
@@ -71,7 +75,6 @@ public class UIMenuController : MonoBehaviour {
         if (verticalPressed && !VerticalArrowCurrentlyPressed)
         {
             float key = Input.GetAxisRaw("Vertical") == 0 ? Input.GetAxis("MainMenuXboxControlsVertical") : Input.GetAxisRaw("Vertical");
-            setInteractable(true);
             if (key == -1)
             {
                 moveDown();
@@ -80,7 +83,7 @@ public class UIMenuController : MonoBehaviour {
             {
                 moveUp();
             }
-            setInteractable(false);
+            setInteractable();
             VerticalArrowCurrentlyPressed = true;
         }
         else if (verticalReleased && VerticalArrowCurrentlyPressed)
@@ -104,9 +107,8 @@ public class UIMenuController : MonoBehaviour {
         // Accept selection on menu
         if (Input.GetButtonDown("Submit") && !keyboardSubmitCurrentlyPressed)
         {
-            setInteractable(true);
             invokeButton();
-            setInteractable(false);
+            setInteractable();
             VerticalArrowCurrentlyPressed = true;
         }
         else if (!Input.GetButtonDown("Submit") && VerticalArrowCurrentlyPressed)
@@ -115,21 +117,27 @@ public class UIMenuController : MonoBehaviour {
         }
     }
 
-    private void setInteractable(bool state)
+    private void setInteractable()
     {
         Button button = getButton(xboxButtonIndex);
         if (button != null)
         {
-            button.interactable = state;
+			button.Select ();
             return;
         }
 
         Slider slider = getSlider(xboxButtonIndex);
         if (slider != null)
         {
-            slider.interactable = state;
+			slider.Select ();
             return;
         }
+
+		if (xboxButtonIndex != 0) { //If we can't find one, reset the button index and try again
+			xboxButtonIndex = 0;
+			setInteractable ();
+			return;
+		}
 
         Debug.LogError("Could not find selected child " + subMenuForKeyboard.transform.GetChild(xboxButtonIndex).gameObject.name);
     }
@@ -137,22 +145,34 @@ public class UIMenuController : MonoBehaviour {
     private void invokeButton()
     {
         Button b = getButton(xboxButtonIndex);
-        b.onClick.Invoke();
-        xboxButtonIndex = 0;
+		b.onClick.Invoke();
 
-        List<GameObject> panels = UIShowPanel.getActivePanels();
-        if (panels.Count > 0) {
-            subMenuForKeyboard = panels[0];
-        }
-        else
-        {
-            subMenuForKeyboard = startSubMenu;
-        }
+		updatePanel ();
     }
+
+	private bool updatePanel(){
+		GameObject active = UIShowPanel.getInstance ().getActivePanel ();
+
+		if (active == null) {
+			active = startSubMenu;
+		}
+
+		if (active != subMenuForKeyboard) {
+			subMenuForKeyboard = active;
+			xboxButtonIndex = 0;
+			return true;
+		}
+			
+
+		return false;
+	}
 
     private void moveDown()
     {
-        xboxButtonIndex++;
+		if (!updatePanel ()) {
+			xboxButtonIndex++;
+		}
+
         if( xboxButtonIndex >= subMenuForKeyboard.transform.childCount)
         {
             xboxButtonIndex = 0;
@@ -161,8 +181,12 @@ public class UIMenuController : MonoBehaviour {
 
     private void moveUp()
     {
-        xboxButtonIndex--;
-        if (xboxButtonIndex < 0)
+		if (!updatePanel ()){
+			xboxButtonIndex--;
+		}
+			
+		if (xboxButtonIndex < 0)
+
         {
             xboxButtonIndex = subMenuForKeyboard.transform.childCount-1;
         }
