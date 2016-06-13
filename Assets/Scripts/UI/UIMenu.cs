@@ -5,7 +5,7 @@ public class UIMenu : MonoBehaviour {
 
     public bool pauseGameOnOpen = false;
 	public bool disableClose = false;
-	private static bool menuOpen = false;
+	private bool menuOpen = false;
 
     public void Start()
     {
@@ -21,9 +21,9 @@ public class UIMenu : MonoBehaviour {
 
 		//Pause/unpause the gam
 		if (open && pauseGameOnOpen) {
-			Time.timeScale = 0;
+			Time.timeScale = 0f;
 		} else if( !open && pauseGameOnOpen){
-			Time.timeScale = 1;
+			Time.timeScale = 1f;
 		}
 			
 		menuOpen = open;
@@ -39,7 +39,7 @@ public class UIMenu : MonoBehaviour {
 		SetMenuOpen (true);
 	}
 
-	public static bool isOpen(){
+	public bool isOpen(){
 		return menuOpen;
 	}
 }

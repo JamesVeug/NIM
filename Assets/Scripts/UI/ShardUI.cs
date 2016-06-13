@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class ShardUI : MonoBehaviour
 {
+	private static ShardUI instance = null;
+
     public Text pickupCounterText;
     public MovementWaypoint closestShardToMaster;
     public GameObject navigatorPrefab;
@@ -17,19 +19,19 @@ public class ShardUI : MonoBehaviour
     private MovementWaypoint lastPlayerPoint;
     public float maxNavNodes = 10;
     public float navTimeDelay = 2;
-    private static float nextTime = 0f;
+    private float nextTime = 0f;
 
     // Current time for the scaling of the bar
-    private static float currentTime = 1f;
+    private float currentTime = 1f;
 
     // Scroll bar to represent how mcuh we have collected
     private Scrollbar bar;
     private bool alertedCompletion = false;
-    private static float currentSpeed = 0;
-    private static int pickups = 0;
+    private float currentSpeed = 0;
+    private int pickups = 0;
 
     // We picked up a shard
-    public static void pickupShard()
+    public void pickupShard()
     {
         pickups++;
         if (currentTime >= 1)
@@ -42,6 +44,8 @@ public class ShardUI : MonoBehaviour
 		masterShard = FindObjectOfType<MasterCrystal> ().gameObject;
 		totalPickups = FindObjectsOfType<PickupTemp> ().Length;
 		bar = GetComponent<Scrollbar>();
+
+		instance = this;
 	}
 
     // Use this for initialization
@@ -250,4 +254,8 @@ public class ShardUI : MonoBehaviour
         // Didn't add into the list. So add to the end
         list.Add(path);
     }
+
+	public static ShardUI getInstance(){
+		return instance;
+	}
 }
