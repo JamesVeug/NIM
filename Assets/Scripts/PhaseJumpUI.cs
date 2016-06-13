@@ -36,15 +36,25 @@ public class PhaseJumpUI : MonoBehaviour
     private Image glowImage;
     private float glowTime = 0f;
     private bool hasGlown = false;
+    private float gemState = 0;
 
     // Phase Jumping
     private bool phaseButtonPressed = false;
 
     [Range(min: 0, max: 100)]
     public float[] PreviewSoundsVolume;
+    [Range(min: 0, max: 100)]
+    public float[] canPhaseSoundsVolume;
+    [Range(min: 0, max: 100)]
+    public float[] canNotPhaseSoundsVolume;
+    [Range(min: 0, max: 100)]
+    public float[] cooldownPhaseSoundsVolume;
 
     // Clips
     public AudioClip[] PreviewSounds;
+    public AudioClip[] canPhaseSounds;
+    public AudioClip[] canNotPhaseSounds;
+    public AudioClip[] cooldownPhaseSounds;
 
 	void Awake () {
 		// Get the text off the canvas
@@ -384,41 +394,53 @@ public class PhaseJumpUI : MonoBehaviour
             if (!shouldGlow)
             {
                 // No glow
-                gemRenderer.material = standaredMaterial;
-                if (glowImage2 != null)
+                if (glowImage2 != null && gemState != 0)
                 {
+                    gemRenderer.material = standaredMaterial;
                     Color col = glowImage2.color;
                     col.a = 0;
                     if (light != null) light.color = col;
                     glowImage2.color = col;
+                    gemState = 0;
+
+                    // Play sound
+                    SoundMaster.playRandomSound(canNotPhaseSounds, canNotPhaseSoundsVolume, audioSource);
                 }
             }
             else if ( jump.isCoolingDown())
             {
                 // Cooling down
-                gemRenderer.material = cooldownMaterial;
-                if (glowImage2 != null)
+                if (glowImage2 != null && gemState != 1)
                 {
+                    gemRenderer.material = cooldownMaterial;
                     Color col = glowImage2.color;
                     col.g = 0;
                     col.b = 0;
                     col.a = 0.5f;
                     glowImage2.color = col;
                     setLightColor(Color.red);
+                    gemState = 1;
+
+                    // Play sound
+                    SoundMaster.playRandomSound(cooldownPhaseSounds, cooldownPhaseSoundsVolume, audioSource);
                 }
             }
-            else
+            else if (gemState != 2)
             {
+
                 // Glowing 
-                gemRenderer.material = glowMaterial;
                 if (glowImage2 != null)
                 {
+                    gemRenderer.material = glowMaterial;
                     Color col = glowImage2.color;
                     col.g = 255;
                     col.b = 255;
                     col.a = 0.5f;
                     glowImage2.color = col;
                     setLightColor(col);
+
+                    // Play sound
+                    SoundMaster.playRandomSound(canPhaseSounds, canPhaseSoundsVolume, audioSource);
                 }
 
                 // Make the staff glow white
@@ -429,6 +451,7 @@ public class PhaseJumpUI : MonoBehaviour
                     glowTime = 1;
                     hasGlown = true;
                 }
+                gemState = 2;
             }
         }
         else
