@@ -4,7 +4,7 @@ using System;
 
 public class PressurePlate : MonoBehaviour
 {
-
+    private AudioSource audioSource;
     private Vector3 PositionOff;
     private Vector3 PositionOn;
 
@@ -13,9 +13,12 @@ public class PressurePlate : MonoBehaviour
     public bool triggerTester = false;
     private bool triggered;
 
+
+
     // Use this for initialization
     void Start()
     {
+        audioSource = gameObject.GetComponent<AudioSource>();
         PositionOff = this.transform.localPosition;
         //moved half the trigger plate down
         PositionOn = new Vector3(this.transform.localPosition.x, this.transform.localPosition.y - downwardsMoveDist, this.transform.localPosition.z);
@@ -71,6 +74,7 @@ public class PressurePlate : MonoBehaviour
     {
         triggered = trig;
 		if (trig) {
+
 			triggerReact();
 		}
         
