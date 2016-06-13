@@ -25,7 +25,10 @@ public class TutorialTrigger : MonoBehaviour {
 			return; //Only the player triggers tutorials
 		}
 
-		panel.ShowText (text, FADE_TIME);
+        if (panel != null)
+        {
+            panel.ShowText(text, FADE_TIME);
+        }
 	}
 
 	void OnTriggerExit(Collider other){
@@ -33,6 +36,9 @@ public class TutorialTrigger : MonoBehaviour {
 			return; //Only the player triggers tutorials
 		}
 
-		panel.FadeOut (FADE_TIME);
+        if (panel != null)
+        {
+            panel.FadeOut(FADE_TIME);
+        }
 	}
 }
