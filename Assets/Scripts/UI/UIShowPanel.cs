@@ -1,27 +1,39 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 
 public class UIShowPanel : MonoBehaviour {
-    private static List<GameObject> activePanels = new List<GameObject>();
+	private static UIShowPanel instance;
+    private GameObject activePanel = null;
+
+	void Awake(){
+		instance = this;
+	}
 
 	public void showPanel(GameObject panel){
 		panel.SetActive (true);
-        activePanels.Add(panel);
+        activePanel = panel;
 	}
 
 	public void hidePanel(GameObject panel){
 		panel.SetActive (false);
-        activePanels.Remove(panel);
+		activePanel = null;
     }
     
-    public static List<GameObject> getActivePanels()
+    public GameObject getActivePanel()
     {
-        return activePanels;
+        return activePanel;
     }
 
 	public void quit(){
 		Application.Quit ();
     }
+
+	public static UIShowPanel getInstance(){
+		if (instance) {
+			return instance;
+		} else {
+			return null;
+		}
+	}
 }

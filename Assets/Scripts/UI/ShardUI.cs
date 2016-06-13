@@ -5,30 +5,33 @@ using UnityEngine.UI;
 
 public class ShardUI : MonoBehaviour
 {
-    public int totalPickups = 0;
+	private static ShardUI instance = null;
+
     public Text pickupCounterText;
     public MovementWaypoint closestShardToMaster;
     public GameObject navigatorPrefab;
-    public GameObject masterShard;
     public GameObject player;
+
+	private int totalPickups = 0;
+	private GameObject masterShard;
 
     // Navigation Path
     private MovementWaypoint lastPlayerPoint;
     public float maxNavNodes = 10;
     public float navTimeDelay = 2;
-    private static float nextTime = 0f;
+    private float nextTime = 0f;
 
     // Current time for the scaling of the bar
-    private static float currentTime = 1f;
+    private float currentTime = 1f;
 
-    // Scroll bar to represent how mcuh we have collected
-    private Scrollbar bar;
+    // Scroll bar to represent how much we have collected
+    public Image shardImage;
     private bool alertedCompletion = false;
-    private static float currentSpeed = 0;
-    private static int pickups = 0;
+    private float currentSpeed = 0;
+    private int pickups = 0;
 
     // We picked up a shard
-    public static void pickupShard()
+    public void pickupShard()
     {
         pickups++;
         if (currentTime >= 1)
@@ -37,15 +40,21 @@ public class ShardUI : MonoBehaviour
         }
     }
 
+	void Awake(){
+		masterShard = FindObjectOfType<MasterCrystal> ().gameObject;
+		totalPickups = FindObjectsOfType<PickupTemp> ().Length;
+
+		instance = this;
+	}
+
     // Use this for initialization
     void Start () {
-        bar = GetComponent<Scrollbar>();
-        bar.size = 0;
+        shardImage.fillAmount = 0;
     }
 
     void Update()
     {
-        if( bar == null)
+        if( shardImage == null)
         {
             Debug.LogError("No scroll bar has been added to GameObject '" + gameObject.name + "'");
             return;
@@ -53,10 +62,10 @@ public class ShardUI : MonoBehaviour
 
         // Change the scroll bar
         float expectedPickup = ((float)pickups / (float)totalPickups);
-        float currentPickup = bar.size;
+        float currentPickup = shardImage.fillAmount;
 
         float newPickup = currentPickup += (expectedPickup - currentPickup) * currentTime;
-        bar.size = newPickup;
+        shardImage.fillAmount = newPickup;
         currentTime = Mathf.Min(1, currentTime += Time.deltaTime);
 
 
@@ -72,7 +81,7 @@ public class ShardUI : MonoBehaviour
         
 
         // Check if we have completed the bar
-        if (bar.size >= 1)
+        if (shardImage.fillAmount >= 1)
         {
 
             if (player == null)
@@ -102,6 +111,8 @@ public class ShardUI : MonoBehaviour
         // Don't call this method again
         alertedCompletion = true;
         startPath();
+
+		masterShard.SetActive (true);
     }
 
     public void continuePath()
@@ -242,4 +253,8 @@ public class ShardUI : MonoBehaviour
         // Didn't add into the list. So add to the end
         list.Add(path);
     }
+
+	public static ShardUI getInstance(){
+		return instance;
+	}
 }

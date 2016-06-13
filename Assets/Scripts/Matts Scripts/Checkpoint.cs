@@ -3,7 +3,8 @@ using System.Collections;
 
 public class Checkpoint : MonoBehaviour {
 
-    public CheckpointPlayer playerScript;
+    public AIBuzzer[] buzzerAI;
+    private CheckpointPlayer playerScript;
     private MovementWaypoint waypoint;
     // Use this for initialization
 
@@ -11,16 +12,20 @@ public class Checkpoint : MonoBehaviour {
     {
 		playerScript = FindObjectOfType<CheckpointPlayer> ();
         waypoint = this.GetComponent<MovementWaypoint>();
-        Debug.Log("WAYPOINT: " + waypoint.ToString());
 
     }
 
     public void OnTriggerEnter(Collider other)
     {
-        Debug.Log("TEST1");
         if (other.gameObject.tag == "Player")
         {
             playerScript.setCheckpoint(this);
+            if (buzzerAI != null)
+            {
+                foreach(AIBuzzer b in buzzerAI)
+                    b.spanRange();
+            }
+            
         }
         else {
             Debug.Log("NO PLAYER TAG FOUND FOR CHECKPOINT");

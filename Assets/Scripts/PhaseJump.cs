@@ -54,16 +54,12 @@ public class PhaseJump : MonoBehaviour
     public AudioClip[] phaseForwardSounds;
     public AudioClip[] phaseBackSounds;
     public AudioClip[] cantPhaseSounds;
-    public AudioMixerGroup[] phaseForwardMixer;
-    public AudioMixerGroup[] phaseBackMixer;
-    public AudioMixerGroup[] cantPhaseMixer;
 
     // Use this for initialization
     void Start()
     {
         playerMovement = GetComponent<Movement>();
         audioSource = GetComponents<AudioSource>()[0];
-        //audioSource2 = GetComponents<AudioSource>()[1];
         coolDownRemainingTime = phaseCoolDown;
     }
 
@@ -74,12 +70,21 @@ public class PhaseJump : MonoBehaviour
 
     public bool phaseForward()
     {
+		bool phased = phase (true);
+		if (phased) {
+			SoundMaster.playRandomSound(phaseForwardSounds, phaseForwardSoundsVolume, getAudioSource());
+		}
+		return phased;
         return phase(true);
     }
 
     public bool phaseBack()
     {
-        return phase(false);
+		bool phased = phase (false);
+		if (phased) {
+			SoundMaster.playRandomSound(phaseBackSounds, phaseBackSoundsVolume, getAudioSource());
+		}
+        return phased;
     }
 
     public void ShakeCamera()
@@ -119,10 +124,6 @@ public class PhaseJump : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (UIMenu.isOpen())
-        {
-            return;
-        }
         coolDownRemainingTime += Time.deltaTime;
 
 
@@ -141,8 +142,8 @@ public class PhaseJump : MonoBehaviour
 
             // Scale character
             float curveScale = scaleCurve.Evaluate(time);
-            Vector3 scale = savedScale * curveScale;
-            transform.localScale = transform.lossyScale*curveScale;
+            //Vector3 scale = savedScale * curveScale;
+            //transform.localScale = transform.lossyScale*curveScale;
 
             foreach (PhaseObjectTravel p in phasingObects)
             {
@@ -155,19 +156,14 @@ public class PhaseJump : MonoBehaviour
             }
 
             // Vibration
-            float vibration = (1 - curveScale)*vibrationScale;
+            //float vibration = (1 - curveScale)*vibrationScale;
             //GamePad.SetVibration(PlayerIndex.One, vibration, vibration);
 
-            // TODO: Needs to be Fixed. Sometimes plays more than once!
-            if (curveScale > 0.1 && curveScale < 0.3  && time < 1)
-            {
-                SoundMaster.playRandomSound(phaseBackSounds, phaseBackSoundsVolume, getAudioSource());
-            }
-
             // Finished phasing
-            else if (time >= 1)
+            if (time >= 1)
             {
-                transform.localScale = savedScale;
+                //transform.localScale = savedScale;
+				setVisible(true);
                 transform.position = phaseToPosition;
                 phasing = false;
                 phaseDirectionSelected = 0;
@@ -278,12 +274,14 @@ public class PhaseJump : MonoBehaviour
         
 
         // Start phase
-        savedScale = transform.localScale;
+		//savedScale = transform.localScale;
         phaseToPosition = spawnPosition;
         phaseFromPosition = transform.position;
         playerMovement.currentMovementWaypoint = newPhasePoint;
         phaseRemainingTime = 0;
         phasing = true;
+
+		setVisible (false);
 
         // If we are inside any phaseCondition volumes. Call the afterPhase method
         callConditions(false, phaseForward);
@@ -432,6 +430,9 @@ public class PhaseJump : MonoBehaviour
             spawnPhase = getPreviousWayPoint(current, spawnPosition, phaseForward);
         }
 
+		//Debug.DrawLine (transform.position, spawnPosition, Color.red, 5);
+		//Debug.DrawLine (transform.position, phasedPoint.transform.position, Color.red, 5);
+
         // Apply the Y according to the largest Y of the points then add the players extra Y
         float extraY = transform.position.y - current.transform.position.y;
 
@@ -505,8 +506,10 @@ public class PhaseJump : MonoBehaviour
         float Ad = (A.next.transform.position - A.transform.position).magnitude;
         //Debug.Log("Ad " + Ad);
 
-        // Get the distance traveled
-        float traveled = (transform.position - A.transform.position).magnitude;
+        // Get the distance traveled by x,z not y
+		Vector3 t = transform.position; t.y = 0;
+		Vector3 y = A.transform.position; y.y = 0F;
+        float traveled = (t-y).magnitude;
         //Debug.Log("traveled " + traveled);
 
         // Get percentage
@@ -517,8 +520,8 @@ public class PhaseJump : MonoBehaviour
         //Debug.Log("B " + B.name);
         //Debug.Log("Bn " + Bn);
         Vector3 destination = getPointOnLine(B.transform.position, Bn.transform.position, traveledPercent);
-
-        // Return Y
+        
+		// Return Y
         return destination;
     }
 
@@ -679,6 +682,18 @@ public class PhaseJump : MonoBehaviour
             p.cameraToEdit = main;
         }
     }
+
+	private void setVisible(bool visible){
+		Renderer[] renderers = GetComponentsInChildren<Renderer> ();
+
+		for (int i = 0; i < renderers.Length; i++) {
+			// Don't hide particles
+			if (!(renderers [i] is ParticleSystemRenderer)) {
+				renderers [i].enabled = visible;
+				Debug.Log ("Name " + renderers [i].name);
+			}
+		}
+	}
 
     private bool areLinkedByPhase(MovementWaypoint A, MovementWaypoint B)
     {

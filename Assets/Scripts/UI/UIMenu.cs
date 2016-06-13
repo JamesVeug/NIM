@@ -4,11 +4,13 @@ using System.Collections;
 public class UIMenu : MonoBehaviour {
 
     public bool pauseGameOnOpen = false;
-	private static bool menuOpen = false;
+	public bool disableClose = false;
+	private bool menuOpen = false;
 
     public void Start()
     {
         menuOpen = true;
+		SetMenuOpen (disableClose);
     }
 
 	//Set the menu state
@@ -19,9 +21,9 @@ public class UIMenu : MonoBehaviour {
 
 		//Pause/unpause the gam
 		if (open && pauseGameOnOpen) {
-			Time.timeScale = 0;
+			Time.timeScale = 0f;
 		} else if( !open && pauseGameOnOpen){
-			Time.timeScale = 1;
+			Time.timeScale = 1f;
 		}
 			
 		menuOpen = open;
@@ -30,14 +32,14 @@ public class UIMenu : MonoBehaviour {
 
 	//Functions for use with buttons
 	public void CloseMenu(){
-		SetMenuOpen (false);
+		SetMenuOpen (false || disableClose);
 	}
 
 	public void OpenMenu(){
 		SetMenuOpen (true);
 	}
 
-	public static bool isOpen(){
+	public bool isOpen(){
 		return menuOpen;
 	}
 }

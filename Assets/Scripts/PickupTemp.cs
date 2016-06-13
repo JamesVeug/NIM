@@ -61,7 +61,8 @@ public class PickupTemp : MonoBehaviour {
         }
 
         // Change UI
-        ShardUI.pickupShard();
+        ShardUI ui = ShardUI.getInstance();
+        if (ui != null) ui.pickupShard();
 
         // Play sound
         AudioSource source = other.gameObject.GetComponent<AudioSource>();
