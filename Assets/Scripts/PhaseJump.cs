@@ -119,10 +119,6 @@ public class PhaseJump : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (UIMenu.isOpen())
-        {
-            return;
-        }
         coolDownRemainingTime += Time.deltaTime;
 
 

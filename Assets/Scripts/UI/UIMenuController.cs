@@ -6,20 +6,15 @@ using System;
 
 public class UIMenuController : MonoBehaviour {
 
-	public UIMenu menu = null;
+	private UIMenu menu = null;
     public bool menuStartsOpen = false;
     public GameObject subMenuForKeyboard;
 
-    private bool openedMenuOnStart = false;
     private bool keyboardSubmitCurrentlyPressed = false;
     private bool VerticalArrowCurrentlyPressed = false;
     private int xboxButtonIndex = 0;
 
     private GameObject startSubMenu;
-
-	//Work around for timeScale = 0 problems with
-	//multiple presses
-	private bool toggled = false;
 
 	void Awake()
 	{
@@ -51,13 +46,13 @@ public class UIMenuController : MonoBehaviour {
         bool cancelbutton = Input.GetButtonDown("Cancel");
         bool MainMenuToggleButton = Input.GetButtonDown("MainMenuToggle");
         bool MainMenuToggleButtonXbox = Input.GetButtonDown("MainMenuToggleXbox");
-        if ((MainMenuToggleButton|| MainMenuToggleButtonXbox) && !UIMenu.isOpen())
+        if ((MainMenuToggleButton|| MainMenuToggleButtonXbox) && !menu.isOpen())
         {
             // Open the menu
             menu.OpenMenu();
-            setInteractable(false);
+            //setInteractable(false);
         }
-        else if (cancelbutton && UIMenu.isOpen())
+        else if (cancelbutton && menu.isOpen())
         {
             // Close the menu
             menu.CloseMenu();
@@ -65,7 +60,7 @@ public class UIMenuController : MonoBehaviour {
         }
 
         // Menu not open
-        if( !UIMenu.isOpen())
+        if( !menu.isOpen())
         {
             return;
         }
@@ -142,10 +137,10 @@ public class UIMenuController : MonoBehaviour {
     private void invokeButton()
     {
         Button b = getButton(xboxButtonIndex);
-        b.onClick.Invoke();
+		b.onClick.Invoke();
         xboxButtonIndex = 0;
 
-        List<GameObject> panels = UIShowPanel.getActivePanels();
+		List<GameObject> panels = UIShowPanel.getInstance().getActivePanels();
         if (panels.Count > 0) {
             subMenuForKeyboard = panels[0];
         }

@@ -81,7 +81,7 @@ public class MovingPlatform : MonoBehaviour {
 
             if (Vector3.Distance(transform.position, pointA.transform.position) < 0.5f)
             {
-                transform.position = Vector3.MoveTowards(transform.position, pointB.transform.position, speed * Time.deltaTime);
+				transform.position = Vector3.MoveTowards(transform.position, pointB.transform.position, speed * (Time.deltaTime * Time.timeScale));
                 //transform.MovePosition(transform.position, pointB.transform.position, speed * Time.deltaTime);
                 pointATarget = !pointATarget;
                 if (isTrigger)
@@ -90,7 +90,7 @@ public class MovingPlatform : MonoBehaviour {
                 }
             }
             else {
-                transform.position = Vector3.MoveTowards(transform.position, pointA.transform.position, speed * Time.deltaTime);
+				transform.position = Vector3.MoveTowards(transform.position, pointA.transform.position, speed * (Time.deltaTime * Time.timeScale));
                 
             }
             
@@ -99,7 +99,7 @@ public class MovingPlatform : MonoBehaviour {
         else {
             if (Vector3.Distance(transform.position, pointB.transform.position) < 0.5f)
             {
-                transform.position = Vector3.MoveTowards(transform.position, pointA.transform.position, speed * Time.deltaTime);
+				transform.position = Vector3.MoveTowards(transform.position, pointA.transform.position, speed * (Time.deltaTime * Time.timeScale));
                 pointATarget = !pointATarget;
                 if (isTrigger)
                 {
@@ -107,7 +107,7 @@ public class MovingPlatform : MonoBehaviour {
                 }
             }
             else {
-                transform.position = Vector3.MoveTowards(transform.position, pointB.transform.position, speed * Time.deltaTime);
+				transform.position = Vector3.MoveTowards(transform.position, pointB.transform.position, speed * (Time.deltaTime * Time.timeScale));
                 
             }
 

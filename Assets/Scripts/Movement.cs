@@ -80,10 +80,6 @@ public class Movement : MonoBehaviour {
         if (controller == null) { //If the player can't be controlled, don't let it move
             return;
         }
-        else if( UIMenu.isOpen())
-        {
-            return;
-        }
 
         if (rotateTo != Quaternion.identity) {
             transform.rotation = Quaternion.Slerp(transform.rotation, rotateTo, Time.deltaTime * turnSpeed);
