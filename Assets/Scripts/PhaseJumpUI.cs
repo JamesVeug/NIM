@@ -150,6 +150,7 @@ public class PhaseJumpUI : MonoBehaviour
         }
 
         // Hide the marker
+		dofScript.focalTransform = jump.transform;
         setMarkerVisibility(marker, false);
         isPreviewing = false;
     }
@@ -181,43 +182,38 @@ public class PhaseJumpUI : MonoBehaviour
 			previewPhase (true);
 		} else if (preview < 0 && jump.canPhaseBack ()) {
 			previewPhase (false);
-		} else {
-			// Disable preview Script if we aren't previewing
-			disablePreviewCamera ();
+		} else if (!isPhasing) {
+			disablePreviewCamera();
+
 		}
 
 		//Debug.Log ("PreviewDirection : " + previewDirection);
 
         // Phase
-        if (phaseJumpDirection == 1 && jump.canPhaseForward())
-        {
-            // Create trail
-            cloneParticle(trail);
-            cloneParticle(phaseIn);
+		if (phaseJumpDirection == 1 && jump.canPhaseForward ()) {
+			// Create trail
+			cloneParticle (trail);
+			cloneParticle (phaseIn);
 
-            // Phase
-            jump.phaseForward();
-            setMarkerVisibility(marker, false);
-			//previewDirection = phaseJumpDirection;
-        }
-        else if (phaseJumpDirection == -1 && jump.canPhaseBack())
-        {
-            // Create trail
-            cloneParticle(trail);
-            cloneParticle(phaseIn);
+			// Phase
+			jump.phaseForward ();
+			setMarkerVisibility (marker, false);
+		} else if (phaseJumpDirection == -1 && jump.canPhaseBack ()) {
+			// Create trail
+			cloneParticle (trail);
+			cloneParticle (phaseIn);
 
-            // Phase
-            jump.phaseBack();
-			setMarkerVisibility(marker, false);
-			//previewDirection = phaseJumpDirection;
-        }
-
-
-        // Focus on the player again
-        if (dofScript != null)
-        {
-            dofScript.focalLength = (chaseScript.whatToChase.transform.position - Camera.main.transform.position).magnitude;
-        }
+			// Phase
+			jump.phaseBack ();
+			setMarkerVisibility (marker, false);
+		} else if (phaseJumpDirection != 0 && !isPhasing && Input.GetButtonDown("PhaseJump")) {
+			// Play can't phase sound
+			// Pressing phase button
+			// We are not already phasing
+			// Button is not already pressed
+			jump.playCantPhaseSound ();
+		}
+		phaseButtonPressed = true;
     }
 
     private bool isPreviewingPhase()
@@ -241,10 +237,11 @@ public class PhaseJumpUI : MonoBehaviour
         marker.transform.rotation = transform.rotation;
 
         // Preview back position
-        chaseScript.whatToChase = marker;
-        //dofScript.focalLength = (marker.transform.position - chaseScript.getNewPosition()).magnitude;
-
-        //SoundMaster.playRandomSound(PreviewSounds, PreviewSoundsVolume, getAudioSource());
+		if (chaseScript.whatToChase != marker) {
+			chaseScript.whatToChase = marker;
+			SoundMaster.playRandomSound(PreviewSounds, PreviewSoundsVolume, getAudioSource());
+		}
+		dofScript.focalTransform = marker.transform;
         setMarkerVisibility(marker, true);
     }
 

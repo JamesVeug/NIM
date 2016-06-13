@@ -54,16 +54,12 @@ public class PhaseJump : MonoBehaviour
     public AudioClip[] phaseForwardSounds;
     public AudioClip[] phaseBackSounds;
     public AudioClip[] cantPhaseSounds;
-    public AudioMixerGroup[] phaseForwardMixer;
-    public AudioMixerGroup[] phaseBackMixer;
-    public AudioMixerGroup[] cantPhaseMixer;
 
     // Use this for initialization
     void Start()
     {
         playerMovement = GetComponent<Movement>();
         audioSource = GetComponents<AudioSource>()[0];
-        //audioSource2 = GetComponents<AudioSource>()[1];
         coolDownRemainingTime = phaseCoolDown;
     }
 
@@ -74,12 +70,21 @@ public class PhaseJump : MonoBehaviour
 
     public bool phaseForward()
     {
+		bool phased = phase (true);
+		if (phased) {
+			SoundMaster.playRandomSound(phaseForwardSounds, phaseForwardSoundsVolume, getAudioSource());
+		}
+		return phased;
         return phase(true);
     }
 
     public bool phaseBack()
     {
-        return phase(false);
+		bool phased = phase (false);
+		if (phased) {
+			SoundMaster.playRandomSound(phaseBackSounds, phaseBackSoundsVolume, getAudioSource());
+		}
+        return phased;
     }
 
     public void ShakeCamera()
@@ -158,14 +163,8 @@ public class PhaseJump : MonoBehaviour
             //float vibration = (1 - curveScale)*vibrationScale;
             //GamePad.SetVibration(PlayerIndex.One, vibration, vibration);
 
-            // TODO: Needs to be Fixed. Sometimes plays more than once!
-            if (curveScale > 0.1 && curveScale < 0.3  && time < 1)
-            {
-                SoundMaster.playRandomSound(phaseBackSounds, phaseBackSoundsVolume, getAudioSource());
-            }
-
             // Finished phasing
-            else if (time >= 1)
+            if (time >= 1)
             {
                 //transform.localScale = savedScale;
 				setVisible(true);
@@ -692,7 +691,11 @@ public class PhaseJump : MonoBehaviour
 		Renderer[] renderers = GetComponentsInChildren<Renderer> ();
 
 		for (int i = 0; i < renderers.Length; i++) {
-			renderers [i].enabled = visible;
+			// Don't hide particles
+			if (!(renderers [i] is ParticleSystemRenderer)) {
+				renderers [i].enabled = visible;
+				Debug.Log ("Name " + renderers [i].name);
+			}
 		}
 	}
 
