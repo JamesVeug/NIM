@@ -103,7 +103,7 @@ public class Movement : MonoBehaviour {
 
         // Start walking to waypoint
         Vector3 movement = moveToPosition;
-        if (moveHorizontal != 0 && previewCamera == 0)
+        if (moveHorizontal != 0 )
         {
             // Get the move vector and slowy start moving
             moveToPosition = moveWithWaypoints(nextPoint);

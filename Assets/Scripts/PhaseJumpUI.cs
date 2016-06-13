@@ -22,6 +22,7 @@ public class PhaseJumpUI : MonoBehaviour
     public GameObject PhaseLight;
     private bool isPreviewing;
     private bool isPhasing;
+	private float previewDirection;
 
 
     public Material standaredMaterial;
@@ -175,21 +176,17 @@ public class PhaseJumpUI : MonoBehaviour
             disablePreviewCamera();
         }
 
-        // Disable the camera if we release all buttons and are not phasing
-        if (Mathf.Abs(preview) != 1 && isPreviewingPhase() && !jump.isPhasing()) {
-            disablePreviewCamera();
-        }
-        
         // Preview
-        if( preview == 1 && jump.canPhaseForward() && !isPreviewingPhase())
-        {
-            previewPhase(true);
-        }
-        else if (preview == -1 && jump.canPhaseBack() && !isPreviewingPhase())
-        {
-            previewPhase(false);
-        }
+		if (preview > 0 && jump.canPhaseForward ()) {
+			previewPhase (true);
+		} else if (preview < 0 && jump.canPhaseBack ()) {
+			previewPhase (false);
+		} else {
+			// Disable preview Script if we aren't previewing
+			disablePreviewCamera ();
+		}
 
+		//Debug.Log ("PreviewDirection : " + previewDirection);
 
         // Phase
         if (phaseJumpDirection == 1 && jump.canPhaseForward())
@@ -201,6 +198,7 @@ public class PhaseJumpUI : MonoBehaviour
             // Phase
             jump.phaseForward();
             setMarkerVisibility(marker, false);
+			//previewDirection = phaseJumpDirection;
         }
         else if (phaseJumpDirection == -1 && jump.canPhaseBack())
         {
@@ -210,7 +208,8 @@ public class PhaseJumpUI : MonoBehaviour
 
             // Phase
             jump.phaseBack();
-            setMarkerVisibility(marker, false);
+			setMarkerVisibility(marker, false);
+			//previewDirection = phaseJumpDirection;
         }
 
 
@@ -245,9 +244,8 @@ public class PhaseJumpUI : MonoBehaviour
         chaseScript.whatToChase = marker;
         //dofScript.focalLength = (marker.transform.position - chaseScript.getNewPosition()).magnitude;
 
-        SoundMaster.playRandomSound(PreviewSounds, PreviewSoundsVolume, getAudioSource());
+        //SoundMaster.playRandomSound(PreviewSounds, PreviewSoundsVolume, getAudioSource());
         setMarkerVisibility(marker, true);
-        isPreviewing = true;
     }
 
     private void updateGlow()
