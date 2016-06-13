@@ -34,7 +34,7 @@ public class UIMenuController : MonoBehaviour {
         if (menuStartsOpen)
         {
             menu.OpenMenu();
-            setInteractable(false);
+            //setInteractable(false);
         }
     }
 
