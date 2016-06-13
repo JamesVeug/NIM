@@ -5,12 +5,13 @@ using UnityEngine.UI;
 
 public class ShardUI : MonoBehaviour
 {
-    public int totalPickups = 0;
     public Text pickupCounterText;
     public MovementWaypoint closestShardToMaster;
     public GameObject navigatorPrefab;
-    public GameObject masterShard;
     public GameObject player;
+
+	private int totalPickups = 0;
+	private GameObject masterShard;
 
     // Navigation Path
     private MovementWaypoint lastPlayerPoint;
@@ -37,9 +38,14 @@ public class ShardUI : MonoBehaviour
         }
     }
 
+	void Awake(){
+		masterShard = FindObjectOfType<MasterCrystal> ().gameObject;
+		totalPickups = FindObjectsOfType<PickupTemp> ().Length;
+		bar = GetComponent<Scrollbar>();
+	}
+
     // Use this for initialization
     void Start () {
-        bar = GetComponent<Scrollbar>();
         bar.size = 0;
     }
 
@@ -102,6 +108,8 @@ public class ShardUI : MonoBehaviour
         // Don't call this method again
         alertedCompletion = true;
         startPath();
+
+		masterShard.SetActive (true);
     }
 
     public void continuePath()

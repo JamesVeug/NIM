@@ -21,7 +21,7 @@ public class ChangeWaypointVolume : MonoBehaviour {
         if (drawText)
         {
             string text = newPreviousWaypoint == null ? "null" : newPreviousWaypoint.name;
-            TextGizmo.Instance.DrawText(Camera.main, transform.position, text);
+            //TextGizmo.Instance.DrawText(Camera.main, transform.position, text);
         }
     }
 }
