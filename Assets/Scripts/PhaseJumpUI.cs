@@ -250,6 +250,7 @@ public class PhaseJumpUI : MonoBehaviour
 
         glowTime = Mathf.Max(0, glowTime - Time.deltaTime);
         if (glowImage != null) glowImage.enabled = glowTime > 0;
+        Debug.Log("Glow " + glowTime);
         if (jump.isPhasing())
         {
             if (glowImage != null)
@@ -344,7 +345,7 @@ public class PhaseJumpUI : MonoBehaviour
         }
         if (glowImage != null)
         {
-            glowImage.GetComponent<Image>().enabled = Camera.main.transform.position.x > Camera.main.ScreenToWorldPoint(glowImage.transform.position).x;
+            //glowImage.GetComponent<Image>().enabled = Camera.main.transform.position.x > Camera.main.ScreenToWorldPoint(glowImage.transform.position).x;
             Color c = glowImage.color;
             glowImage.transform.position = screenPos;
             c.a = glowTime / 2;
